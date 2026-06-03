@@ -1,3 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+
+@theme {
+  --color-primary: #d6336c;
+  --color-secondary: #ff4081;
+  --color-brand-pink: #ffb6c1;
+  --color-brand-white: #fff5f8;
+}
+
+.main-btn {
+  @apply border-4 rounded-xl;
+}
