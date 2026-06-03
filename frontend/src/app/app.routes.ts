@@ -1,9 +1,14 @@
 import { Routes } from '@angular/router';
 import { Home } from './nene-project/pages/home/home';
-import { Dashboard } from './nene-project/pages/dashboard/dashboard';
+
+import { Login } from './nene-project/pages/auth/login/login';
+import { Register } from './nene-project/pages/auth/register/register';
 
 export const routes: Routes = [
     {path:'', redirectTo:'home', pathMatch:'full'},
     {path:'home',component:Home},
-    {path:'dashboard',component:Dashboard}
+    {path:'auth',children:[
+        {path:'login',component:Login},
+        {path:'register',component:Register}
+    ]}
 ];
