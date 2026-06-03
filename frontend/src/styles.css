@@ -24,3 +24,15 @@
 button:disabled {
     @apply opacity-30 pointer-events-none
 }
+
+.nav-list {
+  @apply relative inline-block cursor-pointer px-4 md:px-6 py-2 md:py-3 rounded-full text-base md:text-lg font-bold text-pink-400 transition-all duration-300;
+}
+
+.nav-list:hover {
+  @apply text-pink-600 bg-pink-100 scale-105 shadow-[0_4px_0_#fbcfe8] -translate-y-1;
+}
+
+.nav-list:active {
+  @apply translate-y-0 shadow-none scale-95;
+}
