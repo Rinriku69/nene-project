@@ -1,6 +1,7 @@
-import { Component, computed, Signal, signal } from '@angular/core';
+import { Component, computed, Signal, signal, WritableSignal } from '@angular/core';
 import { debounce, email, form, FormField, minLength, required, validate } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
+import { RegisterModel } from '../../../models/AuthModel';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,7 @@ export class Register {
     return false
   });
 
-  private readonly registerModel = signal({
+  private readonly registerModel:WritableSignal<RegisterModel> = signal({
     email: '',
     username: '',
     password: '',

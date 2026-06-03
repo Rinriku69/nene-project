@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
 import { form, FormField, required } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
+import { LoginModel } from '../../../models/AuthModel';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './login.css',
 })
 export class Login {
-  private readonly loginModel = signal({
+  private readonly loginModel:WritableSignal<LoginModel> = signal({
     username:'',
     password:''
   })
