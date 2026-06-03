@@ -10,5 +10,13 @@
 }
 
 .main-btn {
-  @apply border-4 rounded-xl;
+  @apply relative px-12 py-5 bg-pink-400 border-4 border-pink-500 rounded-full cursor-pointer transition-all duration-200 shadow-[0_8px_0_#db2777];
+}
+
+.main-btn:hover {
+  @apply bg-pink-300 translate-y-1 shadow-[0_4px_0_#db2777];
+}
+
+.main-btn:active {
+  @apply translate-y-2 shadow-none;
 }
