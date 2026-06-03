@@ -20,3 +20,7 @@
 .main-btn:active {
   @apply translate-y-2 shadow-none;
 }
+
+button:disabled {
+    @apply opacity-30 pointer-events-none
+}
