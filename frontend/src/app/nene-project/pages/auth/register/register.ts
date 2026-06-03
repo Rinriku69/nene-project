@@ -1,5 +1,5 @@
 import { Component, computed, Signal, signal } from '@angular/core';
-import { form, FormField, minLength, required, validate } from '@angular/forms/signals';
+import { debounce, email, form, FormField, minLength, required, validate } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -17,13 +17,15 @@ export class Register {
   });
 
   private readonly registerModel = signal({
-    nickname: '',
+    email: '',
     username: '',
     password: '',
     password_confirmation: '',
   });
   protected readonly registerForm = form(this.registerModel, (path) => {
-    required(path.nickname, { message: 'Nickname is required' });
+    debounce(path.email,500);
+    email(path.email,{message:'Please enter valid email'});
+    required(path.email, { message: 'Email is required' });
     required(path.username, { message: 'Username is required' });
     required(path.password, { message: 'Password is required' });
     required(path.password_confirmation,{message:'Please confirm your password'})

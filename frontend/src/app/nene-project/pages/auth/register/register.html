@@ -16,20 +16,7 @@
     </div>
 
     <form class="flex flex-col gap-5 w-full">
-      <div class="flex flex-col gap-2 ">
-        <label class="text-pink-400 font-bold ml-4">Name</label>
-        <input
-          type="text"
-          placeholder="What do we call you?"
-          [formField]="registerForm.nickname"
-          class="w-full px-6 py-4 rounded-full bg-pink-50 border-2 border-pink-200 text-pink-500 font-medium placeholder-pink-300 focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all"
-        />
-        @if(registerForm.nickname().invalid() && registerForm.nickname().touched()){
-          @for (error of registerForm.nickname().errors(); track error) {
-                <p class="ml-4 text-xs text-red-600 mt-1">{{ error.message }}</p>
-              }
-        }
-      </div>
+      
 
       <div class="flex flex-col gap-2">
         <label class="text-pink-400 font-bold ml-4">Username</label>
@@ -41,6 +28,21 @@
         />
         @if(registerForm.username().invalid() && registerForm.username().touched()){
           @for (error of registerForm.username().errors(); track error) {
+                <p class="ml-4 text-xs text-red-600 mt-1">{{ error.message }}</p>
+              }
+        }
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label class="text-pink-400 font-bold ml-4">Email</label>
+        <input
+          type="text"
+          placeholder="Tell me your email!"
+          [formField]="registerForm.email"
+          class="w-full px-6 py-4 rounded-full bg-pink-50 border-2 border-pink-200 text-pink-500 font-medium placeholder-pink-300 focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all"
+        />
+        @if(registerForm.email().invalid() && registerForm.email().touched()){
+          @for (error of registerForm.email().errors(); track error) {
                 <p class="ml-4 text-xs text-red-600 mt-1">{{ error.message }}</p>
               }
         }
