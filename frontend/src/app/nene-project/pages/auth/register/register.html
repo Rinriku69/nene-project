@@ -11,7 +11,6 @@
     <div class="text-center">
       <h2 class="text-4xl font-black text-pink-400 drop-shadow-sm tracking-tighter">
         Join the fun! <br />
-        🎉💖
       </h2>
     </div>
 
@@ -27,7 +26,7 @@
           class="w-full px-6 py-4 rounded-full bg-pink-50 border-2 border-pink-200 text-pink-500 font-medium placeholder-pink-300 focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all"
         />
         @if(registerForm.username().invalid() && registerForm.username().touched()){
-          @for (error of registerForm.username().errors(); track error) {
+          @for (error of registerForm.username().errors(); track $index) {
                 <p class="ml-4 text-xs text-red-600 mt-1">{{ error.message }}</p>
               }
         }
@@ -42,7 +41,7 @@
           class="w-full px-6 py-4 rounded-full bg-pink-50 border-2 border-pink-200 text-pink-500 font-medium placeholder-pink-300 focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all"
         />
         @if(registerForm.email().invalid() && registerForm.email().touched()){
-          @for (error of registerForm.email().errors(); track error) {
+          @for (error of registerForm.email().errors(); track $index) {
                 <p class="ml-4 text-xs text-red-600 mt-1">{{ error.message }}</p>
               }
         }
@@ -57,7 +56,7 @@
           class="w-full px-6 py-4 rounded-full bg-pink-50 border-2 border-pink-200 text-pink-500 font-medium placeholder-pink-300 focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all"
         />
         @if(registerForm.password().invalid() && registerForm.password().touched()){
-          @for (error of registerForm.password().errors(); track error) {
+          @for (error of registerForm.password().errors(); track $index) {
                 <p class="ml-4 text-xs text-red-600 mt-1">{{ error.message }}</p>
               }
         }
@@ -71,18 +70,18 @@
           class="w-full px-6 py-4 rounded-full bg-pink-50 border-2 border-pink-200 text-pink-500 font-medium placeholder-pink-300 focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all"
         />
         @if(registerForm.password_confirmation().invalid() && registerForm.password_confirmation().touched()){
-          @for (error of registerForm.password_confirmation().errors(); track error) {
+          @for (error of registerForm.password_confirmation().errors(); track $index) {
                 <p class="ml-4 text-xs text-red-600 mt-1">{{ error.message }}</p>
               }
         }
       </div>
 
       <button type="button" class="main-btn group mt-4 w-full flex justify-center items-center"
-      [disabled]="formSubmitDisable()">
+      [disabled]="formSubmitDisable()" (click)="submit()">
         <span
           class="text-2xl font-black text-white group-hover:scale-110 transition-transform duration-300"
         >
-          Sign Up 🚀
+          Sign Up 
         </span>
       </button>
     </form>
