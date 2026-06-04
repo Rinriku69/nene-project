@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    protected function register(Request $request): JsonResponse
+    function register(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'username' => ['required', 'string', 'max:20', 'unique:users,username'],
