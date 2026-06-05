@@ -7,7 +7,7 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) =>{
     const loadingService = inject(LoadingService);
 
     loadingService.show();
-    console.log("loading triggered")
+    // console.log("loading triggered")
     return next(req).pipe(
         finalize(() => loadingService.hide())
     );

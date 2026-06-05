@@ -12,9 +12,8 @@ export const xsrfInterceptor: HttpInterceptorFn = (req,next) =>{
     let reqHeaders = req.headers;
     if(xsrfToken){
         reqHeaders = reqHeaders.set('X-XSRF-TOKEN',xsrfToken);
-        console.log("Token found")
     }else{
-        console.log("Token Not Found in cookie")
+        console.error("Token Not Found in cookie")
     }
 
     const cloneReq = req.clone({
