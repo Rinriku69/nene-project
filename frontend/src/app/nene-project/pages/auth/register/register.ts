@@ -1,17 +1,31 @@
-import { Component, computed, effect, inject, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, computed, effect, inject, Resource, Signal, signal, WritableSignal } from '@angular/core';
 import { debounce, email, form, FormField, minLength, required, validate } from '@angular/forms/signals';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { RegisterModel } from '../../../models/AuthModel';
 import { AuthService } from '../../../services/auth.service';
+import { LoadingComponent } from "../../../components/loading-component/loading-component";
+import { LoadingService } from '../../../services/loading.service';
+import { ErrorObjectResponse, ResouceErrorResponse, ResourceResponse } from '../../../models/Resource';
 
 @Component({
   selector: 'app-register',
-  imports: [RouterLink, FormField],
+  imports: [RouterLink, FormField, LoadingComponent],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
 export class Register {
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly loadingService = inject(LoadingService);
+
+  protected readonly errorMessage: WritableSignal<Required<ErrorObjectResponse>> = signal({
+    errors:{
+      username:[],
+      email:[]
+    },
+    message:''
+  });
+  protected readonly isLoading = computed(()=>this.loadingService.isLoading());
   protected readonly formSubmitDisable: Signal<boolean> = computed(() => {
     if (this.registerForm().invalid() || this.registerForm.password_confirmation().invalid()) {
       return true
@@ -49,7 +63,7 @@ export class Register {
 
   protected submit(){
     if(this.registerForm().invalid()){
-      console.log("register form invalid")
+      console.error("Register form invalid")
       return
     }
 
@@ -57,16 +71,15 @@ export class Register {
       next:()=>{
         this.authService.register(this.registerForm().value()).subscribe({
           next: (response) => {
-            console.log(response)
+            this.router.navigate(['/auth/login'])
           },
-          error: (error) =>{
-            console.error(error.error.message)
+          error: (error:ResouceErrorResponse) =>{
+            this.errorMessage.update(()=>error.error)
           }
         })
       },
-      error:(err)=>{
-        console.log("Failed to get CSRF Token")
-        console.log(err)
+      error:(_)=>{
+        console.error("Failed to get CSRF Token")
       }
     })
   }
