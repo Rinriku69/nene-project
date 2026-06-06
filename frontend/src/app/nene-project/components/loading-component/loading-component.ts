@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { LoadingService } from '../../services/loading.service';
 import { Icons } from '../icons/icons';
 
@@ -10,4 +10,5 @@ import { Icons } from '../icons/icons';
 })
 export class LoadingComponent {
   protected readonly loadingService = inject(LoadingService);
+  classAttribute = input<string>("");
 }
