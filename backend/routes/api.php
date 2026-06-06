@@ -16,6 +16,8 @@ Route::controller(AuthController::class)
 
 Route::middleware((['auth']))
     ->group(static function():void{
+        Route::post('/auth/logout',[AuthController::class,'logout'])->name('auth.logout');
+
         Route::controller(UserController::class)
             ->name('user.')
             ->group(static function():void{
