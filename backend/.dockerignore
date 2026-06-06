@@ -1,0 +1,14 @@
+.env
+.env.*
+vendor/
+node_modules/
+public/hot
+public/storage
+storage/*.key
+storage/logs/*.log
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+.git/
+.github/
+docker-compose.yml

@@ -1,0 +1,59 @@
+
+
+services:
+  # 1. Frontend Service (Angular + Nginx)
+  frontend:
+    container_name: nene-angular
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    networks:
+      - nene-network
+
+  backend-php:
+    container_name: nene-laravel-fpm
+    build:
+      context: ./backend
+    volumes:
+      - ./backend:/var/www/html
+    env_file:
+      - ./backend/.env
+    networks:
+      - nene-network
+
+  backend-nginx:
+    image: nginx:alpine
+    container_name: nene-laravel-nginx
+    ports:
+      - "8000:80" 
+    volumes:
+      - ./backend:/var/www/html
+      - ./backend/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend-php
+    networks:
+      - nene-network
+  db:
+    image: postgres:16-alpine
+    container_name: nene-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5433:5432" 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - nene-network
+
+volumes:
+  postgres_data:
+
+networks:
+  nene-network:
+    driver: bridge
