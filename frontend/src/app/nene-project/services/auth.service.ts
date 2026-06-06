@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { LoginModel, RegisterModel, User } from '../models/AuthModel';
 import { ResourceResponse } from '../models/Resource';
 import co from '@angular/common/locales/co';
@@ -36,6 +36,15 @@ export class AuthService {
   logout():Observable<ResourceResponse>{
     return this.http.post<ResourceResponse>(`${this.baseApiUrl}/auth/logout`,{}).pipe(
       tap(()=>this.currentUser.set(null))
+    )
+  }
+
+  hydrateAuthState(){
+    return this.getUser().pipe(
+      catchError(()=>{
+        this.currentUser.set(null);
+        return of(null);
+      })
     )
   }
 }
