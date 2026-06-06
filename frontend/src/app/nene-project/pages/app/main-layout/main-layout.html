@@ -20,7 +20,11 @@
       </ul>
 
       <div class="font-black text-lg md:text-xl text-pink-500 bg-pink-100 px-6 py-3 rounded-full border-2 border-pink-300 shadow-[0_4px_0_#fbcfe8] hover:-translate-y-1 hover:shadow-[0_6px_0_#fbcfe8] hover:bg-pink-200 active:translate-y-1 active:shadow-none transition-all cursor-pointer shrink-0">
-        LOGO LOGIN 🌸
+        @if(currentUser()){
+          {{currentUser()?.username}}
+        }@else {
+          Please Login
+        }
       </div>
 
     </div>

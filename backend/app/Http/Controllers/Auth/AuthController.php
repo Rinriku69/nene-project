@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -37,4 +38,24 @@ class AuthController extends Controller
             ], 400);
         }
     }
+
+    function login(Request $request): JsonResponse{
+       $credentail = $request->validate([
+        'username'=>['required', 'string', 'max:20'],
+        'password'=>['required','string','min:8']
+       ]);
+
+       if(Auth::attempt($credentail)){
+        session()->regenerate();
+        return response()->json([
+            'status' => 'ok',
+            'message'=>'Login success'
+        ],200);
+       }
+
+       return response()->json([
+        'message' => 'username or password is incorrect'
+       ],401);
+    }
+
 }

@@ -12,6 +12,10 @@
       <h2 class="text-4xl font-black text-pink-400 drop-shadow-sm tracking-tighter">
         Welcome Back! <br />
       </h2>
+      @if(errorMessage()){
+
+        <p class="font-semibold mt-2 text-red-500">{{errorMessage()}}</p>
+      }
     </div>
 
     <form class="flex flex-col gap-5 w-full">
@@ -45,11 +49,14 @@
         }
       </div>
 
-      <button type="button" class="main-btn group mt-4 w-full flex justify-center items-center">
+      <button type="button" class="main-btn group mt-4 w-full flex justify-center items-center"
+      (click)="submit()"
+      [disabled]="loginForm().invalid() || isLoading()">
+      <app-loading-component [classAttribute]="'size-10 animate-spin mx-1'"></app-loading-component>
         <span
           class="text-2xl font-black text-white group-hover:scale-110 transition-transform duration-300"
         >
-          Login ✨
+          Login
         </span>
       </button>
     </form>
