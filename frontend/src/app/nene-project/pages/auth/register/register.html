@@ -84,7 +84,7 @@
 
       <button type="button" class="main-btn group mt-4 w-full flex justify-center items-center"
       [disabled]="formSubmitDisable() || isLoading()" (click)="submit()">
-       <app-loading-component></app-loading-component>
+       <app-loading-component [classAttribute]="'size-10 animate-spin mx-1'"></app-loading-component>
         <span
           class="text-2xl font-black text-white group-hover:scale-110 transition-transform duration-300"
         >
