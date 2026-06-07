@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('rarity');
+            $table->enum('rarity',['SSR','SR','R','N']);
             $table->string('url');
             $table->integer('weight');
             $table->timestamps();
