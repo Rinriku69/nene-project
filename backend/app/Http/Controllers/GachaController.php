@@ -87,19 +87,19 @@ class GachaController extends Controller
 
     private function randomRarity()
     {
-        $randomInt = random_int(1, 10);
+        $randomInt = random_int(1, 100);
         $rarity = '';
         switch (true) {
-            case ($randomInt <= 1):
+            case ($randomInt <= 5):
                 $rarity = 'SSR';
                 break;
-            case ($randomInt <= 3):
+            case ($randomInt <= 25):
                 $rarity = 'SR';
                 break;
-            case ($randomInt <= 6):
+            case ($randomInt <=  40):
                 $rarity = 'R';
                 break;
-            case ($randomInt <= 10):
+            case ($randomInt <= 100):
                 $rarity = 'N';
                 break;
         }
