@@ -13,5 +13,6 @@ export interface LoginModel {
 export interface User{
     username:string;
     email:string;
+    currency:number;
     role:string;
 }
