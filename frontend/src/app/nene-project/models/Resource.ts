@@ -22,3 +22,14 @@ export interface ErrorObjectResponse{
     };
     message:string;
 }
+
+export interface GachaResponse {
+    results: GachaItem[];
+}
+
+export interface GachaItem{
+    name:string;
+    description:string;
+    rarity:'N'|'R'|'SR'|'SSR';
+    url:string;
+}
