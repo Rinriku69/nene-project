@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\GachaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -10,8 +11,8 @@ Route::controller(AuthController::class)
     ->prefix('/auth')
     ->name('auth.')
     ->group(static function():void{
-        Route::post('register','register')->name('register');
-        Route::post('login','login')->name('login');
+        Route::post('/register','register')->name('register');
+        Route::post('/login','login')->name('login');
     });
 
 Route::middleware((['auth']))
@@ -22,5 +23,12 @@ Route::middleware((['auth']))
             ->name('user.')
             ->group(static function():void{
                 Route::get('getUser','getUser')->name('getUser');
+            });
+
+        Route::controller(GachaController::class)
+            ->prefix('/gacha')
+            ->name('gacha')
+            ->group(static function():void{
+                Route::post('/pull','pull')->name('pull');
             });
     });
