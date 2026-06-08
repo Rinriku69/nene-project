@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ItemResource;
+use App\Models\GachaLog;
 use App\Models\Inventory;
 use App\Models\Item;
 use App\Models\User;
@@ -27,19 +28,35 @@ class GachaController extends Controller
 
             $rolledItems = $this->randomPull($request->pull);
 
-            foreach ($rolledItems as $item) {
-                Inventory::updateOrCreate(
-                    [
-                        'user_id' => $user->id,
-                        'item_id' => $item->id,
-                    ],
-                    [
-                        'quantity' => DB::raw('quantity + 1'),
-                    ]
-                );
+            $itemCounts = collect($rolledItems)->countBy('id');
+
+            foreach ($itemCounts as $itemId => $count) {
+                $inventory = Inventory::firstOrNew([
+                    'user_id' => $user->id,
+                    'item_id' => $itemId,
+                ]);
+
+                $inventory->quantity = ($inventory->quantity ?? 0) + $count;
+
+                $inventory->save();
             }
             $user->currency -= $request->pull * 10;
             $user->save();
+            
+            $now = now();
+
+            $logPayload = [];
+
+            foreach($rolledItems as $item){
+                $logPayload[] = [
+                    'user_id' => $user->id,
+                    'item_id' => $item->id,
+                    'created_at' => $now,
+                    'updated_at' => $now
+                ];
+            }
+
+            GachaLog::insert($logPayload);
 
             return $rolledItems;
         });
