@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { GachaItem, ResouceErrorResponse } from '../../../models/Resource';
 import { GachaService } from '../../../services/gacha.service';
@@ -10,7 +10,7 @@ import { LoadingService } from '../../../services/loading.service';
   templateUrl: './gacha.html',
   styleUrl: './gacha.css',
 })
-export class Gacha {
+export class Gacha implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly gachaService = inject(GachaService)
   private readonly loadingService = inject(LoadingService)
@@ -18,6 +18,17 @@ export class Gacha {
   isRolling = computed(()=> this.loadingService.isLoading());
   pullResults = signal<GachaItem[] | null>(null);
   selectedItem = signal<GachaItem | null>(null);
+
+  rollType = signal<1 | 10 | 0>(0);
+  confirmModal = signal<boolean>(false);
+  pullAmount = signal<number|null>(null);
+  gemLeft = signal<number>(0);
+
+  featuredItems = [
+    { url: 'https://res.cloudinary.com/dhvmcbbdi/image/upload/v1780825123/134227912693387031_1452_817_1780434105773_d4iyrq.jpg', alt: 'Nene Flower SR' },
+    { url: 'https://res.cloudinary.com/dhvmcbbdi/image/upload/v1780825122/134215114489764490_1452_817_1780434219032_lir4w8.jpg', alt: 'Disney Princess R' },
+    { url: 'https://res.cloudinary.com/dhvmcbbdi/image/upload/v1780825390/134224687394682974_1452_817_1780434126139_if4d0i.jpg', alt: 'Triple Meow SR' }
+  ];
 
   viewItem(item: GachaItem) {
     this.selectedItem.set(item);
@@ -27,12 +38,29 @@ export class Gacha {
     this.selectedItem.set(null);
   }
 
-  roll(amount: number) {
+  closeConfirmModal(){
+    this.confirmModal.set(false);
+  }
+
+  confirmPull(type: 1 | 10){
+    this.confirmModal.set(true);
+    if(type === 1){
+     this.rollType.set(type);
+     this.pullAmount.set(100);
+     this.gemLeft.set(this.currentUser()?.currency! - this.pullAmount()!);
+    }else{
+      this.rollType.set(type);
+      this.pullAmount.set(1000);
+      this.gemLeft.set(this.currentUser()?.currency! - this.pullAmount()!);
+    }
+  }
+
+  roll() {
     if (this.isRolling()) return;
-    
+    this.closeConfirmModal();
     this.pullResults.set(null);
     
-    this.gachaService.gachaRoll(amount).subscribe({
+    this.gachaService.gachaRoll(this.rollType()).subscribe({
       next:(response)=>{
         this.pullResults.set(response.results)
         this.authService.getUser().subscribe();
@@ -47,5 +75,19 @@ export class Gacha {
     this.pullResults.set(null);
   }
 
+  currentSlide = signal(0);
+  private slideInterval: any;
+  ngOnInit(){
+    this.slideInterval = setInterval(() => {
+      this.currentSlide.update(index => 
+        (index + 1) % this.featuredItems.length
+      );
+    }, 3000);
+  }
 
+  ngOnDestroy(){
+    if (this.slideInterval) {
+      clearInterval(this.slideInterval);
+    }
+  }
 }

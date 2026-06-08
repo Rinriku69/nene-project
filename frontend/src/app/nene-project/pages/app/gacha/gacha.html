@@ -1,157 +1,309 @@
-<section class="relative w-full min-h-[calc(100svh-4rem)] flex flex-col items-center py-6 px-4 overflow-hidden bg-pink-50">
-  <div class="absolute inset-0 z-0 opacity-60 bg-[radial-gradient(#fbcfe8_6px,transparent_3px)] bg-size-[40px_40px]"></div>
+<section
+  class="relative w-full min-h-[calc(100svh-4rem)] flex flex-col items-center py-6 px-4 overflow-hidden bg-pink-50"
+>
+  <div
+    class="absolute inset-0 z-0 opacity-60 bg-[radial-gradient(#fbcfe8_6px,transparent_3px)] bg-size-[40px_40px]"
+  ></div>
 
   <div class="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center gap-8">
-    
     <div class="text-center mt-4">
       <h1 class="text-4xl md:text-5xl font-black text-pink-500 drop-shadow-md tracking-tight">
-       Super Eor Gacha! 
+        Nene and The GANG
       </h1>
       <p class="text-pink-400 font-medium mt-2 text-lg">Unlock your precious memories!</p>
     </div>
 
-    <div class="w-full relative rounded-4xl overflow-hidden border-4 border-pink-300 shadow-[0_12px_0_#fbcfe8] bg-white aspect-21/9">
-      <img src="/images/gacha_banner.png" alt="Gacha Banner" class="w-full h-full object-cover" />
-      
-      <div class="absolute bottom-4 right-4 bg-white/80 backdrop-blur-md px-4 py-2 rounded-full border-2 border-pink-200">
-        <span class="text-pink-500 font-black">Featured: SSR Nene Flower!</span>
+    <div
+      class="w-full relative rounded-4xl overflow-hidden border-4 border-pink-300 shadow-[0_12px_0_#fbcfe8] bg-white aspect-21/9"
+    >
+      @for (item of featuredItems; track $index) {
+        <div
+          class="absolute inset-0 transition-opacity duration-1000 ease-in-out"
+          [class.opacity-100]="$index === currentSlide()"
+          [class.opacity-0]="$index !== currentSlide()"
+        >
+          <img
+            [src]="item.url"
+            [alt]="item.alt"
+            class="absolute block w-full h-full object-cover"
+          />
+
+          <div
+            class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/80 to-transparent p-4"
+          >
+            <p class="text-white text-lg font-bold drop-shadow-md">{{ item.alt }}</p>
+          </div>
+        </div>
+      }
+      <!-- <img src="/images/gacha_banner.png" alt="Gacha Banner" class="w-full h-full object-cover" /> -->
+
+      <div
+        class="absolute bottom-4 right-4 bg-white/80 backdrop-blur-md px-4 py-2 rounded-full border-2 border-pink-200"
+      >
+        <span class="text-pink-500 font-black">Featured: SR Nene Flower!</span>
       </div>
     </div>
 
-    <div class="flex items-center gap-4 bg-white px-6 py-3 rounded-full border-2 border-pink-200 shadow-sm">
+    <div
+      class="flex items-center gap-4 bg-white px-6 py-3 rounded-full border-2 border-pink-200 shadow-sm"
+    >
       <span class="text-pink-400 font-bold">Your Gems:</span>
       <span class="text-pink-500 font-black text-xl flex items-center gap-2">
-        💎 {{currentUser()?.currency || 0}}
+        💎 {{ currentUser()?.currency || 0 }}
       </span>
     </div>
 
     <div class="flex flex-row gap-6 w-full max-w-lg mt-4 justify-center">
-      <button 
+      <button
         class="flex-1 group relative flex flex-col items-center justify-center gap-2 bg-white border-4 border-pink-300 rounded-4xl p-4 pb-6 hover:-translate-y-1 transition-transform duration-300 shadow-[0_8px_0_#fbcfe8] hover:shadow-[0_12px_0_#fbcfe8] active:translate-y-2 active:shadow-[0_0px_0_#fbcfe8] disabled:opacity-70 disabled:cursor-not-allowed"
-        (click)="roll(1)"
+        (click)="confirmPull(1)"
         [disabled]="isRolling()"
       >
-        <span class="text-xl font-black text-pink-400 group-hover:text-pink-500 transition-colors">1x Roll</span>
-        <span class="text-sm font-bold text-pink-300 flex items-center gap-1">💎 160</span>
+        <span class="text-xl font-black text-pink-400 group-hover:text-pink-500 transition-colors"
+          >1x Roll</span
+        >
+        <span class="text-sm font-bold text-pink-300 flex items-center gap-1">💎 100</span>
       </button>
 
-      <button 
+      <button
         class="flex-1 group relative flex flex-col items-center justify-center gap-2 bg-pink-400 border-4 border-pink-500 rounded-4xl p-4 pb-6 hover:-translate-y-1 transition-transform duration-300 shadow-[0_8px_0_#f472b6] hover:shadow-[0_12px_0_#f472b6] active:translate-y-2 active:shadow-[0_0px_0_#f472b6] disabled:opacity-70 disabled:cursor-not-allowed"
-        (click)="roll(10)"
+        (click)="confirmPull(10)"
         [disabled]="isRolling()"
       >
-        <div class="absolute -top-3 -right-3 bg-yellow-400 text-yellow-900 text-xs font-black px-3 py-1 rounded-full border-2 border-yellow-500 shadow-sm rotate-12">
+        <div
+          class="absolute -top-3 -right-3 bg-yellow-400 text-yellow-900 text-xs font-black px-3 py-1 rounded-full border-2 border-yellow-500 shadow-sm rotate-12"
+        >
           SR GUARANTEED!
         </div>
-        <span class="text-2xl font-black text-white group-hover:scale-110 transition-transform">10x Roll</span>
-        <span class="text-sm font-bold text-pink-100 flex items-center gap-1">💎 1600</span>
+        <span class="text-2xl font-black text-white group-hover:scale-110 transition-transform"
+          >10x Roll</span
+        >
+        <span class="text-sm font-bold text-pink-100 flex items-center gap-1">💎 1000</span>
       </button>
     </div>
-
   </div>
-  
+
+  <!-- Confirm Modal -->
+  @if (confirmModal()) {
+    <div
+      class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
+      (click)="closeConfirmModal()"
+    >
+      <div
+        class="w-full max-w-md rounded-2xl bg-brand-white shadow-2xl border border-white/50 p-8"
+        (click)="$event.stopPropagation()"
+      >
+        <!-- Header -->
+        <div class="flex flex-col items-center gap-3">
+         
+
+          <h2 class="text-3xl font-black text-brand-pink">Confirm your pull</h2>
+
+          <p class="text-center text-gray-500">Spend gems to perform this pull.</p>
+        </div>
+
+        <!-- Cost -->
+        <div class="my-8 rounded-xl bg-pink-50 border border-pink-200 p-5 text-center">
+          <div class="text-sm font-semibold text-pink-700 uppercase tracking-wide">Cost</div>
+
+          <div class="mt-2 text-4xl font-bold text-pink-950">💎 {{ pullAmount() }}</div>
+          <div class="border-2 border-slate-200 w-full mt-2"></div>
+          <div class="flex justify-center items-baseline">
+            <span class="text-sm mt-5 font-medium">💎{{currentUser()?.currency}}</span>
+            <span class="ml-2">-></span>
+            <span class="text-sm mt-5 text-red-600 font-medium">💎{{gemLeft()}}</span>
+          </div>
+        </div>
+
+        <!-- Warning -->
+        <div class="mb-8 rounded-lg bg-amber-50 border border-amber-200 p-3 text-sm text-amber-800">
+          This action will consume your gems immediately.
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-3">
+          <button
+            class="flex-1 rounded-xl border border-gray-300 px-4 py-3 font-semibold text-gray-700 transition hover:bg-gray-100"
+            (click)="closeConfirmModal()"
+          >
+            Cancel
+          </button>
+
+          <button
+            class="flex-1 rounded-xl bg-brand-pink px-4 py-3 font-bold text-white shadow-lg shadow-pink-300 transition hover:scale-105 hover:brightness-110 active:scale-95"
+            (click)="roll()"
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Rolling Loading -->
   @if (isRolling()) {
-    <div class="fixed inset-0 z-50 bg-pink-100/80 backdrop-blur-sm flex flex-col items-center justify-center gap-4">
+    <div
+      class="fixed inset-0 z-50 bg-pink-100/80 backdrop-blur-sm flex flex-col items-center justify-center gap-4"
+    >
       <div class="text-6xl animate-bounce">✨</div>
       <h2 class="text-3xl font-black text-pink-500 animate-pulse">Pulling...</h2>
     </div>
   }
 
+  <!-- Gacha Result -->
   @if (pullResults()) {
-    <div class="fixed inset-0 z-100 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-4 overflow-y-auto ">
-      <div class="w-full max-w-8xl flex-1 flex flex-col items-center justify-center relative min-h-max py-10 ">
-        <h2 class="text-4xl font-black text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] mb-12 animate-pulse">Pull Results</h2>
-        
+    <div
+      class="fixed inset-0 z-100 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-4 overflow-y-auto"
+    >
+      <div
+        class="w-full max-w-8xl flex-1 flex flex-col items-center justify-center relative min-h-max py-10"
+      >
+        <h2
+          class="text-4xl font-black text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] mb-12 animate-pulse"
+        >
+          Pull Results
+        </h2>
+
         @if (pullResults()!.length === 1) {
-          <div class="flex flex-col items-center animate-smooth-appear ">
-            <div class="relative w-90 md:w-100 aspect-4/3 rounded-xl overflow-hidden border-4  ease-out will-change-transform hover:scale-105 hover:-translate-y-2 hover:z-50 cursor-pointer" (click)="viewItem(pullResults()![0])"
-                 [class.border-green-400]="pullResults()![0].rarity === 'N'"
-                 [class.shadow-[0_0_20px_#4ade80]]="pullResults()![0].rarity === 'N'"
-                 [class.border-blue-400]="pullResults()![0].rarity === 'R'"
-                 [class.shadow-[0_0_20px_#60a5fa]]="pullResults()![0].rarity === 'R'"
-                 [class.border-purple-500]="pullResults()![0].rarity === 'SR'"
-                 [class.shadow-[0_0_25px_#a855f7]]="pullResults()![0].rarity === 'SR'"
-                 [class.border-yellow-400]="pullResults()![0].rarity === 'SSR'"
-                 [class.shadow-[0_0_30px_#facc15]]="pullResults()![0].rarity === 'SSR'">
-              
+          <div class="flex flex-col items-center animate-smooth-appear">
+            <div
+              class="relative w-90 md:w-100 aspect-4/3 rounded-xl overflow-hidden border-4 ease-out will-change-transform hover:scale-105 hover:-translate-y-2 hover:z-50 cursor-pointer"
+              (click)="viewItem(pullResults()![0])"
+              [class.border-green-400]="pullResults()![0].rarity === 'N'"
+              [class.shadow-[0_0_20px_#4ade80]]="pullResults()![0].rarity === 'N'"
+              [class.border-blue-400]="pullResults()![0].rarity === 'R'"
+              [class.shadow-[0_0_20px_#60a5fa]]="pullResults()![0].rarity === 'R'"
+              [class.border-purple-500]="pullResults()![0].rarity === 'SR'"
+              [class.shadow-[0_0_25px_#a855f7]]="pullResults()![0].rarity === 'SR'"
+              [class.border-yellow-400]="pullResults()![0].rarity === 'SSR'"
+              [class.shadow-[0_0_30px_#facc15]]="pullResults()![0].rarity === 'SSR'"
+            >
               @if (pullResults()![0].rarity === 'SSR') {
-                <div class="absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_50%,#fef08a_120%)] animate-pulse opacity-70"></div>
-                <div class="absolute -top-10 -left-10 w-full h-full bg-white opacity-20 rotate-45 blur-xl animate-spin-slow pointer-events-none"></div>
+                <div
+                  class="absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_50%,#fef08a_120%)] animate-pulse opacity-70"
+                ></div>
+                <div
+                  class="absolute -top-10 -left-10 w-full h-full bg-white opacity-20 rotate-45 blur-xl animate-spin-slow pointer-events-none"
+                ></div>
               }
-              
-              <img [src]="pullResults()![0].url" [alt]="pullResults()![0].name" class="w-full h-full object-cover z-10 relative" />
-              
-              <div class="absolute bottom-0 inset-x-0 bg-linear-to-t from-black/80 via-black/40 to-transparent p-4 pt-10 z-30">
+
+              <img
+                [src]="pullResults()![0].url"
+                [alt]="pullResults()![0].name"
+                class="w-full h-full object-cover z-10 relative"
+              />
+
+              <div
+                class="absolute bottom-0 inset-x-0 bg-linear-to-t from-black/80 via-black/40 to-transparent p-4 pt-10 z-30"
+              >
                 <div class="text-center">
-                  <span class="inline-block px-2 py-0.5 rounded text-xs font-black mb-1 text-white backdrop-blur-sm"
-                        [class.bg-green-500]="pullResults()![0].rarity === 'N'"
-                        [class.bg-blue-500]="pullResults()![0].rarity === 'R'"
-                        [class.bg-purple-500]="pullResults()![0].rarity === 'SR'"
-                        [class.bg-yellow-500]="pullResults()![0].rarity === 'SSR'">
-                    {{pullResults()![0].rarity}}
+                  <span
+                    class="inline-block px-2 py-0.5 rounded text-xs font-black mb-1 text-white backdrop-blur-sm"
+                    [class.bg-green-500]="pullResults()![0].rarity === 'N'"
+                    [class.bg-blue-500]="pullResults()![0].rarity === 'R'"
+                    [class.bg-purple-500]="pullResults()![0].rarity === 'SR'"
+                    [class.bg-yellow-500]="pullResults()![0].rarity === 'SSR'"
+                  >
+                    {{ pullResults()![0].rarity }}
                   </span>
-                  <p class="text-2xl font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">{{pullResults()![0].name}}</p>
+                  <p class="text-2xl font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                    {{ pullResults()![0].name }}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         } @else {
-          <div class="flex flex-col gap-4 md:gap-6 w-full max-w-10xl animate-smooth-appear ">
-            <div class="flex justify-center gap-3 md:gap-6 ">
+          <div class="flex flex-col gap-4 md:gap-6 w-full max-w-10xl animate-smooth-appear">
+            <div class="flex justify-center gap-3 md:gap-6">
               @for (item of pullResults()!.slice(0, 3); track $index) {
-                <div class="relative w-70 md:w-80 aspect-4/3 rounded-lg overflow-hidden border-2 md:border-4   ease-out will-change-transform hover:scale-110 hover:-translate-y-2 hover:z-50 cursor-pointer" (click)="viewItem(item)"
-                     [class.border-green-400]="item.rarity === 'N'"
-                     [class.shadow-[0_0_15px_#4ade80]]="item.rarity === 'N'"
-                     [class.border-blue-400]="item.rarity === 'R'"
-                     [class.shadow-[0_0_15px_#60a5fa]]="item.rarity === 'R'"
-                     [class.border-purple-500]="item.rarity === 'SR'"
-                     [class.shadow-[0_0_20px_#a855f7]]="item.rarity === 'SR'"
-                     [class.border-yellow-400]="item.rarity === 'SSR'"
-                     [class.shadow-[0_0_25px_#facc15]]="item.rarity === 'SSR'">
-                  
+                <div
+                  class="relative w-70 md:w-80 aspect-4/3 rounded-lg overflow-hidden border-2 md:border-4 ease-out will-change-transform hover:scale-110 hover:-translate-y-2 hover:z-50 cursor-pointer"
+                  (click)="viewItem(item)"
+                  [class.border-green-400]="item.rarity === 'N'"
+                  [class.shadow-[0_0_15px_#4ade80]]="item.rarity === 'N'"
+                  [class.border-blue-400]="item.rarity === 'R'"
+                  [class.shadow-[0_0_15px_#60a5fa]]="item.rarity === 'R'"
+                  [class.border-purple-500]="item.rarity === 'SR'"
+                  [class.shadow-[0_0_20px_#a855f7]]="item.rarity === 'SR'"
+                  [class.border-yellow-400]="item.rarity === 'SSR'"
+                  [class.shadow-[0_0_25px_#facc15]]="item.rarity === 'SSR'"
+                >
                   @if (item.rarity === 'SSR') {
-                    <div class="absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_50%,#fef08a_120%)] animate-pulse opacity-70"></div>
+                    <div
+                      class="absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_50%,#fef08a_120%)] animate-pulse opacity-70"
+                    ></div>
                   }
-                  <img [src]="item.url" [alt]="item.name" class="w-full h-full object-cover z-10 relative" [class.animate-pulse]="item.rarity === 'SSR'"/>
-                  <div class="absolute bottom-0 inset-x-0 bg-linear-to-t from-black/80 via-black/40 to-transparent p-2 pt-6 z-30 text-center">
-                    <span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-black mb-0.5 text-white backdrop-blur-sm shadow-sm"
-                          [class.bg-green-500]="item.rarity === 'N'"
-                          [class.bg-blue-500]="item.rarity === 'R'"
-                          [class.bg-purple-500]="item.rarity === 'SR'"
-                          [class.bg-yellow-500]="item.rarity === 'SSR'">
-                      {{item.rarity}}
+                  <img
+                    [src]="item.url"
+                    [alt]="item.name"
+                    class="w-full h-full object-cover z-10 relative"
+                    [class.animate-pulse]="item.rarity === 'SSR'"
+                  />
+                  <div
+                    class="absolute bottom-0 inset-x-0 bg-linear-to-t from-black/80 via-black/40 to-transparent p-2 pt-6 z-30 text-center"
+                  >
+                    <span
+                      class="inline-block px-1.5 py-0.5 rounded text-[10px] font-black mb-0.5 text-white backdrop-blur-sm shadow-sm"
+                      [class.bg-green-500]="item.rarity === 'N'"
+                      [class.bg-blue-500]="item.rarity === 'R'"
+                      [class.bg-purple-500]="item.rarity === 'SR'"
+                      [class.bg-yellow-500]="item.rarity === 'SSR'"
+                    >
+                      {{ item.rarity }}
                     </span>
-                    <p class="text-sm md:text-base font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] truncate px-1">{{item.name}}</p>
+                    <p
+                      class="text-sm md:text-base font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] truncate px-1"
+                    >
+                      {{ item.name }}
+                    </p>
                   </div>
                 </div>
               }
             </div>
-            
-            <div class="flex justify-center gap-3 md:gap-6 ">
+
+            <div class="flex justify-center gap-3 md:gap-6">
               @for (item of pullResults()!.slice(3, 7); track $index) {
-                <div class="relative w-70 md:w-80 aspect-4/3 rounded-lg overflow-hidden border-2 md:border-4  ease-out will-change-transform hover:scale-110 hover:-translate-y-2 hover:z-50 cursor-pointer" (click)="viewItem(item)"
-                     [class.border-green-400]="item.rarity === 'N'"
-                     [class.shadow-[0_0_15px_#4ade80]]="item.rarity === 'N'"
-                     [class.border-blue-400]="item.rarity === 'R'"
-                     [class.shadow-[0_0_15px_#60a5fa]]="item.rarity === 'R'"
-                     [class.border-purple-500]="item.rarity === 'SR'"
-                     [class.shadow-[0_0_20px_#a855f7]]="item.rarity === 'SR'"
-                     [class.border-yellow-400]="item.rarity === 'SSR'"
-                     [class.shadow-[0_0_25px_#facc15]]="item.rarity === 'SSR'">
-                  
+                <div
+                  class="relative w-70 md:w-80 aspect-4/3 rounded-lg overflow-hidden border-2 md:border-4 ease-out will-change-transform hover:scale-110 hover:-translate-y-2 hover:z-50 cursor-pointer"
+                  (click)="viewItem(item)"
+                  [class.border-green-400]="item.rarity === 'N'"
+                  [class.shadow-[0_0_15px_#4ade80]]="item.rarity === 'N'"
+                  [class.border-blue-400]="item.rarity === 'R'"
+                  [class.shadow-[0_0_15px_#60a5fa]]="item.rarity === 'R'"
+                  [class.border-purple-500]="item.rarity === 'SR'"
+                  [class.shadow-[0_0_20px_#a855f7]]="item.rarity === 'SR'"
+                  [class.border-yellow-400]="item.rarity === 'SSR'"
+                  [class.shadow-[0_0_25px_#facc15]]="item.rarity === 'SSR'"
+                >
                   @if (item.rarity === 'SSR') {
-                    <div class="absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_50%,#fef08a_120%)] animate-pulse opacity-70"></div>
+                    <div
+                      class="absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_50%,#fef08a_120%)] animate-pulse opacity-70"
+                    ></div>
                   }
-                  <img [src]="item.url" [alt]="item.name" class="w-full h-full object-cover z-10 relative" [class.animate-pulse]="item.rarity === 'SSR'"/>
-                  <div class="absolute bottom-0 inset-x-0 bg-linear-to-t from-black/80 via-black/40 to-transparent p-2 pt-6 z-30 text-center">
-                    <span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-black mb-0.5 text-white backdrop-blur-sm shadow-sm"
-                          [class.bg-green-500]="item.rarity === 'N'"
-                          [class.bg-blue-500]="item.rarity === 'R'"
-                          [class.bg-purple-500]="item.rarity === 'SR'"
-                          [class.bg-yellow-500]="item.rarity === 'SSR'">
-                      {{item.rarity}}
+                  <img
+                    [src]="item.url"
+                    [alt]="item.name"
+                    class="w-full h-full object-cover z-10 relative"
+                    [class.animate-pulse]="item.rarity === 'SSR'"
+                  />
+                  <div
+                    class="absolute bottom-0 inset-x-0 bg-linear-to-t from-black/80 via-black/40 to-transparent p-2 pt-6 z-30 text-center"
+                  >
+                    <span
+                      class="inline-block px-1.5 py-0.5 rounded text-[10px] font-black mb-0.5 text-white backdrop-blur-sm shadow-sm"
+                      [class.bg-green-500]="item.rarity === 'N'"
+                      [class.bg-blue-500]="item.rarity === 'R'"
+                      [class.bg-purple-500]="item.rarity === 'SR'"
+                      [class.bg-yellow-500]="item.rarity === 'SSR'"
+                    >
+                      {{ item.rarity }}
                     </span>
-                    <p class="text-sm md:text-base font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] truncate px-1">{{item.name}}</p>
+                    <p
+                      class="text-sm md:text-base font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] truncate px-1"
+                    >
+                      {{ item.name }}
+                    </p>
                   </div>
                 </div>
               }
@@ -159,29 +311,46 @@
 
             <div class="flex justify-center gap-3 md:gap-6">
               @for (item of pullResults()!.slice(7, 10); track $index) {
-                <div class="relative w-70 md:w-80 aspect-4/3  rounded-lg overflow-hidden border-2 md:border-4   ease-out will-change-transform hover:scale-110 hover:-translate-y-2 hover:z-50 cursor-pointer" (click)="viewItem(item)"
-                     [class.border-green-400]="item.rarity === 'N'"
-                     [class.shadow-[0_0_15px_#4ade80]]="item.rarity === 'N'"
-                     [class.border-blue-400]="item.rarity === 'R'"
-                     [class.shadow-[0_0_15px_#60a5fa]]="item.rarity === 'R'"
-                     [class.border-purple-500]="item.rarity === 'SR'"
-                     [class.shadow-[0_0_20px_#a855f7]]="item.rarity === 'SR'"
-                     [class.border-yellow-400]="item.rarity === 'SSR'"
-                     [class.shadow-[0_0_25px_#facc15]]="item.rarity === 'SSR'">
-                  
+                <div
+                  class="relative w-70 md:w-80 aspect-4/3 rounded-lg overflow-hidden border-2 md:border-4 ease-out will-change-transform hover:scale-110 hover:-translate-y-2 hover:z-50 cursor-pointer"
+                  (click)="viewItem(item)"
+                  [class.border-green-400]="item.rarity === 'N'"
+                  [class.shadow-[0_0_15px_#4ade80]]="item.rarity === 'N'"
+                  [class.border-blue-400]="item.rarity === 'R'"
+                  [class.shadow-[0_0_15px_#60a5fa]]="item.rarity === 'R'"
+                  [class.border-purple-500]="item.rarity === 'SR'"
+                  [class.shadow-[0_0_20px_#a855f7]]="item.rarity === 'SR'"
+                  [class.border-yellow-400]="item.rarity === 'SSR'"
+                  [class.shadow-[0_0_25px_#facc15]]="item.rarity === 'SSR'"
+                >
                   @if (item.rarity === 'SSR') {
-                    <div class="absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_50%,#fef08a_120%)] animate-pulse opacity-70 "></div>
+                    <div
+                      class="absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_50%,#fef08a_120%)] animate-pulse opacity-70"
+                    ></div>
                   }
-                  <img [src]="item.url" [alt]="item.name" class="w-full h-full object-cover z-10 relative " [class.animate-pulse]="item.rarity === 'SSR'" />
-                  <div class="absolute bottom-0 inset-x-0 bg-linear-to-t from-black/80 via-black/40 to-transparent p-2 pt-6 z-30 text-center">
-                    <span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-black mb-0.5 text-white backdrop-blur-sm shadow-sm"
-                          [class.bg-green-500]="item.rarity === 'N'"
-                          [class.bg-blue-500]="item.rarity === 'R'"
-                          [class.bg-purple-500]="item.rarity === 'SR'"
-                          [class.bg-yellow-500]="item.rarity === 'SSR'">
-                      {{item.rarity}}
+                  <img
+                    [src]="item.url"
+                    [alt]="item.name"
+                    class="w-full h-full object-cover z-10 relative"
+                    [class.animate-pulse]="item.rarity === 'SSR'"
+                  />
+                  <div
+                    class="absolute bottom-0 inset-x-0 bg-linear-to-t from-black/80 via-black/40 to-transparent p-2 pt-6 z-30 text-center"
+                  >
+                    <span
+                      class="inline-block px-1.5 py-0.5 rounded text-[10px] font-black mb-0.5 text-white backdrop-blur-sm shadow-sm"
+                      [class.bg-green-500]="item.rarity === 'N'"
+                      [class.bg-blue-500]="item.rarity === 'R'"
+                      [class.bg-purple-500]="item.rarity === 'SR'"
+                      [class.bg-yellow-500]="item.rarity === 'SSR'"
+                    >
+                      {{ item.rarity }}
                     </span>
-                    <p class="text-sm md:text-base font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] truncate px-1">{{item.name}}</p>
+                    <p
+                      class="text-sm md:text-base font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] truncate px-1"
+                    >
+                      {{ item.name }}
+                    </p>
                   </div>
                 </div>
               }
@@ -189,7 +358,10 @@
           </div>
         }
 
-        <button (click)="closeResults()" class="mt-12 px-12 py-4 bg-white hover:bg-pink-100 text-pink-500 font-black text-xl rounded-full border-4 border-pink-300 shadow-[0_6px_0_#fbcfe8] active:translate-y-2 active:shadow-[0_0px_0_#fbcfe8] transition-all">
+        <button
+          (click)="closeResults()"
+          class="mt-12 px-12 py-4 bg-white hover:bg-pink-100 text-pink-500 font-black text-xl rounded-full border-4 border-pink-300 shadow-[0_6px_0_#fbcfe8] active:translate-y-2 active:shadow-[0_0px_0_#fbcfe8] transition-all"
+        >
           Confirm
         </button>
       </div>
@@ -197,42 +369,74 @@
   }
 
   @if (selectedItem()) {
-    <div class="fixed inset-0 z-200 bg-black/80 backdrop-blur-md flex flex-col items-center justify-center p-4" (click)="closeItem()">
-      <div class="relative w-full max-w-[60%] md:max-w-[70%] aspect-4/3 rounded-2xl overflow-hidden border-4 animate-smooth-appear cursor-default"
-           [class.border-green-400]="selectedItem()!.rarity === 'N'"
-           [class.shadow-[0_0_40px_#4ade80]]="selectedItem()!.rarity === 'N'"
-           [class.border-blue-400]="selectedItem()!.rarity === 'R'"
-           [class.shadow-[0_0_40px_#60a5fa]]="selectedItem()!.rarity === 'R'"
-           [class.border-purple-500]="selectedItem()!.rarity === 'SR'"
-           [class.shadow-[0_0_50px_#a855f7]]="selectedItem()!.rarity === 'SR'"
-           [class.border-yellow-400]="selectedItem()!.rarity === 'SSR'"
-           [class.shadow-[0_0_60px_#facc15]]="selectedItem()!.rarity === 'SSR'"
-           (click)="$event.stopPropagation()">
-           
+    <div
+      class="fixed inset-0 z-200 bg-black/80 backdrop-blur-md flex flex-col items-center justify-center p-4"
+      (click)="closeItem()"
+    >
+      <div
+        class="relative w-full max-w-[60%] md:max-w-[70%] aspect-4/3 rounded-2xl overflow-hidden border-4 animate-smooth-appear cursor-default"
+        [class.border-green-400]="selectedItem()!.rarity === 'N'"
+        [class.shadow-[0_0_40px_#4ade80]]="selectedItem()!.rarity === 'N'"
+        [class.border-blue-400]="selectedItem()!.rarity === 'R'"
+        [class.shadow-[0_0_40px_#60a5fa]]="selectedItem()!.rarity === 'R'"
+        [class.border-purple-500]="selectedItem()!.rarity === 'SR'"
+        [class.shadow-[0_0_50px_#a855f7]]="selectedItem()!.rarity === 'SR'"
+        [class.border-yellow-400]="selectedItem()!.rarity === 'SSR'"
+        [class.shadow-[0_0_60px_#facc15]]="selectedItem()!.rarity === 'SSR'"
+        (click)="$event.stopPropagation()"
+      >
         @if (selectedItem()!.rarity === 'SSR') {
-          <div class="absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_50%,#fef08a_120%)] animate-pulse opacity-70"></div>
-          <div class="absolute -top-10 -left-10 w-full h-full bg-white opacity-20 rotate-45 blur-xl animate-spin-slow pointer-events-none"></div>
+          <div
+            class="absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_50%,#fef08a_120%)] animate-pulse opacity-70"
+          ></div>
+          <div
+            class="absolute -top-10 -left-10 w-full h-full bg-white opacity-20 rotate-45 blur-xl animate-spin-slow pointer-events-none"
+          ></div>
         }
-        
-        <img [src]="selectedItem()!.url" [alt]="selectedItem()!.name" class="w-full h-full object-cover z-10 relative" />
-        
-        <div class="absolute bottom-0 inset-x-0 bg-linear-to-t from-black/90 via-black/50 to-transparent p-6 pt-16 z-30 text-center">
-          <span class="inline-block px-3 py-1 rounded text-sm font-black mb-2 text-white backdrop-blur-sm shadow-sm"
-                [class.bg-green-500]="selectedItem()!.rarity === 'N'"
-                [class.bg-blue-500]="selectedItem()!.rarity === 'R'"
-                [class.bg-purple-500]="selectedItem()!.rarity === 'SR'"
-                [class.bg-yellow-500]="selectedItem()!.rarity === 'SSR'">
-            {{selectedItem()!.rarity}}
+
+        <img
+          [src]="selectedItem()!.url"
+          [alt]="selectedItem()!.name"
+          class="w-full h-full object-cover z-10 relative"
+        />
+
+        <div
+          class="absolute bottom-0 inset-x-0 bg-linear-to-t from-black/90 via-black/50 to-transparent p-6 pt-16 z-30 text-center"
+        >
+          <span
+            class="inline-block px-3 py-1 rounded text-sm font-black mb-2 text-white backdrop-blur-sm shadow-sm"
+            [class.bg-green-500]="selectedItem()!.rarity === 'N'"
+            [class.bg-blue-500]="selectedItem()!.rarity === 'R'"
+            [class.bg-purple-500]="selectedItem()!.rarity === 'SR'"
+            [class.bg-yellow-500]="selectedItem()!.rarity === 'SSR'"
+          >
+            {{ selectedItem()!.rarity }}
           </span>
-          <p class="text-3xl font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">{{selectedItem()!.name}}</p>
-          @if(selectedItem()!.description) {
-            <p class="text-gray-200 mt-2 font-medium">{{selectedItem()!.description}}</p>
+          <p class="text-3xl font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+            {{ selectedItem()!.name }}
+          </p>
+          @if (selectedItem()!.description) {
+            <p class="text-gray-200 mt-2 font-medium">{{ selectedItem()!.description }}</p>
           }
         </div>
-        
-        <button (click)="closeItem()" class="absolute top-4 right-4 z-40 bg-black/50 hover:bg-black/80 text-white rounded-full p-2 backdrop-blur-md transition-colors cursor-pointer hover:scale-110 active:scale-95">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+
+        <button
+          (click)="closeItem()"
+          class="absolute top-4 right-4 z-40 bg-black/50 hover:bg-black/80 text-white rounded-full p-2 backdrop-blur-md transition-colors cursor-pointer hover:scale-110 active:scale-95"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
           </svg>
         </button>
       </div>
