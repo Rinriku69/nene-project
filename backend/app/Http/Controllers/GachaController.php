@@ -77,8 +77,12 @@ class GachaController extends Controller
         $results = [];
 
         for ($i = 0; $i < $pulls; $i++) {
-            $rarity = $this->randomRarity();
-
+            if($i === 8 && $pulls === 10){
+                $rarity = 'SR';
+            }else{
+                $rarity = $this->randomRarity();
+            }
+            
             $itemsInThisRarity = $items->get($rarity);
             $totalWeight = $totalWeightByRarity->get($rarity);
             $randomNumber = random_int(1, $totalWeight);
@@ -107,13 +111,13 @@ class GachaController extends Controller
         $randomInt = random_int(1, 100);
         $rarity = '';
         switch (true) {
-            case ($randomInt <= 5):
+            case ($randomInt <= 2):
                 $rarity = 'SSR';
                 break;
-            case ($randomInt <= 25):
+            case ($randomInt <= 9):
                 $rarity = 'SR';
                 break;
-            case ($randomInt <=  40):
+            case ($randomInt <=  31):
                 $rarity = 'R';
                 break;
             case ($randomInt <= 100):
