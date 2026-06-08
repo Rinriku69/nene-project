@@ -22,7 +22,7 @@ class GachaController extends Controller
         $rolledItems = DB::transaction(function () use ($request) {
             $user = User::where('id', Auth::id())->lockForUpdate()->first();
 
-            if ($user->currency < ($request->pull * 10)) {
+            if ($user->currency < ($request->pull * 100)) {
                 abort(400, 'Insufficient Coin!');
             }
 
