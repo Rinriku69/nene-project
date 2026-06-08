@@ -40,7 +40,7 @@ class GachaController extends Controller
 
                 $inventory->save();
             }
-            $user->currency -= $request->pull * 10;
+            $user->currency -= $request->pull * 100;
             $user->save();
             
             $now = now();
