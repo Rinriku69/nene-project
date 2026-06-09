@@ -3,6 +3,7 @@ import { AuthService } from '../../../services/auth.service';
 import { GachaItem, ResouceErrorResponse } from '../../../models/Resource';
 import { GachaService } from '../../../services/gacha.service';
 import { LoadingService } from '../../../services/loading.service';
+import { AudioService } from '../../../services/audio.service';
 
 @Component({
   selector: 'app-gacha',
@@ -13,7 +14,8 @@ import { LoadingService } from '../../../services/loading.service';
 export class Gacha implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly gachaService = inject(GachaService)
-  private readonly loadingService = inject(LoadingService)
+  private readonly loadingService = inject(LoadingService);
+  private readonly audioService = inject(AudioService);
   currentUser = computed(() => this.authService.currentUserState());
   isRolling = computed(()=> this.loadingService.isLoading());
   pullResults = signal<GachaItem[] | null>(null);
@@ -62,7 +64,8 @@ export class Gacha implements OnInit, OnDestroy {
     
     this.gachaService.gachaRoll(this.rollType()).subscribe({
       next:(response)=>{
-        this.pullResults.set(response.results)
+        this.pullResults.set(response.results);
+        this.rollType() === 1 ? this.audioService.playSfx('singlePull.mp3') : this.audioService.playSfx('multiPull.mp3');
         this.authService.getUser().subscribe();
       },
       error:(error:ResouceErrorResponse)=>{
