@@ -1,6 +1,6 @@
 import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import { GachaItem, ResourceErrorResponse } from '../../../models/Resource';
+import { GachaItem, ResourceErrorResponse, PaginationResponse, GachaLog } from '../../../models/Resource';
 import { GachaService } from '../../../services/gacha.service';
 import { AudioService } from '../../../services/audio.service';
 
@@ -82,6 +82,36 @@ export class Gacha implements OnInit, OnDestroy {
 
   currentSlide = signal(0);
   private slideInterval: any;
+  
+  logModal = signal<boolean>(false);
+  gachaLogs = signal<PaginationResponse<GachaLog> | null>(null);
+
+  openLogModal() {
+    this.logModal.set(true);
+    this.fetchLogs(1);
+  }
+
+  fetchLogs(page: number) {
+    this.gachaService.getGachaLogs(page).subscribe({
+      next: (response) => {
+        this.gachaLogs.set(response);
+      },
+      error: (error: ResourceErrorResponse) => {
+        console.error(error);
+      }
+    });
+  }
+
+  changeLogPage(page: number) {
+    if (page >= 1 && page <= (this.gachaLogs()?.last_page || 1)) {
+      this.fetchLogs(page);
+    }
+  }
+
+  closeLogModal() {
+    this.logModal.set(false);
+  }
+
   ngOnInit(){
     this.slideInterval = setInterval(() => {
       this.currentSlide.update(index => 

@@ -11,42 +11,42 @@ use Illuminate\Support\Facades\Route;
 Route::controller(AuthController::class)
     ->prefix('/auth')
     ->name('auth.')
-    ->group(static function():void{
-        Route::post('/register','register')->name('register');
-        Route::post('/login','login')->name('login');
+    ->group(static function (): void {
+        Route::post('/register', 'register')->name('register');
+        Route::post('/login', 'login')->name('login');
     });
 
 Route::middleware((['auth']))
-    ->group(static function():void{
-        Route::post('/auth/logout',[AuthController::class,'logout'])->name('auth.logout');
+    ->group(static function (): void {
+        Route::post('/auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
         Route::controller(UserController::class)
             ->name('user.')
-            ->group(static function():void{
-                Route::get('/getUser','getUser')->name('getUser');
-                Route::post('/getDailyLogin','dailyLogin')->name('dailyLogin');
+            ->group(static function (): void {
+                Route::get('/getUser', 'getUser')->name('getUser');
+                Route::post('/getDailyLogin', 'dailyLogin')->name('dailyLogin');
             });
 
         Route::controller(GachaController::class)
             ->prefix('/gacha')
             ->name('gacha')
-            ->group(static function():void{
-                Route::post('/pull','pull')->name('pull');
+            ->group(static function (): void {
+                Route::post('/pull', 'pull')->name('pull');
+                Route::get('/logs', 'getGachaLogs')->name('logs');
             });
 
         Route::controller(AdminController::class)
             ->prefix('/admin')
             ->name('admin.')
-            ->group(static function():void{
-                Route::get('/getUserList','getUserList')->name('getUserList');
-                Route::post('/updateUser/{id}','updateUser')->name('updateUser');
+            ->group(static function (): void {
+                Route::get('/getUserList', 'getUserList')->name('getUserList');
+                Route::post('/updateUser/{id}', 'updateUser')->name('updateUser');
             });
 
         Route::controller(GachaController::class)
             ->prefix('/gacha')
             ->name('gacha')
-            ->group(static function():void{
-                Route::post('/pull','pull')->name('pull');
+            ->group(static function (): void {
+                Route::post('/pull', 'pull')->name('pull');
             });
-        
     });

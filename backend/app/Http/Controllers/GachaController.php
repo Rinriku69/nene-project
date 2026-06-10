@@ -135,4 +135,17 @@ class GachaController extends Controller
 
         return $rarity;
     }
+
+    public function getGachaLogs(Request $request): JsonResponse
+    {
+        $logs = GachaLog::where('user_id', Auth::id())
+            ->join('items', 'gacha_logs.item_id', '=', 'items.id')
+            ->select('items.name', 'gacha_logs.created_at')
+            ->orderBy('gacha_logs.created_at', 'desc')
+            ->paginate(10);
+
+        return response()->json(
+            $logs
+        );
+    }
 }

@@ -45,7 +45,7 @@ interface Link {
 }
 
 export interface PaginationResponse<T>{
-    currentPage : number;
+    current_page : number;
     data: T[];
     first_page_url: string;
     from: number;
@@ -70,4 +70,9 @@ export interface UserResource extends User{
 export interface filterTerm {
   search:string|null;
   role:string|null;
+}
+
+export interface GachaLog {
+    name: string;
+    created_at: string;
 }

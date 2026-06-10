@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { GachaResponse } from '../models/Resource';
+import { GachaResponse, PaginationResponse, GachaLog } from '../models/Resource';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -13,6 +13,11 @@ export class GachaService {
 
   gachaRoll(pulls:number): Observable<GachaResponse>{
     return this.http.post<GachaResponse>(`${this.baseApiUrl}/pull`,{'pull':pulls})
+  }
+
+  getGachaLogs(page: number = 1): Observable<PaginationResponse<GachaLog>> {
+    let params = new HttpParams().set('page', page);
+    return this.http.get<PaginationResponse<GachaLog>>(`${this.baseApiUrl}/logs`, { params });
   }
 
 }
