@@ -28,6 +28,10 @@ Add more items
 
 Adjust rarity \& rate
 
+Collection
+
+Gacha log
+
 
 
 
