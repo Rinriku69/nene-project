@@ -14,6 +14,17 @@ export const authGuard: CanActivateFn = (route, state)=>{
     return router.parseUrl('/auth/login')
 }
 
+export const redirectAuth: CanActivateFn = (route, state) =>{
+    const authService = inject(AuthService);
+    const router = inject(Router);
+
+    if(authService.isLoggedIn()){
+        return router.parseUrl('/app/dashboard')
+    }
+
+    return true
+}
+
 export const roleGuard = (allowedRoles: string[]):CanActivateFn =>{
     return (route,state) =>{
         const authService = inject(AuthService);
