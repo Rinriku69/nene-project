@@ -40,32 +40,34 @@ class AuthController extends Controller
         }
     }
 
-    function login(Request $request): JsonResponse{
-       $credentail = $request->validate([
-        'username'=>['required', 'string', 'max:20'],
-        'password'=>['required','string','min:8']
-       ]);
+    function login(Request $request): JsonResponse
+    {
+        $credentail = $request->validate([
+            'username' => ['required', 'string', 'max:20'],
+            'password' => ['required', 'string', 'min:8']
+        ]);
 
-       if(Auth::attempt($credentail)){
-        session()->regenerate();
+        if (Auth::attempt($credentail)) {
+            session()->regenerate();
+            return response()->json([
+                'status' => 'ok',
+                'message' => 'Login success'
+            ], 200);
+        }
+
         return response()->json([
-            'status' => 'ok',
-            'message'=>'Login success'
-        ],200);
-       }
-
-       return response()->json([
-        'message' => 'username or password is incorrect'
-       ],401);
+            'message' => 'username or password is incorrect'
+        ], 401);
     }
 
-    function logout(){
+    function logout()
+    {
         Auth::logout();
         session()->invalidate();
         session()->regenerateToken();
 
         return response()->json([
-        'message'=>'Logout success'
-        ],200);
+            'message' => 'Logout success'
+        ], 200);
     }
 }
