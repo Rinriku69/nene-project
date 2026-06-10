@@ -12,6 +12,8 @@ authentication:
 
 ~~add email form, remove nickname~~
 
+email verified
+
 
 
 gacha feature:
@@ -22,11 +24,15 @@ gacha feature:
 
 ~~add sound effect~~
 
+Add more items
+
+Adjust rarity \& rate
 
 
 
 
-point feature:
+
+Point feature:
 
 get point by doing mission
 
@@ -34,7 +40,7 @@ get point by doing mission
 
 
 
-mission feature:
+Mission feature:
 
 random task
 
@@ -42,7 +48,7 @@ get point when finished
 
 
 
-safezone:
+Safezone:
 
 database for message
 
@@ -60,7 +66,7 @@ display saving goal \& status
 
 
 
-dashboard:
+Dashboard:
 
 online status?
 
@@ -68,7 +74,7 @@ mission
 
 
 
-home:
+Home:
 
 style landing page
 
@@ -78,7 +84,15 @@ style landing page
 
 
 
-user:
+Admin Dashboard:
+
+&#x09;- user management
+
+&#x09;- gacha banner management
+
+
+
+Profile:
 
 upload profile(cloudinary)
 
@@ -90,5 +104,7 @@ computed password check?
 
 ~~remove emojis~~
 
+BUGs:
 
+pulling loading when logged out in gacha page
 
