@@ -19,12 +19,14 @@
             type="text" 
             placeholder="Search username..." 
             class="w-full pl-12 pr-4 py-3 bg-pink-50 border-2 border-pink-200 rounded-full focus:outline-none focus:border-pink-400 focus:bg-white text-pink-700 font-bold placeholder-pink-300 transition-colors shadow-inner"
-          >
+            (keyup)="setSearch(searchInput.value)"
+            (keyup.enter)="search()"
+          #searchInput>
         </div>
         
         <!-- Role Filter -->
         <div class="relative w-full sm:w-48 group">
-          <select class="w-full appearance-none pl-6 pr-12 py-3 bg-white border-2 border-pink-300 rounded-full font-bold text-pink-500 focus:outline-none focus:border-pink-500 cursor-pointer hover:bg-pink-50 transition-colors">
+          <select (change)="setRole(role.value)" #role class="w-full appearance-none pl-6 pr-12 py-3 bg-white border-2 border-pink-300 rounded-full font-bold text-pink-500 focus:outline-none focus:border-pink-500 cursor-pointer hover:bg-pink-50 transition-colors">
             <option value="">All Roles</option>
             <option value="user">User</option>
             <option value="admin">Admin</option>
@@ -55,7 +57,7 @@
             @if (userListResponse()?.data; as users) {
               @for (user of users; track user.id; let i = $index) {
                 <tr class="border-b-2 border-pink-50 hover:bg-pink-50/50 transition-colors group">
-                  <td class="p-4 px-6 text-pink-400 font-bold">{{ (userListResponse()!.currentPage - 1) * userListResponse()!.per_page + i + 1 }}</td>
+                  <td class="p-4 px-6 text-pink-400 font-bold">{{ i +1 }}</td>
                   <td class="p-4 px-6 font-bold text-gray-500">#{{ user.id }}</td>
                   <td class="p-4 px-6 font-black text-pink-500">{{ user.username }}</td>
                   <td class="p-4 px-6">{{ user.email }}</td>

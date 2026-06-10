@@ -66,3 +66,8 @@ export interface UserResource extends User{
     created_at: string;
     updated_at: string;
 }
+
+export interface filterTerm {
+  search:string|null;
+  role:string|null;
+}

@@ -12,11 +12,22 @@ use Illuminate\Support\Facades\Gate;
 
 class AdminController extends Controller
 {
-    function getuserList(): JsonResponse
+    function getuserList(Request $request): JsonResponse
     {
+        $search = $request->input('search');
+        $role = $request->input('role');
         Gate::authorize('isAdmin', Auth::user());
 
-        $userList = User::paginate(10);
+        $userList = User::query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($subQuery) use ($search) {
+                    $subQuery->where('username', 'LIKE', "%{$search}%")
+                        ->orWhere('email', 'LIKE', "%{$search}%");
+                });
+            })->when($role,function ($query,$role){
+                $query->where('role',$role);
+            })
+            ->paginate(10);
 
         return response()->json(
             $userList,
