@@ -43,7 +43,6 @@ export class UserManagement implements OnInit {
 
   setSearch(search: string) {
     this.searchTerm.update((v) => ({ ...v, search }));
-    console.log(this.searchTerm());
   }
 
   setRole(role: string) {
