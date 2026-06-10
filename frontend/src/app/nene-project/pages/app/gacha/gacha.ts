@@ -2,7 +2,6 @@ import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular
 import { AuthService } from '../../../services/auth.service';
 import { GachaItem, ResourceErrorResponse } from '../../../models/Resource';
 import { GachaService } from '../../../services/gacha.service';
-import { LoadingService } from '../../../services/loading.service';
 import { AudioService } from '../../../services/audio.service';
 
 @Component({
@@ -14,10 +13,9 @@ import { AudioService } from '../../../services/audio.service';
 export class Gacha implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly gachaService = inject(GachaService)
-  private readonly loadingService = inject(LoadingService);
   private readonly audioService = inject(AudioService);
   currentUser = computed(() => this.authService.currentUserState());
-  isRolling = computed(()=> this.loadingService.isLoading());
+  isRolling = signal<boolean>(false);
   pullResults = signal<GachaItem[] | null>(null);
   selectedItem = signal<GachaItem | null>(null);
 
@@ -59,6 +57,7 @@ export class Gacha implements OnInit, OnDestroy {
 
   roll() {
     if (this.isRolling()) return;
+    this.isRolling.set(true);
     this.closeConfirmModal();
     this.pullResults.set(null);
     
@@ -67,8 +66,10 @@ export class Gacha implements OnInit, OnDestroy {
         this.pullResults.set(response.results);
         this.rollType() === 1 ? this.audioService.playSfx('singlePull.mp3') : this.audioService.playSfx('multiPull.mp3');
         this.authService.getUser().subscribe();
+        this.isRolling.set(false);
       },
       error:(error:ResourceErrorResponse)=>{
+        this.isRolling.set(false);
         console.error(error)
       }
     })
@@ -76,6 +77,7 @@ export class Gacha implements OnInit, OnDestroy {
 
   closeResults() {
     this.pullResults.set(null);
+    this.isRolling.set(false);
   }
 
   currentSlide = signal(0);
