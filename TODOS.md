@@ -40,6 +40,8 @@ Point feature:
 
 get point by doing mission
 
+daily login
+
 ~~use for gacha reroll~~
 
 
@@ -107,6 +109,8 @@ FIX:
 computed password check?
 
 ~~remove emojis~~
+
+
 
 BUGs:
 

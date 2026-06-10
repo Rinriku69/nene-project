@@ -15,4 +15,5 @@ export interface User{
     email:string;
     currency:number;
     role:string;
+    last_login_at:string | null;
 }

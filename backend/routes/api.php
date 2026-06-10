@@ -24,6 +24,7 @@ Route::middleware((['auth']))
             ->name('user.')
             ->group(static function():void{
                 Route::get('/getUser','getUser')->name('getUser');
+                Route::post('/getDailyLogin','dailyLogin')->name('dailyLogin');
             });
 
         Route::controller(GachaController::class)
@@ -47,4 +48,5 @@ Route::middleware((['auth']))
             ->group(static function():void{
                 Route::post('/pull','pull')->name('pull');
             });
+        
     });
