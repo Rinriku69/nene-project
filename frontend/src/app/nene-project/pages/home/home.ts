@@ -1,13 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Icons } from "../../components/icons/icons";
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
-  imports: [Icons,RouterLink],
+  imports: [Icons,],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home {
-
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  boopClick(){
+    if(this.authService.currentUserState()){
+      this.router.navigate(['/app/dashboard']);
+    }else{
+      this.router.navigate(['/auth/login']);
+    }
+  }
 }

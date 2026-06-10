@@ -4,7 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { LoginModel } from '../../../models/AuthModel';
 import { AuthService } from '../../../services/auth.service';
 import {  switchMap } from 'rxjs';
-import { ResouceErrorResponse } from '../../../models/Resource';
+import { ResourceErrorResponse } from '../../../models/Resource';
 import { LoadingComponent } from "../../../components/loading-component/loading-component";
 import { LoadingService } from '../../../services/loading.service';
 
@@ -39,7 +39,7 @@ export class Login {
       next:(_)=>{
         this.router.navigate(['/app/dashboard'])
       },
-      error:(error:ResouceErrorResponse) =>{
+      error:(error:ResourceErrorResponse) =>{
         if(error.status === 422){
           this.errorMessage.set(error.error.message)
         }else if(error.status === 401){

@@ -42,12 +42,12 @@ class GachaController extends Controller
             }
             $user->currency -= $request->pull * 100;
             $user->save();
-            
+
             $now = now();
 
             $logPayload = [];
 
-            foreach($rolledItems as $item){
+            foreach ($rolledItems as $item) {
                 $logPayload[] = [
                     'user_id' => $user->id,
                     'item_id' => $item->id,
@@ -77,12 +77,20 @@ class GachaController extends Controller
         $results = [];
 
         for ($i = 0; $i < $pulls; $i++) {
-            if($i === 8 && $pulls === 10){
-                $rarity = 'SR';
-            }else{
+            if ($i == 9 && $pulls == 10) {
+                $hasSr = collect($results)->contains(function ($item) {
+                    return in_array($item->rarity, ['SR', 'SSR']);
+                });
+                if (!$hasSr) {
+                    $rarity = 'SR';
+                } else {
+                    $rarity = $this->randomRarity();
+                }
+            } else {
                 $rarity = $this->randomRarity();
             }
-            
+
+
             $itemsInThisRarity = $items->get($rarity);
             $totalWeight = $totalWeightByRarity->get($rarity);
             $randomNumber = random_int(1, $totalWeight);

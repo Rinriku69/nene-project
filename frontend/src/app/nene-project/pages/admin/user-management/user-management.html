@@ -1,0 +1,253 @@
+<section class="relative w-full min-h-[calc(100svh-4rem)] flex flex-col items-center py-8 px-4 md:px-8 overflow-hidden bg-pink-50">
+  <!-- cute radial gradient background -->
+  <div class="absolute inset-0 z-0 opacity-60 bg-[radial-gradient(#fbcfe8_6px,transparent_3px)] bg-size-[40px_40px]"></div>
+
+  <div class="relative z-10 w-full max-w-7xl flex flex-col gap-6">
+    <!-- Header & Filters -->
+    <div class="bg-white rounded-3xl p-6 md:p-8 border-4 border-pink-200 shadow-[0_8px_0_#fbcfe8] flex flex-col md:flex-row justify-between items-center gap-6">
+      <div>
+        <h1 class="text-3xl md:text-4xl font-black text-pink-500 drop-shadow-sm tracking-tight">User Management</h1>
+        <p class="text-pink-400 font-medium mt-1">Manage all the cute friends in the GANG!</p>
+      </div>
+      
+      <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+        <!-- Search Input -->
+        <div class="relative flex-1 sm:w-64">
+          <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-pink-400">
+             <app-icons [name]="'search'"></app-icons>
+          </div>
+          <input 
+            type="text" 
+            placeholder="Search username..." 
+            class="w-full pl-12 pr-4 py-3 bg-pink-50 border-2 border-pink-200 rounded-full focus:outline-none focus:border-pink-400 focus:bg-white text-pink-700 font-bold placeholder-pink-300 transition-colors shadow-inner"
+            (keydown)="setSearch(searchTerm.value)"
+            (keydown.enter)="search()"
+            #searchTerm
+          >
+        </div>
+        
+        <!-- Role Filter -->
+        <div class="relative w-full sm:w-48 group">
+          <select (change)="setRole(role.value)" #role class="w-full appearance-none pl-6 pr-12 py-3 bg-white border-2 border-pink-300 rounded-full font-bold text-pink-500 focus:outline-none focus:border-pink-500 cursor-pointer hover:bg-pink-50 transition-colors">
+            <option value="">All Roles</option>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+            <option value="friend">Friend</option>
+          </select>
+          <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+            <app-icons [name]="'downIcon'" [classAttribute]="'w-5 h-5 text-pink-400'"></app-icons>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="bg-white rounded-3xl border-4 border-pink-200 shadow-[0_12px_0_#fbcfe8] overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-pink-100 border-b-4 border-pink-200 text-pink-600 font-black tracking-wide">
+              <th class="p-4 px-6 whitespace-nowrap">No#</th>
+              <th class="p-4 px-6 whitespace-nowrap">User ID</th>
+              <th class="p-4 px-6 whitespace-nowrap">Username</th>
+              <th class="p-4 px-6 whitespace-nowrap">Email</th>
+              <th class="p-4 px-6 whitespace-nowrap">Role</th>
+              <th class="p-4 px-6 text-right whitespace-nowrap">Currency</th>
+              <th class="p-4 px-6 text-center whitespace-nowrap">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="text-pink-900 font-medium">
+            @if (userListResponse()?.data; as users) {
+              @for (user of users; track user.id; let i = $index) {
+                <tr class="border-b-2 border-pink-50 hover:bg-pink-50/50 transition-colors group">
+                  <td class="p-4 px-6 text-pink-400 font-bold">{{ (userListResponse()!.currentPage - 1) * userListResponse()!.per_page + i + 1 }}</td>
+                  <td class="p-4 px-6 font-bold text-gray-500">#{{ user.id }}</td>
+                  <td class="p-4 px-6 font-black text-pink-500">{{ user.username }}</td>
+                  <td class="p-4 px-6">{{ user.email }}</td>
+                  <td class="p-4 px-6">
+                    <span class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider"
+                      [class.bg-blue-100]="user.role === 'user'"
+                      [class.text-blue-500]="user.role === 'user'"
+                      [class.bg-purple-100]="user.role === 'admin'"
+                      [class.text-purple-500]="user.role === 'admin'"
+                      [class.bg-green-100]="user.role === 'friend'"
+                      [class.text-green-500]="user.role === 'friend'"
+                    >
+                      {{ user.role }}
+                    </span>
+                  </td>
+                  <td class="p-4 px-6 text-right font-black">
+                    <div class="flex justify-end items-center gap-1 text-pink-500">
+                      💎 {{ user.currency }}
+                    </div>
+                  </td>
+                  <td class="p-4 px-6 text-center">
+                    <button 
+                      (click)="openEditModal(user)"
+                      class="px-4 py-2 bg-pink-100 hover:bg-pink-200 text-pink-600 font-black rounded-full border-2 border-pink-300 hover:-translate-y-0.5 transition-all shadow-sm active:translate-y-0.5 active:shadow-none"
+                    >
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+              }
+              @if (users.length === 0) {
+                <tr>
+                  <td colspan="7" class="p-12 text-center text-pink-400 font-bold text-lg">
+                    No cuties found ૮ ˶ᵔ ᵕ ᵔ˶ ა
+                  </td>
+                </tr>
+              }
+            } @else {
+              <!-- Loading State -->
+              <tr>
+                <td colspan="7" class="p-12 text-center">
+                  <div class="flex flex-col items-center justify-center gap-3">
+                    <app-icons [name]="'spinner'" [classAttribute]="'w-8 h-8 text-pink-400 animate-spin'"></app-icons>
+                    <span class="text-pink-400 font-bold animate-pulse">Loading friends...</span>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    @if (userListResponse(); as response) {
+      <div class="flex flex-col sm:flex-row justify-between items-center bg-white rounded-3xl sm:rounded-full px-6 py-4 border-4 border-pink-200 shadow-[0_6px_0_#fbcfe8] gap-4">
+        <div class="text-pink-400 font-bold text-sm text-center sm:text-left">
+          Showing <span class="text-pink-600">{{ response.from || 0 }}</span> to <span class="text-pink-600">{{ response.to || 0 }}</span> of <span class="text-pink-600">{{ response.total || 0 }}</span> friends
+        </div>
+        
+        <div class="flex flex-wrap justify-center gap-2">
+          @for (link of response.links; track $index) {
+            <button 
+              class="h-10 min-w-10 px-3 rounded-full flex items-center justify-center font-black transition-all"
+              [class.bg-pink-400]="link.active"
+              [class.text-white]="link.active"
+              [class.shadow-md]="link.active"
+              [class.bg-pink-50]="!link.active"
+              [class.text-pink-500]="!link.active"
+              [class.hover:bg-pink-200]="!link.active && link.url"
+              [class.hover:text-pink-700]="!link.active && link.url"
+              [class.opacity-50]="!link.url"
+              [class.cursor-not-allowed]="!link.url"
+              [disabled]="!link.url"
+              [innerHTML]="link.label"
+            >
+            </button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Edit User Modal -->
+@if (isEditModalOpen()) {
+  <div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
+    <div class="relative w-full max-w-md bg-white rounded-3xl p-8 border-4 border-pink-200 shadow-[0_12px_0_#fbcfe8] animate-in zoom-in-95 duration-200">
+      
+      <!-- Close button -->
+      <button 
+        (click)="closeEditModal()" 
+        class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-pink-100 hover:bg-pink-200 text-pink-500 rounded-full font-black transition-colors"
+      >
+        ✕
+      </button>
+
+      <div class="text-center mb-6">
+        <h2 class="text-3xl font-black text-pink-500 drop-shadow-sm tracking-tight">Edit Cutie</h2>
+        <p class="text-pink-400 font-medium mt-1">Update their GANG profile</p>
+      </div>
+
+      <form class="flex flex-col gap-4">
+        <!-- Username -->
+        <div class="flex flex-col gap-1">
+          <label class="text-pink-500 font-bold ml-4">Username</label>
+          <input
+            type="text"
+            [formField]="updateUserForm.username"
+            class="w-full px-5 py-3 rounded-full bg-pink-50 border-2 border-pink-200 text-pink-600 font-bold placeholder-pink-300 focus:outline-none focus:border-pink-400 focus:bg-white transition-all shadow-inner"
+          />
+          @if(updateUserForm.username().invalid() && updateUserForm.username().touched()){
+            @for(error of updateUserForm.username().errors(); track error){
+              <p class="text-sm text-red-500 font-semibold ml-4 mt-1">{{error.message}}</p>
+            }
+          }
+        </div>
+
+        <!-- Email -->
+        <div class="flex flex-col gap-1">
+          <label class="text-pink-500 font-bold ml-4">Email</label>
+          <input
+            type="email"
+            [formField]="updateUserForm.email"
+            class="w-full px-5 py-3 rounded-full bg-pink-50 border-2 border-pink-200 text-pink-600 font-bold placeholder-pink-300 focus:outline-none focus:border-pink-400 focus:bg-white transition-all shadow-inner"
+          />
+          @if(updateUserForm.email().invalid() && updateUserForm.email().touched()){
+            @for(error of updateUserForm.email().errors(); track error){
+              <p class="text-sm text-red-500 font-semibold ml-4 mt-1">{{error.message}}</p>
+            }
+          }
+        </div>
+
+        <!-- Role & Currency row -->
+        <div class="flex gap-4">
+          <!-- Role -->
+          <div class="flex flex-col gap-1 flex-1">
+            <label class="text-pink-500 font-bold ml-4">Role</label>
+            <div class="relative group">
+              <select 
+                [formField]="updateUserForm.role"
+                class="w-full appearance-none px-5 py-3 rounded-full bg-pink-50 border-2 border-pink-200 text-pink-600 font-bold focus:outline-none focus:border-pink-400 focus:bg-white transition-all shadow-inner cursor-pointer"
+              >
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+                <option value="friend">Friend</option>
+              </select>
+              <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                <app-icons [name]="'downIcon'" [classAttribute]="'w-4 h-4 text-pink-400'"></app-icons>
+              </div>
+            </div>
+          </div>
+
+          <!-- Currency -->
+          <div class="flex flex-col gap-1 flex-1">
+            <label class="text-pink-500 font-bold ml-4 flex items-center gap-1">
+               Currency
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-pink-500">
+                💎
+              </div>
+              <input
+                type="number"
+                [formField]="updateUserForm.currency"
+                class="w-full pl-10 pr-5 py-3 rounded-full bg-pink-50 border-2 border-pink-200 text-pink-600 font-bold focus:outline-none focus:border-pink-400 focus:bg-white transition-all shadow-inner"
+              />
+            </div>
+            @if(updateUserForm.currency().invalid() && updateUserForm.currency().touched()){
+              @for(error of updateUserForm.currency().errors(); track error){
+                <p class="text-sm text-red-500 font-semibold ml-4 mt-1">{{error.message}}</p>
+              }
+            }
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="button" 
+          (click)="submitUpdate()"
+          [disabled]="updateUserForm().invalid()"
+          class="mt-6 w-full py-4 bg-pink-400 text-white text-xl font-black rounded-full border-4 border-pink-500 shadow-[0_6px_0_#f472b6] hover:-translate-y-1 hover:shadow-[0_8px_0_#f472b6] hover:bg-pink-500 active:translate-y-2 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-[0_6px_0_#f472b6] transition-all"
+        >
+          Save Changes
+        </button>
+      </form>
+
+    </div>
+  </div>
+}

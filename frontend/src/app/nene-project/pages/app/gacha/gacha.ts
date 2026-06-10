@@ -1,6 +1,6 @@
 import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import { GachaItem, ResouceErrorResponse } from '../../../models/Resource';
+import { GachaItem, ResourceErrorResponse } from '../../../models/Resource';
 import { GachaService } from '../../../services/gacha.service';
 import { LoadingService } from '../../../services/loading.service';
 import { AudioService } from '../../../services/audio.service';
@@ -68,7 +68,7 @@ export class Gacha implements OnInit, OnDestroy {
         this.rollType() === 1 ? this.audioService.playSfx('singlePull.mp3') : this.audioService.playSfx('multiPull.mp3');
         this.authService.getUser().subscribe();
       },
-      error:(error:ResouceErrorResponse)=>{
+      error:(error:ResourceErrorResponse)=>{
         console.error(error)
       }
     })

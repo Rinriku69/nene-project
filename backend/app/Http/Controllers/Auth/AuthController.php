@@ -21,9 +21,10 @@ class AuthController extends Controller
 
         try {
             $user = new User();
-            $user->email = $request['email'];
-            $user->username = $request['username'];
-            $user->password = $request['password'];
+            $user->email = $validated['email'];
+            $user->username = $validated['username'];
+            $user->password = $validated['password'];
+            $user->currency = 0;
             $user->role = "user";
             $user->save();
 

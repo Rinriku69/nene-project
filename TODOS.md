@@ -12,6 +12,8 @@ authentication:
 
 ~~add email form, remove nickname~~
 
+email verified
+
 
 
 gacha feature:
@@ -25,6 +27,10 @@ gacha feature:
 Add more items
 
 Adjust rarity \& rate
+
+Collection
+
+Gacha log
 
 
 
@@ -101,4 +107,8 @@ FIX:
 computed password check?
 
 ~~remove emojis~~
+
+BUGs:
+
+pulling loading when logged out in gacha page
 
