@@ -10,6 +10,9 @@ export default [
             {path:'dashboard',loadComponent:() => import('./pages/app/dashboard/dashboard').then(m=>m.Dashboard),
                 canMatch:[authGuard]
             },
+            {path:'gacha',loadComponent:() => import('./pages/app/gacha/gacha').then(m=>m.Gacha),
+                canMatch:[authGuard]
+            },
             // {path:'',loadComponent:() => import('./abc/abc.component').then(m=>m.AbcComponent),canMatch:[roleGuard(['admin'])]}
         ]
     },
