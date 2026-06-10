@@ -14,7 +14,7 @@ export interface ResourceResponse{
     message:string;
 }
 
-export interface ResouceErrorResponse extends ResourceResponse{
+export interface ResourceErrorResponse extends ResourceResponse{
     error:ErrorObjectResponse
 }
  

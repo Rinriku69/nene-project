@@ -5,7 +5,7 @@ import { RegisterModel } from '../../../models/AuthModel';
 import { AuthService } from '../../../services/auth.service';
 import { LoadingComponent } from "../../../components/loading-component/loading-component";
 import { LoadingService } from '../../../services/loading.service';
-import { ErrorObjectResponse, ResouceErrorResponse, ResourceResponse } from '../../../models/Resource';
+import { ErrorObjectResponse, ResourceErrorResponse, ResourceResponse } from '../../../models/Resource';
 
 @Component({
   selector: 'app-register',
@@ -73,7 +73,7 @@ export class Register {
           next: (response) => {
             this.router.navigate(['/auth/login'])
           },
-          error: (error:ResouceErrorResponse) =>{
+          error: (error:ResourceErrorResponse) =>{
             this.errorMessage.update(()=>error.error)
           }
         })
