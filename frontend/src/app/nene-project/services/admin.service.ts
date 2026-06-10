@@ -2,7 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../models/AuthModel';
 import { HttpClient } from '@angular/common/http';
-import { filterTerm, PaginationResponse, UserResource } from '../models/Resource';
+import { filterTerm, PaginationResponse, ResourceResponse, UserResource } from '../models/Resource';
+import { UpdateUserForm } from '../pages/admin/user-management/user-management';
 
 
 
@@ -15,5 +16,9 @@ export class AdminService {
 
   getUserList(term:filterTerm): Observable<PaginationResponse<UserResource>>{
     return this.http.get<PaginationResponse<UserResource>>(`${this.baseApiUrl}/getUserList?search=${term.search ?? ''}&role=${term.role ?? ''}`);
+  }
+
+  updateUser(user:UpdateUserForm):Observable<ResourceResponse>{
+    return this.http.post<ResourceResponse>(`${this.baseApiUrl}/updateUser/${user.id}`,user)
   }
 }

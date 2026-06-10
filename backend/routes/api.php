@@ -38,6 +38,7 @@ Route::middleware((['auth']))
             ->name('admin.')
             ->group(static function():void{
                 Route::get('/getUserList','getUserList')->name('getUserList');
+                Route::post('/updateUser/{id}','updateUser')->name('updateUser');
             });
 
         Route::controller(GachaController::class)
