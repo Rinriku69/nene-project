@@ -2,10 +2,11 @@ import { Component, computed, inject } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { CurrencyService } from '../../../services/currency.service';
 import { ResourceErrorResponse } from '../../../models/Resource';
+import { Icons } from '../../../components/icons/icons';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [Icons],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
@@ -17,7 +18,6 @@ export class Dashboard {
 
   canClaimDaily = computed(() => {
     const lastClaimedStr = this.currentUser()?.last_login_at;
-
     if(!lastClaimedStr){
       return true
     }
@@ -31,11 +31,11 @@ export class Dashboard {
   claimDailyGems(){
     this.currencyService.getDailyLogin().subscribe({
       next:(response)=>{
-        alert(response.message);
-        this.authService.getUser()
+        this.authService.getUser().subscribe();
       },
       error:(err:ResourceErrorResponse)=>{
-        alert(err.message);
+        alert("Error occurred");
+        console.log(err)
       }
     });
   }
