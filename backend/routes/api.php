@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\GachaController;
 use App\Http\Controllers\UserController;
@@ -22,7 +23,7 @@ Route::middleware((['auth']))
         Route::controller(UserController::class)
             ->name('user.')
             ->group(static function():void{
-                Route::get('getUser','getUser')->name('getUser');
+                Route::get('/getUser','getUser')->name('getUser');
             });
 
         Route::controller(GachaController::class)
@@ -30,5 +31,12 @@ Route::middleware((['auth']))
             ->name('gacha')
             ->group(static function():void{
                 Route::post('/pull','pull')->name('pull');
+            });
+
+        Route::controller(AdminController::class)
+            ->prefix('/admin')
+            ->name('admin.')
+            ->group(static function():void{
+                Route::get('/getUserList','getUserList')->name('getUserList');
             });
     });

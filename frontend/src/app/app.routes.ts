@@ -11,5 +11,5 @@ export const routes: Routes = [
         {path:'login',component:Login},
         {path:'register',component:Register}
     ]},
-    {path:'app', loadChildren:()=> import('./nene-project/routes')}
+    {path:'', loadChildren:()=> import('./nene-project/routes')}
 ];
