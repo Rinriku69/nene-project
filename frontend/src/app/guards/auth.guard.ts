@@ -25,6 +25,6 @@ export const roleGuard = (allowedRoles: string[]):CanActivateFn =>{
             return true
         }
         
-        return router.parseUrl('/')
+        return router.parseUrl('/app/dashboard')
     }
 }
