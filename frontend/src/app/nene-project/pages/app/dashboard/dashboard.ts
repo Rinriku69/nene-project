@@ -35,7 +35,7 @@ export class Dashboard {
       },
       error:(err:ResourceErrorResponse)=>{
         alert("Error occurred");
-        console.log(err)
+        console.log(err.error.message)
       }
     });
   }
