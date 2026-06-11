@@ -24,7 +24,7 @@ class AuthController extends Controller
             $user->email = $validated['email'];
             $user->username = $validated['username'];
             $user->password = $validated['password'];
-            $user->currency = 0;
+            $user->currency = 800;
             $user->role = "user";
             $user->save();
 
