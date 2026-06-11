@@ -1,11 +1,11 @@
 import { Component, computed, inject } from '@angular/core';
-import { RouterOutlet, RouterLinkWithHref, Router } from '@angular/router';
+import { RouterOutlet, RouterLinkWithHref, Router, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { Icons } from "../../../components/icons/icons";
 
 @Component({
   selector: 'app-main-layout',
-  imports: [RouterOutlet, RouterLinkWithHref, Icons],
+  imports: [RouterOutlet, RouterLinkWithHref, Icons,RouterLinkActive],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.css',
 })
