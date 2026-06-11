@@ -10,6 +10,7 @@ import { Icons } from "../icons/icons";
 })
 export class ItemViewComponent {
   selectedItem = input.required<GachaItem | null>();
+  classAttribute = input.required<string>();
   close = output<void>();
 
   closeItem(){

@@ -281,7 +281,7 @@
   }
 
   @if (selectedItem()) {
-    <app-item-view-component [selectedItem]="selectedItem()" (close)="closeItem()"></app-item-view-component>
+    <app-item-view-component [selectedItem]="selectedItem()" (close)="closeItem()" [classAttribute]="'relative w-full max-w-[60%] md:max-w-[70%] aspect-4/3 rounded-2xl overflow-hidden border-4 animate-smooth-appear cursor-default transition-all'"></app-item-view-component>
   }
 
   <!-- Gacha Log Modal -->
