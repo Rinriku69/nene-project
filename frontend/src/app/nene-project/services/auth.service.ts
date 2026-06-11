@@ -16,7 +16,7 @@ export class AuthService {
   readonly isLoggedIn = computed(()=> this.currentUser()!== null);
 
   getCSRFToken():Observable<ResourceResponse>{
-    return this.http.get<ResourceResponse>("https://nene-project.com/sanctum/csrf-cookie");
+    return this.http.get<ResourceResponse>("/sanctum/csrf-cookie");
   }
 
   register(registerFormData: RegisterModel):Observable<ResourceResponse>{
