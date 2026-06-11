@@ -30,7 +30,9 @@ Adjust rarity \& rate
 
 Collection
 
-Gacha log
+~~Gacha log~~
+
+~~inventory~~
 
 
 
@@ -40,7 +42,7 @@ Point feature:
 
 get point by doing mission
 
-daily login
+~~daily login~~
 
 ~~use for gacha reroll~~
 
@@ -92,7 +94,7 @@ style landing page
 
 Admin Dashboard:
 
-&#x09;- user management
+&#x09;- ~~user management~~
 
 &#x09;- gacha banner management
 
@@ -114,5 +116,5 @@ computed password check?
 
 BUGs:
 
-pulling loading when logged out in gacha page
+~~pulling loading when logged out in gacha page~~
 
