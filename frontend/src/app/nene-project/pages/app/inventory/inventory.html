@@ -20,6 +20,7 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
         @for (item of inventoryData()!.data; track $index) {
           <div
+          (click)="viewImage(item)"
             class="relative aspect-4/3 rounded-3xl overflow-hidden border-4 bg-white ease-out transition-transform hover:-translate-y-2 hover:shadow-xl shadow-[0_8px_0_#fbcfe8] group"
             [class.border-green-400]="item.rarity === 'N'"
             [class.border-blue-400]="item.rarity === 'R'"
@@ -63,6 +64,11 @@
           </div>
         }
       </div>
+
+      @if(selectedItem()){
+        <app-item-view-component [selectedItem]="selectedItem()" (close)="closeItem()" [classAttribute]="'relative w-full max-w-[50%] md:max-w-[50%] aspect-4/3 rounded-2xl overflow-hidden border-4 animate-smooth-appear cursor-default transition-all'"></app-item-view-component>
+      }
+
 
       <!-- Pagination -->
       @if (inventoryData()!.last_page > 1) {
