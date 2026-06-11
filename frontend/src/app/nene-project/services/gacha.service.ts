@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class GachaService {
   private readonly http = inject(HttpClient);
-  private readonly baseApiUrl = 'http://localhost:8000/api/gacha';
+  private readonly baseApiUrl = '/api/gacha';
 
 
   gachaRoll(pulls:number): Observable<GachaResponse>{

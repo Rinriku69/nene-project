@@ -10,13 +10,13 @@ import co from '@angular/common/locales/co';
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
-  private readonly baseApiUrl = "http://localhost:8000/api";
+  private readonly baseApiUrl = "/api";
   private readonly currentUser = signal<User|null>(null);
   readonly currentUserState = computed(()=>this.currentUser());
   readonly isLoggedIn = computed(()=> this.currentUser()!== null);
 
   getCSRFToken():Observable<ResourceResponse>{
-    return this.http.get<ResourceResponse>("http://localhost:8000/sanctum/csrf-cookie");
+    return this.http.get<ResourceResponse>("https://nene-project.com/sanctum/csrf-cookie");
   }
 
   register(registerFormData: RegisterModel):Observable<ResourceResponse>{

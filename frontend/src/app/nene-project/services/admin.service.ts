@@ -11,7 +11,7 @@ import { UpdateUserForm } from '../pages/admin/user-management/user-management';
   providedIn: 'root',
 })
 export class AdminService {
-  private readonly baseApiUrl = "http://localhost:8000/api/admin"
+  private readonly baseApiUrl = "/api/admin"
   private readonly http = inject(HttpClient);
 
   getUserList(term:filterTerm): Observable<PaginationResponse<UserResource>>{

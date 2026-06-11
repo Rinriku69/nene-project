@@ -8,7 +8,7 @@ import { InventoryItem, PaginationResponse } from '../models/Resource';
 })
 export class InventoryService {
   private readonly http = inject(HttpClient);
-  private readonly baseApiUrl = 'http://localhost:8000/api';
+  private readonly baseApiUrl = '/api';
   getInventory(page: number = 1): Observable<PaginationResponse<InventoryItem>> {
     return this.http.get<PaginationResponse<InventoryItem>>(
       `${this.baseApiUrl}/getInventory?page=${page}`,
