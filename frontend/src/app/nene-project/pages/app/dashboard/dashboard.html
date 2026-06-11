@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-pink-50 bg-[radial-gradient(#fbcfe8_6px,transparent_3px)] bg-size-[40px_40px] p-4 sm:p-8 font-sans text-pink-900 flex flex-col items-center">
+<div class="min-h-screen p-4 sm:p-8 font-sans text-pink-900 flex flex-col items-center">
   
   <header class="mb-12 text-center mt-8">
     <h1 class="text-4xl sm:text-5xl font-extrabold text-pink-500 drop-shadow-sm mb-3">Welcome, {{ currentUser()?.username || 'Friend' }}! 🌸</h1>
@@ -47,7 +47,7 @@
     </div>
 
     <!-- Stats Card (Placeholder for future) -->
-    <div class="bg-white rounded-3xl p-8 border-4 border-pink-200 shadow-[0_12px_0_#fbcfe8] flex flex-col items-center justify-center text-center transition-transform hover:-translate-y-2 hover:scale-105 duration-300">
+    <div class="relative bg-white rounded-3xl p-8 border-4 border-pink-200 shadow-[0_12px_0_#fbcfe8] flex flex-col items-center justify-center text-center transition-transform hover:-translate-y-2 hover:scale-105 duration-300">
       <div class="w-24 h-24 bg-pink-100 rounded-full flex items-center justify-center mb-6 border-4 border-pink-300">
         <!-- Profile SVG -->
         <app-icons [name]="'profile'" [classAttribute]="'w-12 h-12 text-pink-500'"></app-icons>
