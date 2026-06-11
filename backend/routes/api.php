@@ -25,6 +25,7 @@ Route::middleware((['auth']))
             ->group(static function (): void {
                 Route::get('/getUser', 'getUser')->name('getUser');
                 Route::post('/getDailyLogin', 'dailyLogin')->name('dailyLogin');
+                Route::get('/getInventory', 'getInventory')->name('getInventory');
             });
 
         Route::controller(GachaController::class)

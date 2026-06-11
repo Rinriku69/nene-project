@@ -76,3 +76,11 @@ export interface GachaLog {
     name: string;
     created_at: string;
 }
+
+export interface InventoryItem {
+    name: string;
+    description: string;
+    rarity: 'SSR' | 'SR' | 'R' | 'N';
+    url: string;
+    quantity: number;
+}

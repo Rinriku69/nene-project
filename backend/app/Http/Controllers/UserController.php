@@ -50,4 +50,15 @@ class UserController extends Controller
 
         return false;
     }
+
+    public function getInventory(Request $request): JsonResponse
+    {
+        $inventory = \App\Models\Inventory::where('user_id', Auth::id())
+            ->join('items', 'inventories.item_id', '=', 'items.id')
+            ->select('items.name', 'items.description', 'items.rarity', 'items.url', 'inventories.quantity')
+            ->orderByRaw("CASE WHEN items.rarity = 'SSR' THEN 1 WHEN items.rarity = 'SR' THEN 2 WHEN items.rarity = 'R' THEN 3 WHEN items.rarity = 'N' THEN 4 ELSE 5 END")
+            ->paginate(6);
+
+        return response()->json($inventory);
+    }
 }

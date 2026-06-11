@@ -22,6 +22,11 @@ export default [
             loadComponent: () => import('./pages/app/gacha/gacha').then((m) => m.Gacha),
             canMatch: [authGuard],
           },
+          {
+            path: 'inventory',
+            loadComponent: () => import('./pages/app/inventory/inventory').then((m) => m.Inventory),
+            canMatch: [authGuard],
+          },
         ],
       },
       {

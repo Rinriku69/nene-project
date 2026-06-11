@@ -60,7 +60,7 @@
             @if (userListResponse()?.data; as users) {
               @for (user of users; track user.id; let i = $index) {
                 <tr class="border-b-2 border-pink-50 hover:bg-pink-50/50 transition-colors group">
-                  <td class="p-4 px-6 text-pink-400 font-bold">{{ (userListResponse()!.currentPage - 1) * userListResponse()!.per_page + i + 1 }}</td>
+                  <td class="p-4 px-6 text-pink-400 font-bold">{{ (userListResponse()!.current_page - 1) * userListResponse()!.per_page + i + 1 }}</td>
                   <td class="p-4 px-6 font-bold text-gray-500">#{{ user.id }}</td>
                   <td class="p-4 px-6 font-black text-pink-500">{{ user.username }}</td>
                   <td class="p-4 px-6">{{ user.email }}</td>
