@@ -36,3 +36,7 @@ button:disabled {
 .nav-list:active {
   @apply translate-y-0 shadow-none scale-95;
 }
+
+.nav-list-active{
+   @apply translate-y-0 shadow-none scale-95 text-pink-600 bg-pink-100;
+}
