@@ -3,10 +3,11 @@ import { AuthService } from '../../../services/auth.service';
 import { GachaItem, ResourceErrorResponse, PaginationResponse, GachaLog } from '../../../models/Resource';
 import { GachaService } from '../../../services/gacha.service';
 import { AudioService } from '../../../services/audio.service';
+import { Icons } from "../../../components/icons/icons";
 
 @Component({
   selector: 'app-gacha',
-  imports: [],
+  imports: [Icons],
   templateUrl: './gacha.html',
   styleUrl: './gacha.css',
 })
