@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, effect, inject, input, signal } from '@angular/core';
 import { RouterOutlet, RouterLinkWithHref, Router, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { Icons } from "../../../components/icons/icons";
@@ -13,6 +13,11 @@ export class MainLayout {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   protected readonly currentUser = computed(()=>this.authService.currentUserState());
+  protected readonly userMenuShow = signal<boolean>(false);
+
+  toggleUserMenu():void{
+    this.userMenuShow.set(!this.userMenuShow());
+  } 
 
   logout(){
     return this.authService.logout().subscribe({
@@ -24,4 +29,6 @@ export class MainLayout {
       }
     })
   }
+
+  
 }

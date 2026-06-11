@@ -3,10 +3,12 @@ import { AuthService } from '../../../services/auth.service';
 import { GachaItem, ResourceErrorResponse, PaginationResponse, GachaLog } from '../../../models/Resource';
 import { GachaService } from '../../../services/gacha.service';
 import { AudioService } from '../../../services/audio.service';
+import { ItemResultComponent } from '../../../components/item-result-component/item-result-component';
+import { ItemViewComponent } from '../../../components/item-view-component/item-view-component';
 
 @Component({
   selector: 'app-gacha',
-  imports: [],
+  imports: [ItemResultComponent, ItemViewComponent],
   templateUrl: './gacha.html',
   styleUrl: './gacha.css',
 })
@@ -26,7 +28,7 @@ export class Gacha implements OnInit, OnDestroy {
 
   featuredItems = [
     { url: 'https://res.cloudinary.com/dhvmcbbdi/image/upload/v1780825123/134227912693387031_1452_817_1780434105773_d4iyrq.jpg', alt: 'Nene Flower SR' },
-    { url: 'https://res.cloudinary.com/dhvmcbbdi/image/upload/v1780825122/134215114489764490_1452_817_1780434219032_lir4w8.jpg', alt: 'Disney Princess R' },
+    { url: 'https://res.cloudinary.com/dhvmcbbdi/image/upload/v1780825122/134215114489764490_1452_817_1780434219032_lir4w8.jpg', alt: 'Disney Princess SR' },
     { url: 'https://res.cloudinary.com/dhvmcbbdi/image/upload/v1780825390/134224687394682974_1452_817_1780434126139_if4d0i.jpg', alt: 'Triple Meow SR' }
   ];
 

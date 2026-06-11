@@ -30,7 +30,7 @@
       </ul>
 
       @if(currentUser()){
-        <div class="relative group shrink-0 z-50">
+        <div class="relative group shrink-0 z-50 "(click)="toggleUserMenu()">
           <div class="font-black flex items-center gap-3 text-lg md:text-xl text-pink-500 bg-pink-100 px-6 py-3 rounded-full border-2 border-pink-300 shadow-[0_4px_0_#fbcfe8] group-hover:-translate-y-1 group-hover:shadow-[0_6px_0_#fbcfe8] group-hover:bg-pink-200 active:translate-y-1 active:shadow-none transition-all cursor-pointer">
             <span class="flex items-center gap-1 text-pink-400">
               💎 {{currentUser()?.currency}}
@@ -40,7 +40,10 @@
             <app-icons [name]="'downIcon'"></app-icons>
           </div>
           
-          <div class="absolute right-0 top-full pt-3 w-56 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300 transform origin-top-right scale-95 group-hover:scale-100">
+          <div class="absolute right-0 top-full pt-3 w-56 opacity-0 pointer-events-none group-hover:opacity-100  group-hover:pointer-events-auto transition-all duration-300 transform origin-top-right scale-95 group-hover:scale-100"
+          [class.opacity-100]="userMenuShow()"
+          [class.opacity-0]="!userMenuShow()"
+          >
             <div class="bg-white rounded-3xl border-4 border-pink-200 shadow-[0_8px_0_#fbcfe8] overflow-hidden p-2 flex flex-col gap-1">
               <a class="flex px-4 py-3 text-pink-500 font-black hover:bg-pink-100 hover:text-pink-600 hover:-translate-y-0.5 rounded-2xl transition-all cursor-pointer  items-center gap-3">
                 <app-icons [name]="'user'"></app-icons>
