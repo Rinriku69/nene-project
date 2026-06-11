@@ -41,7 +41,8 @@
           </div>
           
           <div class="absolute right-0 top-full pt-3 w-56 opacity-0 pointer-events-none group-hover:opacity-100  group-hover:pointer-events-auto transition-all duration-300 transform origin-top-right scale-95 group-hover:scale-100"
-          [class.opacity-100]="userMenuShow()"
+          [class.opacity-100]="userMenuShow()"              
+          [class.!pointer-events-auto]="userMenuShow()"
           [class.opacity-0]="!userMenuShow()"
           >
             <div class="bg-white rounded-3xl border-4 border-pink-200 shadow-[0_8px_0_#fbcfe8] overflow-hidden p-2 flex flex-col gap-1">
