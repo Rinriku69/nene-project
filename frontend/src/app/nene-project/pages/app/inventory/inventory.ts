@@ -1,17 +1,16 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { GachaItem, InventoryItem, PaginationResponse } from '../../../models/Resource';
-import { RouterLink } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
 import { InventoryService } from '../../../services/inventory.service';
+import { GachaItem, InventoryItem, PaginationResponse } from '../../../models/Resource';
 import { ItemViewComponent } from '../../../components/item-view-component/item-view-component';
 
 @Component({
   selector: 'app-inventory',
-  standalone: true,
-  imports: [RouterLink, ItemViewComponent],
+  imports: [ItemViewComponent],
   templateUrl: './inventory.html',
+  styleUrl: './inventory.css',
 })
-export class Inventory implements OnInit {
-  private readonly inventoryService = inject(InventoryService);
+export class Inventory {
+   private readonly inventoryService = inject(InventoryService);
 
   selectedItem = signal<GachaItem | null>(null);
   inventoryData = signal<PaginationResponse<InventoryItem> | null>(null);
