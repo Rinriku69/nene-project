@@ -27,6 +27,11 @@ export default [
             loadComponent: () => import('./pages/app/inventory/inventory').then((m) => m.Inventory),
             canMatch: [authGuard],
           },
+          {
+            path:'safezone',
+            loadComponent:() => import('./pages/app/safe-zone/safe-zone').then((m)=>m.SafeZone),
+            canMatch: [authGuard]
+          }
         ],
       },
       {
