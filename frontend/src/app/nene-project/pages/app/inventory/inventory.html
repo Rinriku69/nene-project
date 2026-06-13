@@ -4,7 +4,7 @@
   <div class="absolute w-full h-full z-0 opacity-60 bg-brand-white"></div>
 
   <div
-    class="relative z-10 max-w-6xl mx-auto flex flex-col items-center gap-8 animate-smooth-appear"
+    class="relative z-201 max-w-6xl mx-auto flex flex-col items-center gap-8"
   >
     <h1
       class="text-4xl md:text-5xl font-black text-pink-500 drop-shadow-[0_4px_4px_#fbcfe8] text-center"
@@ -17,10 +17,10 @@
         <div class="text-6xl animate-bounce">✨</div>
       </div>
     } @else if (inventoryData() && inventoryData()!.data.length > 0) {
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full animate-smooth-appear">
         @for (item of inventoryData()!.data; track $index) {
           <div
-          (click)="viewImage(item)"
+            (click)="viewImage(item)"
             class="relative aspect-4/3 rounded-3xl overflow-hidden border-4 bg-white ease-out transition-transform hover:-translate-y-2 hover:shadow-xl shadow-[0_8px_0_#fbcfe8] group"
             [class.border-green-400]="item.rarity === 'N'"
             [class.border-blue-400]="item.rarity === 'R'"
@@ -65,10 +65,13 @@
         }
       </div>
 
-      @if(selectedItem()){
-        <app-item-view-component [selectedItem]="selectedItem()" (close)="closeItem()" [classAttribute]="'relative w-full max-w-[50%] md:max-w-[50%] aspect-4/3 rounded-2xl overflow-hidden border-4 animate-smooth-appear cursor-default transition-all'"></app-item-view-component>
+      @if (selectedItem()) {
+        <app-item-view-component
+          [selectedItem]="selectedItem()"
+          (close)="closeItem()"
+          [classAttribute]="'relative w-full max-w-[50%] md:max-w-[50%] lg:max-w-[80%] aspect-4/3 rounded-2xl overflow-hidden border-4 animate-smooth-appear cursor-default transition-all'"
+        ></app-item-view-component>
       }
-
 
       <!-- Pagination -->
       @if (inventoryData()!.last_page > 1) {
@@ -107,4 +110,3 @@
     }
   </div>
 </section>
-
