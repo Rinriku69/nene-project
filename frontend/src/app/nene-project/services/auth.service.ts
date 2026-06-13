@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, linkedSignal, signal } from '@angular/core';
 import { catchError, Observable, of, tap } from 'rxjs';
 import { LoginModel, RegisterModel, User } from '../models/AuthModel';
 import { ResourceResponse } from '../models/Resource';
@@ -12,7 +12,7 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly baseApiUrl = "http://localhost:8000/api";
   private readonly currentUser = signal<User|null>(null);
-  readonly currentUserState = computed(()=>this.currentUser());
+  readonly currentUserState = linkedSignal(()=>this.currentUser());
   readonly isLoggedIn = computed(()=> this.currentUser()!== null);
 
   getCSRFToken():Observable<ResourceResponse>{

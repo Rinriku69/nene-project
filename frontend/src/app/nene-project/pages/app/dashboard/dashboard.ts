@@ -1,4 +1,11 @@
-import { Component, computed, inject } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  linkedSignal,
+  ɵAcxViewEncapsulation,
+} from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { CurrencyService } from '../../../services/currency.service';
 import { ResourceErrorResponse } from '../../../models/Resource';
@@ -14,29 +21,37 @@ export class Dashboard {
   private readonly authService = inject(AuthService);
   private readonly currencyService = inject(CurrencyService);
 
-  currentUser = computed(()=>this.authService.currentUserState());
+  currentUser = computed(() => this.authService.currentUserState());
 
-  canClaimDaily = computed(() => {
+  canClaimDaily = linkedSignal(() => {
     const lastClaimedStr = this.currentUser()?.last_login_at;
-    if(!lastClaimedStr){
-      return true
+    if (!lastClaimedStr) {
+      return true;
     }
 
     const lastClaimedDate = new Date(lastClaimedStr).toLocaleDateString('en-US');
     const todayDate = new Date().toLocaleDateString('en-US');
 
-    return lastClaimedDate !== todayDate
+    return lastClaimedDate !== todayDate;
   });
 
-  claimDailyGems(){
+  claimDailyGems() {
+    this.authService.currentUserState.update((v) => {
+      if (v) {
+        return { ...v, currency: v.currency + 450 };
+      }
+      return null;
+    });
+    this.canClaimDaily.set(false);
     this.currencyService.getDailyLogin().subscribe({
-      next:(response)=>{
+      next: (response) => {
         this.authService.getUser().subscribe();
       },
-      error:(err:ResourceErrorResponse)=>{
-        alert("Error occurred");
-        console.log(err.error.message)
-      }
+      error: (err: ResourceErrorResponse) => {
+        alert('Error occurred');
+        this.authService.getUser().subscribe();
+        console.log(err.error.message);
+      },
     });
   }
 }
