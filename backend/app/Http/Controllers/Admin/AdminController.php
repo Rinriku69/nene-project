@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Notifications\GiftNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
@@ -40,8 +42,8 @@ class AdminController extends Controller
         $validated = $request->validate([
             'role' => ['required', 'in:user,admin,friend'],
             'currency' => ['required', 'integer', 'min:0'],
-            'username' => ['required', 'string', 'max:20', Rule::unique('users','username')->ignore($id)],
-            'email' => ['required', 'email', Rule::unique('users','email')->ignore($id)],
+            'username' => ['required', 'string', 'max:20', Rule::unique('users', 'username')->ignore($id)],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($id)],
         ]);
         Gate::authorize('isAdmin', Auth::user());
         $user = User::findOrFail($id);
@@ -49,6 +51,24 @@ class AdminController extends Controller
 
         return response()->json([
             'message' => 'Successfully Updated ' . $user->username
+        ], 200);
+    }
+
+    function sendGiftNoti(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => ['required','string'],
+            'message' => ['required','string'],
+            'amount' => ['required','integer']
+        ]);
+        Gate::authorize('isAdmin',Auth::user());
+        
+        $user = User::all();
+
+        Notification::send($user, new GiftNotification($validated['title'],$validated['message'],$validated['amount']));
+
+        return response()->json([
+            'message' => 'Notification sent'
         ],200);
     }
 }
