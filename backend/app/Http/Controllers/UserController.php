@@ -25,7 +25,7 @@ class UserController extends Controller
     function dailyLogin(): JsonResponse
     {
         $user = Auth::user();
-        $gems = 300;
+        $gems = 450;
         // dd($this->updateDailyLoginCurrency($gems,$user));
         if ($this->updateDailyLoginCurrency($gems, $user)) {
             return response()->json([
