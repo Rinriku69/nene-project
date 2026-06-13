@@ -2,10 +2,11 @@ import { Component, computed, effect, inject, input, signal } from '@angular/cor
 import { RouterOutlet, RouterLinkWithHref, Router, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { Icons } from "../../../components/icons/icons";
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-main-layout',
-  imports: [RouterOutlet, RouterLinkWithHref, Icons,RouterLinkActive],
+  imports: [DecimalPipe,RouterOutlet, RouterLinkWithHref, Icons,RouterLinkActive],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.css',
 })

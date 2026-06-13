@@ -10,6 +10,7 @@ import { GachaItem,  } from '../../models/Resource';
 export class ItemResultComponent {
   item = input.required<GachaItem>();
   selectedItem = output<GachaItem>();
+  classAttribute = input<string>('');
 
   viewItem(item:GachaItem):void{
     this.selectedItem.emit(item)

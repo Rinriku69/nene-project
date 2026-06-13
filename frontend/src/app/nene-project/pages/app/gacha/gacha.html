@@ -1,8 +1,6 @@
 <section
   class="relative w-full min-h-[calc(100svh-4rem)] flex flex-col items-center py-6 px-4 overflow-hidden bg-pink-50/70"
 >
-  <!--   <div class="absolute inset-0 z-0 opacity-60 bg-[radial-gradient(#fbcfe8_6px,transparent_3px)] bg-size-[40px_40px]">
-  </div> -->
 
   <div class="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center gap-8">
     <div class="text-center mt-4">
@@ -34,7 +32,6 @@
           </div>
         </div>
       }
-      <!-- <img src="/images/gacha_banner.png" alt="Gacha Banner" class="w-full h-full object-cover" /> -->
 
       <div
         class="absolute bottom-4 right-4 bg-white/80 backdrop-blur-md px-4 py-2 rounded-full border-2 border-pink-200"
@@ -201,70 +198,25 @@
 
         @if (pullResults()!.length === 1) {
           <div class="flex flex-col items-center animate-smooth-appear">
-            <div
-              class="relative w-90 md:w-100 aspect-4/3 rounded-xl overflow-hidden border-4 ease-out will-change-transform hover:scale-105 hover:-translate-y-2 hover:z-50 cursor-pointer"
-              (click)="viewItem(pullResults()![0])"
-              [class.border-green-400]="pullResults()![0].rarity === 'N'"
-              [class.shadow-[0_0_20px_#4ade80]]="pullResults()![0].rarity === 'N'"
-              [class.border-blue-400]="pullResults()![0].rarity === 'R'"
-              [class.shadow-[0_0_20px_#60a5fa]]="pullResults()![0].rarity === 'R'"
-              [class.border-purple-500]="pullResults()![0].rarity === 'SR'"
-              [class.shadow-[0_0_25px_#a855f7]]="pullResults()![0].rarity === 'SR'"
-              [class.border-yellow-400]="pullResults()![0].rarity === 'SSR'"
-              [class.shadow-[0_0_30px_#facc15]]="pullResults()![0].rarity === 'SSR'"
-            >
-              @if (pullResults()![0].rarity === 'SSR') {
-                <div
-                  class="absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_50%,#fef08a_120%)] animate-pulse opacity-70"
-                ></div>
-                <div
-                  class="absolute -top-10 -left-10 w-full h-full bg-white opacity-20 rotate-45 blur-xl animate-spin-slow pointer-events-none"
-                ></div>
-              }
-
-              <img
-                [src]="pullResults()![0].url"
-                [alt]="pullResults()![0].name"
-                class="w-full h-full object-cover z-10 relative"
-              />
-
-              <div
-                class="absolute bottom-0 inset-x-0 bg-linear-to-t from-black/80 via-black/40 to-transparent p-4 pt-10 z-30"
-              >
-                <div class="text-center">
-                  <span
-                    class="inline-block px-2 py-0.5 rounded text-xs font-black mb-1 text-white backdrop-blur-sm"
-                    [class.bg-green-500]="pullResults()![0].rarity === 'N'"
-                    [class.bg-blue-500]="pullResults()![0].rarity === 'R'"
-                    [class.bg-purple-500]="pullResults()![0].rarity === 'SR'"
-                    [class.bg-yellow-500]="pullResults()![0].rarity === 'SSR'"
-                  >
-                    {{ pullResults()![0].rarity }}
-                  </span>
-                  <p class="text-2xl font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                    {{ pullResults()![0].name }}
-                  </p>
-                </div>
-              </div>
-            </div>
+           <app-item-result-component [item]="pullResults()![0]" (selectedItem)="viewItem(pullResults()![0])" [classAttribute]="'md:w-150'"></app-item-result-component>
           </div>
         } @else {
           <div class="flex flex-col gap-4 md:gap-6 w-full max-w-10xl animate-smooth-appear">
             <div class="flex justify-center gap-3 md:gap-6">
               @for (item of pullResults()!.slice(0, 3); track $index) {
-                <app-item-result-component [item]="item" (selectedItem)="viewItem(item)"></app-item-result-component>
+                <app-item-result-component [item]="item" (selectedItem)="viewItem(item)" [classAttribute]="'md:w-60 lg:w-70'"></app-item-result-component>
               }
             </div>
 
             <div class="flex justify-center gap-3 md:gap-6">
               @for (item of pullResults()!.slice(3, 7); track $index) {
-                <app-item-result-component [item]="item" (selectedItem)="viewItem(item)"></app-item-result-component>
+                <app-item-result-component [item]="item" (selectedItem)="viewItem(item)" [classAttribute]="'md:w-45 lg:w-60'"></app-item-result-component>
               }
             </div>
 
             <div class="flex justify-center gap-3 md:gap-6">
               @for (item of pullResults()!.slice(7, 10); track $index) {
-                <app-item-result-component [item]="item" (selectedItem)="viewItem(item)"></app-item-result-component>
+                <app-item-result-component [item]="item" (selectedItem)="viewItem(item)" [classAttribute]="'md:w-60 lg:w-70'"></app-item-result-component>
               }
             </div>
           </div>
@@ -272,7 +224,7 @@
 
         <button
           (click)="closeResults()"
-          class="mt-12 px-12 py-4 bg-white hover:bg-pink-100 text-pink-500 font-black text-xl rounded-full border-4 border-pink-300 shadow-[0_6px_0_#fbcfe8] active:translate-y-2 active:shadow-[0_0px_0_#fbcfe8] transition-all"
+          class="mt-12 px-12 py-4 bg-white hover:bg-pink-100 hover:scale-110 duration-200 cursor-pointer text-pink-500 font-black text-xl rounded-full border-4 border-pink-300 shadow-[0_6px_0_#fbcfe8] active:translate-y-2 active:shadow-[0_0px_0_#fbcfe8] transition-all"
         >
           Confirm
         </button>
@@ -281,7 +233,7 @@
   }
 
   @if (selectedItem()) {
-    <app-item-view-component [selectedItem]="selectedItem()" (close)="closeItem()" [classAttribute]="'relative w-full max-w-[60%] md:max-w-[70%] aspect-4/3 rounded-2xl overflow-hidden border-4 animate-smooth-appear cursor-default transition-all'"></app-item-view-component>
+    <app-item-view-component [selectedItem]="selectedItem()" (close)="closeItem()" [classAttribute]="'relative w-full max-w-[90%] md:max-w-[70%] aspect-4/3 rounded-2xl overflow-hidden border-4 animate-smooth-appear cursor-default transition-all'"></app-item-view-component>
   }
 
   <!-- Gacha Log Modal -->
