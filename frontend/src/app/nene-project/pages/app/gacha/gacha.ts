@@ -28,7 +28,7 @@ export class Gacha implements OnInit, OnDestroy {
 
   featuredItems = [
     { url: 'https://res.cloudinary.com/dhvmcbbdi/image/upload/v1780825123/134227912693387031_1452_817_1780434105773_d4iyrq.jpg', alt: 'Nene Flower SR' },
-    { url: 'https://res.cloudinary.com/dhvmcbbdi/image/upload/v1780825122/134215114489764490_1452_817_1780434219032_lir4w8.jpg', alt: 'Disney Princess SR' },
+    { url: 'https://res.cloudinary.com/dhvmcbbdi/image/upload/v1781419507/134234158893128900_1452_817_1780434019350_fdte6k.jpg', alt: 'Gimme a hug!! SR' },
     { url: 'https://res.cloudinary.com/dhvmcbbdi/image/upload/v1780825390/134224687394682974_1452_817_1780434126139_if4d0i.jpg', alt: 'Triple Meow SR' }
   ];
 
