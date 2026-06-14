@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use App\Notifications\GiftNotification;
+use App\Notifications\UserNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,18 +54,17 @@ class AdminController extends Controller
         ], 200);
     }
 
-    function sendGiftNoti(Request $request)
+    function sendUserNoti(Request $request)
     {
         $validated = $request->validate([
             'title' => ['required','string'],
             'message' => ['required','string'],
-            'amount' => ['required','integer']
         ]);
         Gate::authorize('isAdmin',Auth::user());
         
         $user = User::all();
 
-        Notification::send($user, new GiftNotification($validated['title'],$validated['message'],$validated['amount']));
+        Notification::send($user, new UserNotification($validated['title'],$validated['message']));
 
         return response()->json([
             'message' => 'Notification sent'

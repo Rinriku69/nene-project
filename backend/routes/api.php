@@ -27,6 +27,7 @@ Route::middleware((['auth']))
                 Route::post('/getDailyLogin', 'dailyLogin')->name('dailyLogin');
                 Route::get('/getInventory', 'getInventory')->name('getInventory');
                 Route::get('/getNoti','getNoti')->name('getNoti');
+                Route::post('/markAsReadAll','markAsReadAll')->name('markAsReadAll');
             });
 
         Route::controller(GachaController::class)
@@ -43,7 +44,7 @@ Route::middleware((['auth']))
             ->group(static function (): void {
                 Route::get('/getUserList', 'getUserList')->name('getUserList');
                 Route::post('/updateUser/{id}', 'updateUser')->name('updateUser');
-                Route::post('/sendGiftNoti','sendGiftNoti')->name('sendGiftNoti');
+                Route::post('/sendUserNoti','sendUserNoti')->name('sendUserNoti');
             });
 
         Route::controller(GachaController::class)

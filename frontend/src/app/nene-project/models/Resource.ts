@@ -84,3 +84,16 @@ export interface InventoryItem {
     url: string;
     quantity: number;
 }
+
+export interface Notifications<T> {
+    data: T[]
+}
+
+export interface NotificationItem {
+    id:string;
+    title:string;
+    message:string;
+    notification_date:string;
+    read_at:string | null
+}
+

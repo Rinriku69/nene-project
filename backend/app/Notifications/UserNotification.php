@@ -7,21 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class GiftNotification extends Notification
+class UserNotification extends Notification
 {
     use Queueable;
 
     protected string $title;
     protected string $message;
-    protected int $amount;
     /**
      * Create a new notification instance.
      */
-    public function __construct(string $title,string $message,int $amount)
+    public function __construct(string $title,string $message)
     {
         $this->title = $title;
         $this->message = $message;
-        $this->amount = $amount;
     }
 
     /**
@@ -46,7 +44,6 @@ class GiftNotification extends Notification
         return [
             'title'=> $this->title,
             'message'=> $this->message,
-            'amount' => $this->amount
         ];
     }
 }

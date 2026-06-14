@@ -2,18 +2,21 @@
   <div
     class="bg-pink-50 bg-[radial-gradient(#fbcfe8_6px,transparent_3px)] bg-size-[40px_40px] fixed inset-0 z-0"
   ></div>
-  <nav class="top-0 z-50 px-2 py-2 md:py-2 md:px-5 sm:px-2  ">
+  <nav class="top-0 z-50 px-2 py-2 md:py-2 md:px-5 sm:px-2">
     <div
       class="flex flex-wrap items-center justify-between gap-4 px-6 py-2 md:py-2 lg:py-3 rounded-3xl bg-white/80 backdrop-blur-md border-4 border-pink-200 shadow-[0_8px_0_#fbcfe8] w-full"
     >
       <div
         class="size-19 lg:size-24 md:size-24 relative bg-pink-300 rounded-4xl hover:scale-110 hover:rotate-3 transition-transform cursor-pointer flex gap-2 items-center shrink-0"
       >
-        <img src="icons/nene_flower.png" alt="Nene flower logo" routerLink="/app/dashboard">
-        <span class="absolute right-1 px-1 bottom-0 rounded-2xl font-black text-secondary bg-brand-pink">Nene</span>
+        <img src="icons/nene_flower.png" alt="Nene flower logo" routerLink="/app/dashboard" />
+        <span
+          class="absolute right-1 px-1 bottom-0 rounded-2xl font-black text-secondary bg-brand-pink"
+          >Nene</span
+        >
       </div>
 
-      <ul class="flex  flex-wrap justify-center items-center gap-1 md:gap-5 lg:gap-2 flex-1 ">
+      <ul class="flex flex-wrap justify-center items-center gap-1 md:gap-5 lg:gap-2 flex-1">
         <li>
           <a class="nav-list block" routerLink="/app/gacha" routerLinkActive="nav-list-active"
             >Gacha</a
@@ -25,9 +28,7 @@
           >
         </li>
         <li>
-          <a class="nav-list block"  routerLinkActive="nav-list-active"
-            >Safe Zone</a
-          >
+          <a class="nav-list block" routerLinkActive="nav-list-active">Safe Zone</a>
         </li>
         <li>
           <a class="nav-list block">Co-op Mission</a>
@@ -40,41 +41,100 @@
       </ul>
 
       @if (currentUser()) {
-        <div class="relative group shrink-0 z-50 w-auto" (click)="toggleUserMenu()">
-          <div
-            class="font-black flex items-center gap-3 text-lg md:text-xl text-pink-500 bg-pink-100 px-6 py-3 rounded-full border-2 border-pink-300 shadow-[0_4px_0_#fbcfe8] group-hover:-translate-y-1 group-hover:shadow-[0_6px_0_#fbcfe8] group-hover:bg-pink-200 active:translate-y-1 active:shadow-none transition-all cursor-pointer"
-          >
-            <span class="flex items-center gap-1 text-pink-400 " id="user-currency">
-              💎 {{ currentUser()?.currency | number }}
-            </span>
-            <div class="w-0.5 h-5 bg-pink-300 rounded-full"></div>
-            <span>{{ currentUser()?.username }}</span>
-            <app-icons [name]="'downIcon'"></app-icons>
-          </div>
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <div (click)="toggleNoti()">
+              @if (notiIsOpen()) {
+                <app-icons
+                  [name]="'open-envelope'"
+                  [classAttribute]="'size-8 text-pink-500'"
+                ></app-icons>
+              } @else {
+                <app-icons
+                  [name]="'envelope'"
+                  [classAttribute]="'size-8 text-pink-500'"
+                ></app-icons>
+              }
+            </div>
+            @if (notifications()) {
+              @if (unreadCount() > 0) {
+                <span
+                  class="absolute select-none -top-1 -right-2 font-semibold bg-red-500 w-5 h-5 rounded-full flex items-center text-white justify-center animate-pulse"
+                  >{{ unreadCount() }}</span
+                >
+              }
 
-          <div
-            class="absolute right-0 top-full pt-3 w-56 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300 transform origin-top-right scale-95 group-hover:scale-100"
-            [class.opacity-100]="userMenuShow()"
-            [class.!pointer-events-auto]="userMenuShow()"
-            [class.opacity-0]="!userMenuShow()"
-          >
+              <div
+                class="absolute top-10 rounded-2xl pointer-events-none md:-right-3 h-90 w-80 z-200 bg-white border border-slate-500 opacity-0 transition-all duration-200 overflow-y-auto flex flex-col p-1 gap-1"
+                [class.opacity-100]="notiIsOpen()"
+                [class.!pointer-events-auto]="notiIsOpen()"
+              >
+                @for (noti of notifications(); track noti.id) {
+                  @if (noti.read_at) {
+                    <div class="flex flex-col m-1 border-b-2 border-slate-300 p-2 pb-10 gap-2 rounded-2xl bg-slate-200">
+                      <div class="flex justify-between">
+                        <span class="text-slate-500 font-semibold text-xl">{{ noti.title }}</span>
+                        <span class="text-sm font-medium text-slate-400">{{
+                          noti.notification_date
+                        }}</span>
+                      </div>
+                      <div>
+                        <span class="font-mono text-slate-500">&nbsp;&nbsp;{{ noti.message }}</span>
+                      </div>
+                    </div>
+                  } @else {
+                    <div class="flex flex-col m-2 border-b-2 border-slate-400 rounded-2xl p-2 pb-10 gap-2 hover:bg-slate-100 cursor-pointer">
+                      <div class="flex justify-between">
+                        <span class="text-slate-800 font-semibold text-xl animate-pulse">{{ noti.title }}</span>
+                        <span class="text-sm font-medium text-slate-500">{{
+                          noti.notification_date
+                        }}</span>
+                      </div>
+                      <div>
+                        <span class="font-mono text-slate-600">&nbsp;&nbsp;{{ noti.message }}</span>
+                      </div>
+                    </div>
+                  }
+                }
+              </div>
+            }
+          </div>
+          <div class="relative group shrink-0 z-50 w-auto" (click)="toggleUserMenu()">
             <div
-              class="bg-white rounded-3xl border-4 border-pink-200 shadow-[0_8px_0_#fbcfe8] overflow-hidden p-2 flex flex-col gap-1"
+              class="font-black flex items-center gap-3 text-lg md:text-xl text-pink-500 bg-pink-100 px-6 py-3 rounded-full border-2 border-pink-300 shadow-[0_4px_0_#fbcfe8] group-hover:-translate-y-1 group-hover:shadow-[0_6px_0_#fbcfe8] group-hover:bg-pink-200 active:translate-y-1 active:shadow-none transition-all cursor-pointer"
             >
-              <a
-                class="flex px-4 py-3 text-pink-500 font-black hover:bg-pink-100 hover:text-pink-600 hover:-translate-y-0.5 rounded-2xl transition-all cursor-pointer items-center gap-3"
+              <span class="flex items-center gap-1 text-pink-400" id="user-currency">
+                💎 {{ currentUser()?.currency | number }}
+              </span>
+              <div class="w-0.5 h-5 bg-pink-300 rounded-full"></div>
+              <span>{{ currentUser()?.username }}</span>
+              <app-icons [name]="'downIcon'"></app-icons>
+            </div>
+
+            <div
+              class="absolute right-0 top-full pt-3 w-56 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300 transform origin-top-right scale-95 group-hover:scale-100"
+              [class.opacity-100]="userMenuShow()"
+              [class.!pointer-events-auto]="userMenuShow()"
+              [class.opacity-0]="!userMenuShow()"
+            >
+              <div
+                class="bg-white rounded-3xl border-4 border-pink-200 shadow-[0_8px_0_#fbcfe8] overflow-hidden p-2 flex flex-col gap-1"
               >
-                <app-icons [name]="'user'"></app-icons>
-                Profile
-              </a>
-              <div class="h-1 bg-pink-100/60 rounded-full my-1 mx-2"></div>
-              <a
-                class="flex px-4 py-3 text-red-400 font-black hover:bg-red-50 hover:text-red-500 hover:-translate-y-0.5 rounded-2xl transition-all cursor-pointer items-center gap-3"
-                (click)="logout()"
-              >
-                <app-icons [name]="'logout'"></app-icons>
-                Logout
-              </a>
+                <a
+                  class="flex px-4 py-3 text-pink-500 font-black hover:bg-pink-100 hover:text-pink-600 hover:-translate-y-0.5 rounded-2xl transition-all cursor-pointer items-center gap-3"
+                >
+                  <app-icons [name]="'user'"></app-icons>
+                  Profile
+                </a>
+                <div class="h-1 bg-pink-100/60 rounded-full my-1 mx-2"></div>
+                <a
+                  class="flex px-4 py-3 text-red-400 font-black hover:bg-red-50 hover:text-red-500 hover:-translate-y-0.5 rounded-2xl transition-all cursor-pointer items-center gap-3"
+                  (click)="logout()"
+                >
+                  <app-icons [name]="'logout'"></app-icons>
+                  Logout
+                </a>
+              </div>
             </div>
           </div>
         </div>

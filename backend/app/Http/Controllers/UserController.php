@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\GiftNotificationResource;
+use App\Http\Resources\NotificationResource;
 use App\Models\Inventory;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -74,6 +74,16 @@ class UserController extends Controller
 
         $notifications = $user->notifications;
 
-        return response()->json(GiftNotificationResource::collection($notifications),200);
+        return response()->json(NotificationResource::collection($notifications),200);
+    }
+
+    function markAsReadAll(){
+        $user = Auth::user();
+
+        $user->unreadNotifications->markAsRead();
+
+        return response()->json([
+            'message' => 'ok'
+        ],200);
     }
 }
