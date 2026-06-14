@@ -10,17 +10,18 @@ import { ItemViewComponent } from '../../../components/item-view-component/item-
   styleUrl: './inventory.css',
 })
 export class Inventory {
-   private readonly inventoryService = inject(InventoryService);
+  private readonly inventoryService = inject(InventoryService);
+  protected readonly Array = Array;
 
   selectedItem = signal<GachaItem | null>(null);
   inventoryData = signal<PaginationResponse<InventoryItem> | null>(null);
   isLoading = signal<boolean>(false);
 
-  viewImage(item:GachaItem):void{
+  viewImage(item: GachaItem): void {
     this.selectedItem.set(item);
   }
 
-  closeItem():void{
+  closeItem(): void {
     this.selectedItem.set(null);
   }
 
@@ -38,7 +39,7 @@ export class Inventory {
       error: (error) => {
         console.error(error);
         this.isLoading.set(false);
-      }
+      },
     });
   }
 
