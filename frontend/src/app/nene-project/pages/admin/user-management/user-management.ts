@@ -8,18 +8,11 @@ import {
 } from '../../../models/Resource';
 import { Icons } from '../../../components/icons/icons';
 import { email, form, FormField, min, required } from '@angular/forms/signals';
-
-export interface UpdateUserForm {
-  id: number | null;
-  username: string;
-  email: string;
-  role: string;
-  currency: number;
-}
+import { NotificationModel, UpdateUserForm } from '../../../models/FormModel';
 
 @Component({
   selector: 'app-user-management',
-  imports: [Icons,FormField],
+  imports: [Icons, FormField],
   templateUrl: './user-management.html',
   styleUrl: './user-management.css',
 })
@@ -51,6 +44,8 @@ export class UserManagement implements OnInit {
   }
 
   protected readonly isEditModalOpen = signal(false);
+  protected readonly isNotiModalOpen = signal(false);
+  protected readonly isGiveawayModalOpen = signal(false);
 
   protected readonly updateUserModel: WritableSignal<UpdateUserForm> = signal({
     id: null,
@@ -58,6 +53,23 @@ export class UserManagement implements OnInit {
     email: '',
     role: '',
     currency: 0,
+  });
+
+  protected readonly notificationModel = signal<NotificationModel>({
+    title: '',
+    message: '',
+  });
+
+  protected readonly giveawayGemsModel = signal({
+    amount: 0,
+  });
+
+  protected readonly sendNotificationForm = form(this.notificationModel, (path) => {
+    (required(path.title), required(path.message));
+  });
+
+  protected readonly giveawayGemsForm = form(this.giveawayGemsModel, (path) => {
+    required(path.amount);
   });
 
   protected readonly updateUserForm = form(this.updateUserModel, (path) => {
@@ -79,26 +91,65 @@ export class UserManagement implements OnInit {
     });
     this.isEditModalOpen.set(true);
   }
+  protected openNotiModal() {
+    this.notificationModel.set({
+      title: '',
+      message: '',
+    });
+    this.isNotiModalOpen.set(true);
+  }
+  protected openGiveawayModal() {
+    this.giveawayGemsModel.set({
+      amount: 0,
+    });
+    this.isGiveawayModalOpen.set(true);
+  }
 
   protected closeEditModal() {
     this.isEditModalOpen.set(false);
   }
+  protected closeNotiModal() {
+    this.isNotiModalOpen.set(false);
+  }
+  protected closeGiveawayModal() {
+    this.isGiveawayModalOpen.set(false);
+  }
+
+  submitNoti() {
+    this.adminService.sendNoti(this.sendNotificationForm().value()).subscribe({
+      next: (res) => {
+        alert(`${res.message}`);
+        this.closeNotiModal();
+      },
+    });
+  }
+
+  submitGiveaway() {
+    this.adminService.gemGiveaway(this.giveawayGemsForm().value()).subscribe({
+      next: (res) => {
+        alert(res.message);
+        this.closeGiveawayModal();
+        this.loadUser();
+      },
+    });
+  }
 
   protected submitUpdate() {
     if (this.updateUserForm().invalid()) return;
-    
+
     this.adminService.updateUser(this.updateUserForm().value()).subscribe({
-      next:(res)=>{
+      next: (res) => {
         alert(res.message);
-        this.lodaUser()
-      },error:(err:ResourceErrorResponse)=>{
+        this.loadUser();
+      },
+      error: (err: ResourceErrorResponse) => {
         alert(err.error.message);
-      }
+      },
     });
     this.closeEditModal();
   }
 
-  private lodaUser():void{
+  private loadUser(): void {
     this.adminService.getUserList(this.searchTerm()).subscribe({
       next: (response) => {
         this.userListResponse.set(response);
@@ -110,6 +161,6 @@ export class UserManagement implements OnInit {
   }
 
   ngOnInit() {
-    this.lodaUser()
+    this.loadUser();
   }
 }

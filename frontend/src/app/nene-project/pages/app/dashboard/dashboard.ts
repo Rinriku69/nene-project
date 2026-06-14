@@ -21,6 +21,7 @@ export class Dashboard {
   private readonly authService = inject(AuthService);
   private readonly currencyService = inject(CurrencyService);
 
+  userCurrencyId = '#user-currency';
   currentUser = computed(() => this.authService.currentUserState());
 
   canClaimDaily = linkedSignal(() => {
@@ -53,5 +54,40 @@ export class Dashboard {
         console.log(err.error.message);
       },
     });
+  }
+
+  claimLoginAnimate(claimBtn: HTMLElement): void {
+    const userCurrecny = document.querySelector(this.userCurrencyId);
+    if (!userCurrecny) return;
+    
+
+    const claimBtnRect = claimBtn.getBoundingClientRect();
+    const userCurrencyRect = userCurrecny.getBoundingClientRect();
+
+    const flyDiv = document.createElement('div');
+    flyDiv.className = 'fixed z-2000 w-4 h-4 bg-blue-500 rounded-full transition-all duration-1000';
+    flyDiv.style.left = `${claimBtnRect.left + claimBtnRect.width /2 }px`;
+    flyDiv.style.top = `${claimBtnRect.top}px`;
+    flyDiv.style.transform = 'translate(0,0) scale(3)';
+    flyDiv.style.opacity = '1';
+
+    document.body.appendChild(flyDiv);
+
+    requestAnimationFrame(() => {
+      flyDiv.style.transform = `translate(
+      ${userCurrencyRect.left - claimBtnRect.left - claimBtnRect.width /2 }px,${userCurrencyRect.top - claimBtnRect.top}px) scale(1)`;
+      flyDiv.style.opacity = '0.3';
+    });
+    this.currencyBounce()
+    setTimeout(() => flyDiv.remove(), 1200);
+  }
+
+  currencyBounce(){
+    const userCurrency = document.querySelector(this.userCurrencyId);
+
+    userCurrency?.classList.add('animate-pulse');
+    setTimeout(()=>{
+      userCurrency?.classList.remove('animate-pulse')
+    },4000)
   }
 }

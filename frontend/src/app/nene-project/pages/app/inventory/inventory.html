@@ -4,7 +4,7 @@
   <div class="absolute w-full h-full z-0 opacity-60 bg-brand-white"></div>
 
   <div
-    class="relative z-201 max-w-6xl mx-auto flex flex-col items-center gap-8"
+    class="relative md:pb-10 lg:pb-0 max-w-6xl mx-auto flex flex-col items-center gap-8"
   >
     <h1
       class="text-4xl md:text-5xl font-black text-pink-500 drop-shadow-[0_4px_4px_#fbcfe8] text-center"
@@ -13,8 +13,12 @@
     </h1>
 
     @if (isLoading()) {
-      <div class="flex justify-center items-center py-20">
-        <div class="text-6xl animate-bounce">✨</div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full animate-smooth-appear">
+        @for(i of Array(6); track $index){
+          <div class="relative aspect-4/3 rounded-3xl overflow-hidden  bg-pink-300 animate-pulse  ease-out w-80 group flex items-end p-5">
+              <div class="w-full bg-brand-white h-5 animate-pulse rounded-full"></div>
+          </div>
+        }
       </div>
     } @else if (inventoryData() && inventoryData()!.data.length > 0) {
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full animate-smooth-appear">

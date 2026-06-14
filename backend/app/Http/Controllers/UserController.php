@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\NotificationResource;
+use App\Models\Inventory;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -41,7 +43,7 @@ class UserController extends Controller
     private function updateDailyLoginCurrency(int $amount, User $user): bool
     {
 
-        
+
         if (!$user->last_login_at || !$user->last_login_at->isToday()) {
             $user->currency += $amount;
 
@@ -57,12 +59,31 @@ class UserController extends Controller
 
     public function getInventory(Request $request): JsonResponse
     {
-        $inventory = \App\Models\Inventory::where('user_id', Auth::id())
+        $inventory = Inventory::where('user_id', Auth::id())
             ->join('items', 'inventories.item_id', '=', 'items.id')
             ->select('items.name', 'items.description', 'items.rarity', 'items.url', 'inventories.quantity')
             ->orderByRaw("CASE WHEN items.rarity = 'SSR' THEN 1 WHEN items.rarity = 'SR' THEN 2 WHEN items.rarity = 'R' THEN 3 WHEN items.rarity = 'N' THEN 4 ELSE 5 END")
             ->paginate(6);
 
         return response()->json($inventory);
+    }
+
+    function getNoti(): JsonResponse
+    {
+        $user = Auth::user();
+
+        $notifications = $user->notifications;
+
+        return response()->json(NotificationResource::collection($notifications),200);
+    }
+
+    function markAsReadAll(){
+        $user = Auth::user();
+
+        $user->unreadNotifications->markAsRead();
+
+        return response()->json([
+            'message' => 'ok'
+        ],200);
     }
 }

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { computed, inject, Injectable, linkedSignal, signal } from '@angular/core';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { computed, inject, Injectable, linkedSignal, Resource, signal } from '@angular/core';
+import { catchError, Observable, of, switchMap, tap } from 'rxjs';
 import { LoginModel, RegisterModel, User } from '../models/AuthModel';
-import { ResourceResponse } from '../models/Resource';
+import { NotificationItem, Notifications, ResourceResponse } from '../models/Resource';
 import co from '@angular/common/locales/co';
 
 @Injectable({
@@ -14,6 +14,7 @@ export class AuthService {
   private readonly currentUser = signal<User|null>(null);
   readonly currentUserState = linkedSignal(()=>this.currentUser());
   readonly isLoggedIn = computed(()=> this.currentUser()!== null);
+  readonly notifications = signal<NotificationItem[]|null>(null);
 
   getCSRFToken():Observable<ResourceResponse>{
     return this.http.get<ResourceResponse>("/sanctum/csrf-cookie");
@@ -33,6 +34,16 @@ export class AuthService {
     )
   }
 
+  getNotification():Observable<NotificationItem[]>{
+    return this.http.get<NotificationItem[]>(`${this.baseApiUrl}/getNoti`).pipe(
+      tap((noti)=>{this.notifications.set(noti)})
+    )
+  }
+
+  markNotiAsReadAll(){
+    return this.http.post<ResourceResponse>(`${this.baseApiUrl}/markAsReadAll`,{})
+  }
+
   logout():Observable<ResourceResponse>{
     return this.http.post<ResourceResponse>(`${this.baseApiUrl}/auth/logout`,{}).pipe(
       tap(()=>this.currentUser.set(null))
@@ -44,7 +55,8 @@ export class AuthService {
       catchError(()=>{
         this.currentUser.set(null);
         return of(null);
-      })
+      }),
+      tap(this.getNotification()),
     )
   }
 }

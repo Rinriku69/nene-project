@@ -16,7 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([xsrfInterceptor,loadingInterceptor])),
     provideAppInitializer(()=>{
       const authService = inject(AuthService);
-
+      
       return authService.hydrateAuthState();
     })
   ]
