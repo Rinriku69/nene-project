@@ -11,6 +11,7 @@ use App\Notifications\UserNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rule;
@@ -59,56 +60,75 @@ class AdminController extends Controller
     function sendUserNoti(Request $request)
     {
         $validated = $request->validate([
-            'title' => ['required','string'],
-            'message' => ['required','string'],
+            'title' => ['required', 'string'],
+            'message' => ['required', 'string'],
         ]);
-        Gate::authorize('isAdmin',Auth::user());
-        
+        Gate::authorize('isAdmin', Auth::user());
+
         $user = User::all();
 
-        Notification::send($user, new UserNotification($validated['title'],$validated['message']));
+        Notification::send($user, new UserNotification($validated['title'], $validated['message']));
 
         return response()->json([
             'message' => 'Notification sent'
-        ],200);
+        ], 200);
     }
 
-    function getAllItems():JsonResponse{
-        Gate::authorize('isAdmin',Auth::user());
+    function getAllItems(): JsonResponse
+    {
+        Gate::authorize('isAdmin', Auth::user());
         $items = Item::orderBy('rarity')->get();
 
-        return response()->json(AdminItemResource::collection($items),200);
+        return response()->json(AdminItemResource::collection($items), 200);
     }
 
-    function updateItem(Request $request):JsonResponse{
-        Gate::authorize('isAdmin',Auth::user());
+    function updateItem(Request $request): JsonResponse
+    {
+        Gate::authorize('isAdmin', Auth::user());
         $validated = $request->validate([
-            'name' => ['required','string'],
+            'name' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'url'=>['required','string'],
-            'rarity' => ['required','string'],
-            'weight' => ['required','integer']
+            'url' => ['required', 'string'],
+            'rarity' => ['required', 'string'],
+            'weight' => ['required', 'integer']
         ]);
-        $item = Item::where('id',$request->id)->update($validated);
+        $item = Item::where('id', $request->id)->update($validated);
 
         return response()->json([
             'message' => 'Successfully Updated'
-        ],200);
+        ], 200);
     }
 
-     function addItem(Request $request):JsonResponse{
-        Gate::authorize('isAdmin',Auth::user());
+    function addItem(Request $request): JsonResponse
+    {
+        Gate::authorize('isAdmin', Auth::user());
         $validated = $request->validate([
-            'name' => ['required','string'],
+            'name' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'url'=>['required','string'],
-            'rarity' => ['required','string'],
-            'weight' => ['required','integer']
+            'url' => ['required', 'string'],
+            'rarity' => ['required', 'string'],
+            'weight' => ['required', 'integer']
         ]);
         $item = Item::create($validated);
 
         return response()->json([
             'message' => 'Successfully Created'
-        ],200);
+        ], 200);
+    }
+
+    function gemGiveaway(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'amount' => ['required', 'integer']
+        ]);
+        Gate::authorize('isAdmin', Auth::user());
+
+        DB::table('users')->update([
+            'currency' => DB::raw('currency +'.$validated['amount'])
+        ]);
+
+        return response()->json([
+            'message' => "Giveaway " . $validated['amount'] . " to all user success"
+        ], 200);
     }
 }

@@ -48,6 +48,7 @@ Route::middleware((['auth']))
                 Route::get('/getAllItems','getAllItems')->name('getAllItems');
                 Route::post('/updateItem','updateItem')->name('updateItem');
                 Route::post('/addItem','addItem')->name('addItem');
+                Route::post('/gemGiveaway','gemGiveaway')->name('gemGiveaway');
             });
 
         Route::controller(GachaController::class)

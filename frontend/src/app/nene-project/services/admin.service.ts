@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { User } from '../models/AuthModel';
 import { HttpClient } from '@angular/common/http';
 import { filterTerm, FullGachaItem, GachaItem, PaginationResponse, ResourceResponse, UserResource } from '../models/Resource';
-import { UpdateUserForm } from '../pages/admin/user-management/user-management';
+import { NotificationModel, UpdateUserForm } from '../models/FormModel';
 
 
 
@@ -32,6 +32,14 @@ export class AdminService {
 
   addItem(itemForm: FullGachaItem): Observable<ResourceResponse>{
     return this.http.post<ResourceResponse>(`${this.baseApiUrl}/addItem`,itemForm)
+  }
+
+  sendNoti(notiForm:NotificationModel):Observable<ResourceResponse>{
+    return this.http.post<ResourceResponse>(`${this.baseApiUrl}/sendUserNoti`,notiForm)
+  }
+
+  gemGiveaway(gemForm:{amount:number}):Observable<ResourceResponse>{
+    return this.http.post<ResourceResponse>(`${this.baseApiUrl}/gemGiveaway`,gemForm)
   }
 
 }
