@@ -44,7 +44,10 @@ Route::middleware((['auth']))
             ->group(static function (): void {
                 Route::get('/getUserList', 'getUserList')->name('getUserList');
                 Route::post('/updateUser/{id}', 'updateUser')->name('updateUser');
-                Route::post('/sendUserNoti','sendUserNoti')->name('sendUserNoti');
+                Route::post('/sendUserNoti','sendUserNoti')->name('sendUserNoti'); 
+                Route::get('/getAllItems','getAllItems')->name('getAllItems');
+                Route::post('/updateItem','updateItem')->name('updateItem');
+                Route::post('/addItem','addItem')->name('addItem');
             });
 
         Route::controller(GachaController::class)

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AdminItemResource;
 use App\Http\Resources\UserResource;
+use App\Models\Item;
 use App\Models\User;
 use App\Notifications\UserNotification;
 use Illuminate\Http\JsonResponse;
@@ -68,6 +70,45 @@ class AdminController extends Controller
 
         return response()->json([
             'message' => 'Notification sent'
+        ],200);
+    }
+
+    function getAllItems():JsonResponse{
+        Gate::authorize('isAdmin',Auth::user());
+        $items = Item::orderBy('rarity')->get();
+
+        return response()->json(AdminItemResource::collection($items),200);
+    }
+
+    function updateItem(Request $request):JsonResponse{
+        Gate::authorize('isAdmin',Auth::user());
+        $validated = $request->validate([
+            'name' => ['required','string'],
+            'description' => ['required', 'string'],
+            'url'=>['required','string'],
+            'rarity' => ['required','string'],
+            'weight' => ['required','integer']
+        ]);
+        $item = Item::where('id',$request->id)->update($validated);
+
+        return response()->json([
+            'message' => 'Successfully Updated'
+        ],200);
+    }
+
+     function addItem(Request $request):JsonResponse{
+        Gate::authorize('isAdmin',Auth::user());
+        $validated = $request->validate([
+            'name' => ['required','string'],
+            'description' => ['required', 'string'],
+            'url'=>['required','string'],
+            'rarity' => ['required','string'],
+            'weight' => ['required','integer']
+        ]);
+        $item = Item::create($validated);
+
+        return response()->json([
+            'message' => 'Successfully Created'
         ],200);
     }
 }

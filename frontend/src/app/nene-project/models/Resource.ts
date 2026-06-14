@@ -37,6 +37,11 @@ export interface GachaItem{
     url:string;
 }
 
+export interface FullGachaItem extends GachaItem{
+    id:number;
+    weight:number;
+}
+
 interface Link {
     url:string;
     label:string;
