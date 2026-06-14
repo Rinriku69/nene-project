@@ -43,7 +43,7 @@
       @if (currentUser()) {
         <div class="flex items-center gap-3">
           <div class="relative">
-            <div (click)="toggleNoti()">
+            <div class="cursor-pointer" (click)="toggleNoti()">
               @if (notiIsOpen()) {
                 <app-icons
                   [name]="'open-envelope'"
@@ -79,7 +79,7 @@
                         }}</span>
                       </div>
                       <div>
-                        <span class="font-mono text-slate-500">&nbsp;&nbsp;{{ noti.message }}</span>
+                        <span class="font-mono text-slate-500 ml-2">{{ noti.message }}</span>
                       </div>
                     </div>
                   } @else {
@@ -91,7 +91,7 @@
                         }}</span>
                       </div>
                       <div>
-                        <span class="font-mono text-slate-600">&nbsp;&nbsp;{{ noti.message }}</span>
+                        <span class="font-mono text-slate-600 ml-2">{{ noti.message }}</span>
                       </div>
                     </div>
                   }
