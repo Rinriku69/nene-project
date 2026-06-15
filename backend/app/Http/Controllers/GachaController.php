@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BannerResource;
+use App\Http\Resources\GachaLogResource;
 use App\Http\Resources\ItemResource;
 use App\Models\GachaLog;
 use App\Models\Inventory;
@@ -146,7 +147,7 @@ class GachaController extends Controller
             ->paginate(10);
 
         return response()->json(
-            $logs
+            GachaLogResource::collection($logs)
         );
     }
 
