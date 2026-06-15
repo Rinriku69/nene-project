@@ -36,6 +36,7 @@ Route::middleware((['auth']))
             ->group(static function (): void {
                 Route::post('/pull', 'pull')->name('pull');
                 Route::get('/logs', 'getGachaLogs')->name('logs');
+                Route::get('/getFeatureBanner','getFeatureBanner')->name('getFeatureBanner');
             });
 
         Route::controller(AdminController::class)

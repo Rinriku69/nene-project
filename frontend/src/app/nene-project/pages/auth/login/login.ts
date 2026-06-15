@@ -34,7 +34,8 @@ export class Login {
    submit(){
     return this.authService.getCSRFToken().pipe(
       switchMap(()=> this.authService.login(this.loginForm().value())),
-      switchMap(()=> this.authService.getUser())
+      switchMap(()=> this.authService.getUser()),
+      switchMap(()=>this.authService.getNotification())
     ).subscribe({
       next:(_)=>{
         this.router.navigate(['/app/dashboard'])

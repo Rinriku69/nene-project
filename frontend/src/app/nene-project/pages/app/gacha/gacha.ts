@@ -1,6 +1,11 @@
-import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import { GachaItem, ResourceErrorResponse, PaginationResponse, GachaLog } from '../../../models/Resource';
+import {
+  GachaItem,
+  ResourceErrorResponse,
+  PaginationResponse,
+  GachaLog,
+} from '../../../models/Resource';
 import { GachaService } from '../../../services/gacha.service';
 import { AudioService } from '../../../services/audio.service';
 import { ItemResultComponent } from '../../../components/item-result-component/item-result-component';
@@ -14,7 +19,7 @@ import { ItemViewComponent } from '../../../components/item-view-component/item-
 })
 export class Gacha implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
-  private readonly gachaService = inject(GachaService)
+  private readonly gachaService = inject(GachaService);
   private readonly audioService = inject(AudioService);
   currentUser = computed(() => this.authService.currentUserState());
   isRolling = signal<boolean>(false);
@@ -23,14 +28,10 @@ export class Gacha implements OnInit, OnDestroy {
 
   rollType = signal<1 | 10 | 0>(0);
   confirmModal = signal<boolean>(false);
-  pullAmount = signal<number|null>(null);
+  pullAmount = signal<number | null>(null);
   gemLeft = signal<number>(0);
 
-  featuredItems = [
-    { url: 'https://res.cloudinary.com/dhvmcbbdi/image/upload/v1780825123/134227912693387031_1452_817_1780434105773_d4iyrq.jpg', alt: 'Nene Flower SR' },
-    { url: 'https://res.cloudinary.com/dhvmcbbdi/image/upload/v1781419507/134234158893128900_1452_817_1780434019350_fdte6k.jpg', alt: 'Gimme a hug!! SR' },
-    { url: 'https://res.cloudinary.com/dhvmcbbdi/image/upload/v1780825390/134224687394682974_1452_817_1780434126139_if4d0i.jpg', alt: 'Triple Meow SR' }
-  ];
+  featuredItems = this.gachaService.featureBanner;
 
   viewItem(item: GachaItem) {
     this.selectedItem.set(item);
@@ -40,17 +41,17 @@ export class Gacha implements OnInit, OnDestroy {
     this.selectedItem.set(null);
   }
 
-  closeConfirmModal(){
+  closeConfirmModal() {
     this.confirmModal.set(false);
   }
 
-  confirmPull(type: 1 | 10){
+  confirmPull(type: 1 | 10) {
     this.confirmModal.set(true);
-    if(type === 1){
-     this.rollType.set(type);
-     this.pullAmount.set(100);
-     this.gemLeft.set(this.currentUser()?.currency! - this.pullAmount()!);
-    }else{
+    if (type === 1) {
+      this.rollType.set(type);
+      this.pullAmount.set(100);
+      this.gemLeft.set(this.currentUser()?.currency! - this.pullAmount()!);
+    } else {
       this.rollType.set(type);
       this.pullAmount.set(1000);
       this.gemLeft.set(this.currentUser()?.currency! - this.pullAmount()!);
@@ -62,19 +63,21 @@ export class Gacha implements OnInit, OnDestroy {
     this.isRolling.set(true);
     this.closeConfirmModal();
     this.pullResults.set(null);
-    
+
     this.gachaService.gachaRoll(this.rollType()).subscribe({
-      next:(response)=>{
+      next: (response) => {
         this.pullResults.set(response.results);
-        this.rollType() === 1 ? this.audioService.playSfx('singlePull.mp3') : this.audioService.playSfx('multiPull.mp3');
+        this.rollType() === 1
+          ? this.audioService.playSfx('singlePull.mp3')
+          : this.audioService.playSfx('multiPull.mp3');
         this.authService.getUser().subscribe();
         this.isRolling.set(false);
       },
-      error:(error:ResourceErrorResponse)=>{
+      error: (error: ResourceErrorResponse) => {
         this.isRolling.set(false);
-        console.error(error)
-      }
-    })
+        console.error(error);
+      },
+    });
   }
 
   closeResults() {
@@ -84,7 +87,7 @@ export class Gacha implements OnInit, OnDestroy {
 
   currentSlide = signal(0);
   private slideInterval: any;
-  
+
   logModal = signal<boolean>(false);
   gachaLogs = signal<PaginationResponse<GachaLog> | null>(null);
 
@@ -100,7 +103,7 @@ export class Gacha implements OnInit, OnDestroy {
       },
       error: (error: ResourceErrorResponse) => {
         console.error(error);
-      }
+      },
     });
   }
 
@@ -114,15 +117,15 @@ export class Gacha implements OnInit, OnDestroy {
     this.logModal.set(false);
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.slideInterval = setInterval(() => {
-      this.currentSlide.update(index => 
-        (index + 1) % this.featuredItems.length
-      );
+      if (this.featuredItems.hasValue()) {
+        this.currentSlide.update((index) => (index + 1) % this.featuredItems.value()!.length);
+      }
     }, 3000);
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     if (this.slideInterval) {
       clearInterval(this.slideInterval);
     }
