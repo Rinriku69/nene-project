@@ -1,0 +1,14 @@
+@for (petal of petals; track $index) {
+  <svg
+    viewBox="0 0 100 100"
+    class="fill-pink-300 z-2000 stroke-pink-400 stroke-1 hover:fill-pink-400 transition animate-petal -top-5 w-6 h-8 fixed "
+    [style.left.%]="petal.x"
+    [style.animation-delay.s]="petal.delay"
+    [style.animation-duration.s]="petal.duration"
+
+  >
+    <path
+      d="M50 15 C 35 2, 5 35, 20 60 C 30 75, 45 90, 50 100 C 55 90, 70 75, 80 60 C 95 35, 65 2, 50 15 Z"
+    />
+  </svg>
+}
