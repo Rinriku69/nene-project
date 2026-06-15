@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BannerResource;
 use App\Http\Resources\ItemResource;
 use App\Models\GachaLog;
 use App\Models\Inventory;
@@ -147,5 +148,15 @@ class GachaController extends Controller
         return response()->json(
             $logs
         );
+    }
+
+    function getFeatureBanner():JsonResponse{
+        $features = Item::where('rarity','R')
+                    ->orWhere('rarity','SR')
+                    ->inRandomOrder()
+                    ->limit(3)
+                    ->get();
+        
+        return response()->json(BannerResource::collection($features),200);
     }
 }

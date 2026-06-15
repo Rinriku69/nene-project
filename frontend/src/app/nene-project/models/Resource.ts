@@ -102,3 +102,8 @@ export interface NotificationItem {
     read_at:string | null
 }
 
+export interface FeatureBanner{
+    url:string;
+    alt:string;
+}
+

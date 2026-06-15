@@ -13,13 +13,15 @@
     <div
       class="w-full relative rounded-4xl overflow-hidden border-4 border-pink-300 shadow-[0_12px_0_#fbcfe8] bg-white aspect-21/9"
     >
-      @for (item of featuredItems; track $index) {
+    @if(featuredItems.hasValue()){
+
+      @for (item of featuredItems.value(); track $index) {
         <div
           class="absolute inset-0 transition-opacity duration-1000 ease-in-out"
           [class.opacity-100]="$index === currentSlide()"
           [class.opacity-0]="$index !== currentSlide()"
         >
-          <img
+          <img 
             [src]="item.url"
             [alt]="item.alt"
             class="absolute block w-full h-full object-cover"
@@ -32,11 +34,17 @@
           </div>
         </div>
       }
+    }@else if (featuredItems.isLoading()) {
+      <div
+          class="absolute inset-0 bg-pink-300 animate-pulse"
+        
+        ></div>
+    }
 
       <div
         class="absolute bottom-4 right-4 bg-white/80 backdrop-blur-md px-4 py-2 rounded-full border-2 border-pink-200"
       >
-        <span class="text-pink-500 font-black">Featured {{featuredItems[0].alt}}!!</span>
+        <span class="text-pink-500 font-black">Featured Nene Flower SR!!</span>
       </div>
     </div>
 
