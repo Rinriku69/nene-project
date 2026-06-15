@@ -145,9 +145,10 @@ class GachaController extends Controller
             ->select('items.name', 'gacha_logs.created_at')
             ->orderBy('gacha_logs.created_at', 'desc')
             ->paginate(10);
-
+        
+        $logs->data = GachaLogResource::collection($logs);
         return response()->json(
-            GachaLogResource::collection($logs)
+            $logs
         );
     }
 
