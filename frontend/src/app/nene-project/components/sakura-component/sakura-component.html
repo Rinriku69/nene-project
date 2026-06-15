@@ -1,7 +1,7 @@
 @for (petal of petals; track $index) {
   <svg
     viewBox="0 0 100 100"
-    class="fill-pink-300 z-2000 stroke-pink-400 stroke-1 hover:fill-pink-400 transition animate-petal -top-5 w-6 h-8 fixed "
+    class="fill-pink-300 pointer-events-none z-2000 stroke-pink-400 stroke-1 hover:fill-pink-400 transition animate-petal -top-5 w-6 h-8 fixed "
     [style.left.%]="petal.x"
     [style.animation-delay.s]="petal.delay"
     [style.animation-duration.s]="petal.duration"
