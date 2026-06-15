@@ -146,9 +146,8 @@ class GachaController extends Controller
             ->orderBy('gacha_logs.created_at', 'desc')
             ->paginate(10);
 
-        return response()->json(
-            GachaLogResource::collection($logs)
-        );
+        $logs->date = GachaLogResource::collection($logs);
+        return response()->json($logs);
     }
 
     function getFeatureBanner():JsonResponse{
