@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\GachaController;
+use App\Http\Controllers\SafeZoneMessageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -58,4 +59,12 @@ Route::middleware((['auth']))
             ->group(static function (): void {
                 Route::post('/pull', 'pull')->name('pull');
             });
+        
+        Route::controller(SafeZoneMessageController::class)
+        ->prefix('/safezone')
+        ->name('safezone')
+        ->group(static function():void{
+            Route::post('/addTanzaku','addTanzaku')->name('addTanzaku');
+            Route::get('/getMessages','getMessages')->name('getMessages');
+        });
     });

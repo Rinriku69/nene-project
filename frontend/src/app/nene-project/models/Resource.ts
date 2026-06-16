@@ -1,109 +1,120 @@
-import { TrailingSlashPathLocationStrategy } from "@angular/common";
-import { User } from "./AuthModel";
+import { TrailingSlashPathLocationStrategy } from '@angular/common';
+import { User } from './AuthModel';
 
-export interface ResourceResponse{
-    headers:{
-        normalizedNames:{};
-        lazyUpdate: null | boolean
-    }
-    status:number;
-    statusText:string;
-    url:string;
-    ok:boolean;
-    name:string;
-    message:string;
+export interface ResourceResponse {
+  headers: {
+    normalizedNames: {};
+    lazyUpdate: null | boolean;
+  };
+  status: number;
+  statusText: string;
+  url: string;
+  ok: boolean;
+  name: string;
+  message: string;
 }
 
-export interface ResourceErrorResponse extends ResourceResponse{
-    error:ErrorObjectResponse
+export interface ResourceErrorResponse extends ResourceResponse {
+  error: ErrorObjectResponse;
 }
- 
-export interface ErrorObjectResponse{
-    errors:{
-        username?: string[];
-        email?: string[];
-    };
-    message:string;
+
+export interface ErrorObjectResponse {
+  errors: {
+    username?: string[];
+    email?: string[];
+  };
+  message: string;
 }
 
 export interface GachaResponse {
-    results: GachaItem[];
+  results: GachaItem[];
 }
 
-export interface GachaItem{
-    name:string;
-    description:string;
-    rarity:'N'|'R'|'SR'|'SSR';
-    url:string;
+export interface GachaItem {
+  name: string;
+  description: string;
+  rarity: 'N' | 'R' | 'SR' | 'SSR';
+  url: string;
 }
 
-export interface FullGachaItem extends GachaItem{
-    id:number;
-    weight:number;
+export interface FullGachaItem extends GachaItem {
+  id: number;
+  weight: number;
 }
 
 interface Link {
-    url:string;
-    label:string;
-    page:number;
-    active: boolean;
+  url: string;
+  label: string;
+  page: number;
+  active: boolean;
 }
 
-export interface PaginationResponse<T>{
-    current_page : number;
-    data: T[];
-    first_page_url: string;
-    from: number;
-    last_page: number;
-    last_page_url:string;
-    links: Link[];
-    next_page_url: string | null;
-    path:string;
-    per_page: number;
-    prev_page_url: string | null;
-    to:number;
-    total:number;
+export interface PaginationResponse<T> {
+  current_page: number;
+  data: T[];
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  links: Link[];
+  next_page_url: string | null;
+  path: string;
+  per_page: number;
+  prev_page_url: string | null;
+  to: number;
+  total: number;
 }
 
-export interface UserResource extends User{
-    id:number;
-    email_verified_at: string |null;
-    created_at: string;
-    updated_at: string;
+export interface UserResource extends User {
+  id: number;
+  email_verified_at: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface filterTerm {
-  search:string|null;
-  role:string|null;
+  search: string | null;
+  role: string | null;
 }
 
 export interface GachaLog {
-    name: string;
-    created_at: string;
+  name: string;
+  created_at: string;
 }
 
 export interface InventoryItem {
-    name: string;
-    description: string;
-    rarity: 'SSR' | 'SR' | 'R' | 'N';
-    url: string;
-    quantity: number;
+  name: string;
+  description: string;
+  rarity: 'SSR' | 'SR' | 'R' | 'N';
+  url: string;
+  quantity: number;
 }
 
 export interface Notifications<T> {
-    data: T[]
+  data: T[];
 }
 
 export interface NotificationItem {
-    id:string;
-    title:string;
-    message:string;
-    notification_date:string;
-    read_at:string | null
+  id: string;
+  title: string;
+  message: string;
+  notification_date: string;
+  read_at: string | null;
 }
 
-export interface FeatureBanner{
-    url:string;
-    alt:string;
+export interface FeatureBanner {
+  url: string;
+  alt: string;
 }
 
+export interface SafeZoneResponse {
+  username: string;
+  pos_x: string;
+  pos_y: string;
+  message: string;
+  theme_color: string;
+  created_at:string;
+  unlocked_at:string;
+  expired_at: string;
+  is_locked: boolean;
+}
