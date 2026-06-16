@@ -1,14 +1,13 @@
-<app-sakura-component></app-sakura-component>
 <div
-  class="relative aimate-pulse p-2 sm:p-3 lg:p-2 md:p-2 font-sans flex flex-col items-center gap-2"
+  class="relative aimate-pulse h-125 md:h-170 lg:h-190  p-2 sm:p-3 lg:p-2 md:p-2 font-sans flex flex-col items-center gap-2"
 >
+  <app-sakura-component></app-sakura-component>
   <div
     #sakuraImg
-    class="relative min-w-full flex-1 overflow-hidden"
+    class="relative min-w-full flex-1 overflow-hidden bg-[url('/images/sakurajpg.jpg')] bg-cover bg-bottom bg-no-repeat"
     (mousemove)="updateGhostPosition($event)"
     (click)="placeTanzaku($event)"
   >
-    <img src="images/sakurajpg.jpg" alt="sakura tree" class="w-full" />
     <button
       class="absolute top-5 left-10 border-4 border-pink-500 bg-slate-800/80 p-5 rounded-3xl text-xl font-black text-pink-300 shadow-[0_6px_0_#db2777] hover:-translate-y-1 hover:shadow-[0_8px_0_#db2777] active:translate-y-1 active:shadow-none transition-all cursor-pointer backdrop-blur-sm"
       (click)="openModal()"
@@ -24,9 +23,14 @@
         [style.top.%]="ghostY()"
       >
         <div
-          class="relative w-16 h-36 flex flex-col justify-center items-center font-bold rounded-sm rotate-3 border transition-colors {{getTanzakuColorClasses()}}"
+          class="relative w-16 h-36 flex flex-col justify-center items-center font-bold rounded-sm rotate-3 border transition-colors {{
+            getTanzakuColorClasses()
+          }}"
         >
-          <span class="text-[10px] w-full px-1 overflow-hidden text-ellipsis whitespace-nowrap text-center absolute top-2">{{ currentUser()?.username }}</span>
+          <span
+            class="text-[10px] w-full px-1 overflow-hidden text-ellipsis whitespace-nowrap text-center absolute top-2"
+            >{{ currentUser()?.username }}</span
+          >
           <div class="absolute h-5 w-2 bg-amber-800 bottom-full"></div>
           @if (isConfirm()) {
             <div class="absolute -top-14 w-30 h-10 flex justify-center gap-3">
@@ -38,7 +42,7 @@
               </button>
               <button
                 class="w-10 h-10 flex pointer-events-auto items-center justify-center rounded-full bg-pink-500 border-2 border-pink-400 shadow-[0_4px_0_#db2777] hover:-translate-y-1 hover:shadow-[0_6px_0_#db2777] active:translate-y-1 active:shadow-none font-black text-white cursor-pointer transition-all"
-                (click)="confirmPlacement();$event.stopPropagation()"
+                (click)="confirmPlacement(); $event.stopPropagation()"
               >
                 ✓
               </button>
@@ -57,9 +61,13 @@
           (click)="openViewModal(tanzaku)"
         >
           <div
-            class="relative w-16 h-36 flex flex-col items-center justify-center gap-2 font-bold rounded-sm rotate-3 border transition-colors {{ getColorForTanzaku(tanzaku.theme_color, tanzaku.is_locked) }}"
+            class="relative w-16 h-36 flex flex-col items-center justify-center gap-2 font-bold rounded-sm rotate-3 border transition-colors {{
+              getColorForTanzaku(tanzaku.theme_color, tanzaku.is_locked)
+            }}"
           >
-            <span class="text-[10px] w-full px-1 overflow-hidden text-ellipsis whitespace-nowrap text-center absolute top-2">
+            <span
+              class="text-[10px] w-full px-1 overflow-hidden text-ellipsis whitespace-nowrap text-center absolute top-2"
+            >
               {{ tanzaku.username }}
             </span>
             <div class="absolute h-5 w-2 bg-amber-800 bottom-full"></div>
@@ -114,7 +122,9 @@
                 <option value="purple">Purple</option>
                 <option value="green">Green</option>
               </select>
-              <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-pink-400 text-xs">
+              <div
+                class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-pink-400 text-xs"
+              >
                 ▼
               </div>
             </div>
@@ -168,7 +178,7 @@
 
   @if (viewModalIsOpen() && selectedTanzaku(); as tanzaku) {
     <div
-      class="inset-0 bg-black/70 z-199 fixed flex items-center justify-center p-4 "
+      class="inset-0 bg-black/70 z-199 fixed flex items-center justify-center p-4"
       (click)="closeViewModal()"
     >
       <div
@@ -181,24 +191,36 @@
         >
           ✕
         </button>
-        
+
         <div class="flex items-center gap-3 border-b-2 border-slate-700 pb-4">
-          <div class="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center text-xl font-bold border-2 border-pink-400 text-pink-800">
+          <div
+            class="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center text-xl font-bold border-2 border-pink-400 text-pink-800"
+          >
             {{ selectedTanzaku()?.username?.charAt(0) | uppercase }}
           </div>
           <div class="flex flex-col">
             <span class="text-xl font-black text-pink-300">{{ selectedTanzaku()?.username }}</span>
-            <span class="text-xs text-slate-400 font-semibold">Tanzaku Wish {{selectedTanzaku()?.created_at}}</span>
+            <span class="text-xs text-slate-400 font-semibold"
+              >Tanzaku Wish {{ selectedTanzaku()?.created_at }}</span
+            >
           </div>
         </div>
 
-        <div class="bg-slate-900 rounded-2xl p-6 border-2 border-slate-700 min-h-32 flex flex-col justify-center items-center relative overflow-hidden shadow-inner">
+        <div
+          class="bg-slate-900 rounded-2xl p-6 border-2 border-slate-700 min-h-32 flex flex-col justify-center items-center relative overflow-hidden shadow-inner"
+        >
           @if (selectedTanzaku()?.is_locked) {
             <span class="text-6xl mb-2">🔒</span>
             <p class="text-pink-400 font-bold text-center">This secret message is locked!</p>
-            <p class="text-slate-500 text-sm mt-2">Unlocks at: {{ selectedTanzaku()?.unlocked_at }}</p>
+            <p class="text-slate-500 text-sm mt-2">
+              Unlocks at: {{ selectedTanzaku()?.unlocked_at }}
+            </p>
           } @else {
-            <p class="text-pink-100 text-lg font-medium text-center whitespace-pre-wrap warp-break-words w-full">{{ selectedTanzaku()?.message }}</p>
+            <p
+              class="text-pink-100 text-lg font-medium text-center whitespace-pre-wrap warp-break-words w-full"
+            >
+              {{ selectedTanzaku()?.message }}
+            </p>
           }
         </div>
       </div>
