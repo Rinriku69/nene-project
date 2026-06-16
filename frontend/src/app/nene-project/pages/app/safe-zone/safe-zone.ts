@@ -137,11 +137,6 @@ export class SafeZone implements OnInit {
     this.selectedTanzaku.set(null);
   }
 
-  constructor(){
-    effect(()=>{
-      console.log(this.messageForm().value())
-    })
-  }
 
   ngOnInit(){
     this.safeZoneService.getMessages().subscribe({
