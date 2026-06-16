@@ -24,9 +24,9 @@
         [style.top.%]="ghostY()"
       >
         <div
-          class="relative w-16 h-36 flex justify-center items-center font-bold rounded-sm rotate-3 border transition-colors {{getTanzakuColorClasses()}}"
+          class="relative w-16 h-36 flex flex-col justify-center items-center font-bold rounded-sm rotate-3 border transition-colors {{getTanzakuColorClasses()}}"
         >
-          <span class="text-sm">{{ currentUser()?.username }}</span>
+          <span class="text-[10px] w-full px-1 overflow-hidden text-ellipsis whitespace-nowrap text-center absolute top-2">{{ currentUser()?.username }}</span>
           <div class="absolute h-5 w-2 bg-amber-800 bottom-full"></div>
           @if (isConfirm()) {
             <div class="absolute -top-14 w-30 h-10 flex justify-center gap-3">
@@ -46,6 +46,30 @@
           }
         </div>
       </div>
+    }
+
+    <!-- Fetched Tanzakus -->
+    @if (safeZoneMessages()) {
+      @for (tanzaku of safeZoneMessages(); track $index) {
+        <div
+          class="absolute cursor-pointer hover:scale-110 transition-transform translate-x-[-50%] translate-y-[20%]"
+          [style.left.%]="tanzaku.pos_x"
+          [style.top.%]="tanzaku.pos_y"
+          (click)="openViewModal(tanzaku)"
+        >
+          <div
+            class="relative w-16 h-36 flex flex-col items-center justify-center gap-2 font-bold rounded-sm rotate-3 border transition-colors {{ getColorForTanzaku(tanzaku.theme_color, tanzaku.is_locked) }}"
+          >
+            <span class="text-[10px] w-full px-1 overflow-hidden text-ellipsis whitespace-nowrap text-center absolute top-2">
+              {{ tanzaku.username }}
+            </span>
+            <div class="absolute h-5 w-2 bg-amber-800 bottom-full"></div>
+            @if (tanzaku.is_locked) {
+              <span class="text-xl mt-4 drop-shadow-md">🔒</span>
+            }
+          </div>
+        </div>
+      }
     }
   </div>
 
@@ -139,6 +163,45 @@
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  }
+
+  @if (viewModalIsOpen() && selectedTanzaku(); as tanzaku) {
+    <div
+      class="inset-0 bg-black/70 z-199 fixed flex items-center justify-center p-4 "
+      (click)="closeViewModal()"
+    >
+      <div
+        class="relative w-full max-w-md bg-slate-800 rounded-3xl p-8 border-4 border-pink-500 shadow-[0_12px_0_#db2777] flex flex-col gap-4"
+        (click)="$event.stopPropagation()"
+      >
+        <button
+          (click)="closeViewModal()"
+          class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-slate-700 hover:bg-slate-600 text-pink-400 rounded-full font-black transition-colors cursor-pointer"
+        >
+          ✕
+        </button>
+        
+        <div class="flex items-center gap-3 border-b-2 border-slate-700 pb-4">
+          <div class="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center text-xl font-bold border-2 border-pink-400 text-pink-800">
+            {{ selectedTanzaku()?.username?.charAt(0) | uppercase }}
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xl font-black text-pink-300">{{ selectedTanzaku()?.username }}</span>
+            <span class="text-xs text-slate-400 font-semibold">Tanzaku Wish</span>
+          </div>
+        </div>
+
+        <div class="bg-slate-900 rounded-2xl p-6 border-2 border-slate-700 min-h-32 flex flex-col justify-center items-center relative overflow-hidden shadow-inner">
+          @if (selectedTanzaku()?.is_locked) {
+            <span class="text-6xl mb-2">🔒</span>
+            <p class="text-pink-400 font-bold text-center">This secret message is locked!</p>
+            <p class="text-slate-500 text-sm mt-2">Unlocks at: {{ selectedTanzaku()?.unlocked_at }}</p>
+          } @else {
+            <p class="text-pink-100 text-lg font-medium text-center whitespace-pre-wrap warp-break-words w-full">{{ selectedTanzaku()?.message }}</p>
+          }
+        </div>
       </div>
     </div>
   }

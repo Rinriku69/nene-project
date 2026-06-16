@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SafeZoneModel } from '../models/FormModel';
 import { HttpClient } from '@angular/common/http';
-import { ResourceResponse } from '../models/Resource';
+import { ResourceResponse, SafeZoneResponse } from '../models/Resource';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class SafeZoneService {
     return this.http.post<ResourceResponse>(`${this.baseApiUrl}/api/safezone/addTanzaku`,tanzakuForm);
   }
 
-  getTanzaku():Observable<SafeZoneModel[]>{
-    return this.http.get<SafeZoneModel[]>(`${this.baseApiUrl}/api/safezone/getTanzaku`);
+  getMessages():Observable<SafeZoneResponse[]>{
+    return this.http.get<SafeZoneResponse[]>(`${this.baseApiUrl}/api/safezone/getMessages`);
   }
 }

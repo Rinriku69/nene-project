@@ -1,24 +1,30 @@
-import { Component, computed, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { Component, computed, effect, ElementRef, inject, OnInit, signal, viewChild } from '@angular/core';
 import { SakuraComponent } from '../../../components/sakura-component/sakura-component';
 import { SafeZoneModel } from '../../../models/FormModel';
 import { form, FormField, required } from '@angular/forms/signals';
 import { AuthService } from '../../../services/auth.service';
 import { SafeZoneService } from '../../../services/safe-zone.service';
-import { ResourceErrorResponse } from '../../../models/Resource';
+import { ResourceErrorResponse, SafeZoneResponse } from '../../../models/Resource';
+import { DatePipe, UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-safe-zone',
-  imports: [SakuraComponent, FormField],
+  imports: [SakuraComponent, FormField,UpperCasePipe,],
   templateUrl: './safe-zone.html',
   styleUrl: './safe-zone.css',
 })
-export class SafeZone {
+export class SafeZone implements OnInit {
   sakuraImg = viewChild<ElementRef>('sakuraImg');
   private readonly authService = inject(AuthService);
   private readonly safeZoneService = inject(SafeZoneService);
+  private readonly datePipe = new DatePipe('en-US');
+  protected readonly safeZoneMessages = signal<SafeZoneResponse[] | null>(null);
 
   protected readonly currentUser = computed(() => this.authService.currentUserState());
   readonly modalIsOpen = signal<boolean>(false);
+  readonly viewModalIsOpen = signal<boolean>(false);
+  readonly selectedTanzaku = signal<SafeZoneResponse | null>(null);
+
   readonly isPlacementMode = signal<boolean>(false);
   readonly isShownTanzaku = signal<boolean>(false);
 
@@ -85,7 +91,11 @@ export class SafeZone {
 
   confirmPlacement(){
     this.isConfirm.set(false);
-    this.safeZoneService.addTanzaku(this.messageForm().value()).subscribe({
+    const messageTranform = {...this.messageForm().value(), 
+      unlocked_at: this.messageForm().value().unlocked_at ? 
+      this.datePipe.transform(this.messageForm().value().unlocked_at,'yyyy-MM-dd')
+    : null};
+    this.safeZoneService.addTanzaku(messageTranform).subscribe({
       next: (res)=>{
         console.log(res.message)
 
@@ -97,7 +107,13 @@ export class SafeZone {
   }
 
   getTanzakuColorClasses(): string {
-    const color = this.messageModel().theme_color || 'pink';
+    return this.getColorForTanzaku(this.messageModel().theme_color || 'pink', false);
+  }
+
+  getColorForTanzaku(color: string, isLocked: boolean = false): string {
+    if (isLocked) {
+      return 'bg-slate-300 border-slate-500 text-slate-700 shadow-[0_0_15px_#94a3b8] grayscale brightness-75';
+    }
     switch (color) {
       case 'yellow': return 'bg-yellow-100 border-yellow-300 text-yellow-800 shadow-[0_0_15px_#fef08a]';
       case 'blue': return 'bg-blue-100 border-blue-300 text-blue-800 shadow-[0_0_15px_#bfdbfe]';
@@ -108,5 +124,33 @@ export class SafeZone {
       default:
         return 'bg-pink-100 border-pink-300 text-pink-800 shadow-[0_0_15px_#fbcfe8]';
     }
+  }
+
+  openViewModal(tanzaku: SafeZoneResponse) {
+    if (this.isPlacementMode()) return;
+    this.selectedTanzaku.set(tanzaku);
+    this.viewModalIsOpen.set(true);
+  }
+
+  closeViewModal() {
+    this.viewModalIsOpen.set(false);
+    this.selectedTanzaku.set(null);
+  }
+
+  constructor(){
+    effect(()=>{
+      console.log(this.messageForm().value())
+    })
+  }
+
+  ngOnInit(){
+    this.safeZoneService.getMessages().subscribe({
+      next:(res)=>{
+        this.safeZoneMessages.set(res);
+      },
+      error:(err:ResourceErrorResponse)=>{
+        console.log(err.error.message)
+      }
+    })
   }
 }

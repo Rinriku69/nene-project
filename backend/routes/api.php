@@ -65,5 +65,6 @@ Route::middleware((['auth']))
         ->name('safezone')
         ->group(static function():void{
             Route::post('/addTanzaku','addTanzaku')->name('addTanzaku');
+            Route::get('/getMessages','getMessages')->name('getMessages');
         });
     });
