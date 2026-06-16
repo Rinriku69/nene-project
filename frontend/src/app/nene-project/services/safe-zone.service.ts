@@ -9,13 +9,12 @@ import { ResourceResponse, SafeZoneResponse } from '../models/Resource';
 })
 export class SafeZoneService {
   private readonly http = inject(HttpClient);
-  private readonly baseApiUrl = 'http://localhost:8000'
 
   addTanzaku(tanzakuForm: SafeZoneModel):Observable<ResourceResponse>{
-    return this.http.post<ResourceResponse>(`${this.baseApiUrl}/api/safezone/addTanzaku`,tanzakuForm);
+    return this.http.post<ResourceResponse>(`/api/safezone/addTanzaku`,tanzakuForm);
   }
 
   getMessages():Observable<SafeZoneResponse[]>{
-    return this.http.get<SafeZoneResponse[]>(`${this.baseApiUrl}/api/safezone/getMessages`);
+    return this.http.get<SafeZoneResponse[]>(`/api/safezone/getMessages`);
   }
 }
