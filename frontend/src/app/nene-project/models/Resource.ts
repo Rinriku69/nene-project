@@ -113,6 +113,7 @@ export interface SafeZoneResponse {
   pos_y: string;
   message: string;
   theme_color: string;
+  created_at:string;
   unlocked_at:string;
   expired_at: string;
   is_locked: boolean;

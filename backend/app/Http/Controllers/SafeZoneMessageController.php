@@ -52,6 +52,7 @@ class SafeZoneMessageController extends Controller
                 'pos_y' => $msg->pos_y,
                 'message' => $isLocked ? 'This message will unlock in the future' : $msg->message,
                 'theme_color' => $msg->theme_color,
+                'created_at' => $msg->created_at->format('Y-m-d H:i'),
                 'unlocked_at' => $msg->unlocked_at,
                 'expired_at' => $msg->expired_at,
                 'is_locked' => $isLocked
