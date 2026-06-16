@@ -1,18 +1,18 @@
 <app-sakura-component></app-sakura-component>
 <div
-  class="relative aimate-pulse p-2 sm:p-3 lg:p-2 md:p-2 font-sans text-pink-900 bg-blue-950 flex flex-col items-center gap-2"
+  class="relative aimate-pulse p-2 sm:p-3 lg:p-2 md:p-2 font-sans flex flex-col items-center gap-2"
 >
   <div
     #sakuraImg
-    class="relative min-w-full flex-1 overflow-hiddens"
-    (click)="togglePlacementMode()"
+    class="relative min-w-full flex-1 overflow-hidden"
     (mousemove)="updateGhostPosition($event)"
   >
     <img src="images/sakurajpg.jpg" alt="sakura tree" class="w-full" />
     <button
-      class="absolute border-3 border-pink-500 animate-pulse top-5 left-10 bg-white p-5 rounded-2xl text-xl font-medium hover:bg-slate-200 cursor-pointer"
+      class="absolute top-5 left-10 border-4 border-pink-500 bg-slate-800/80 p-5 rounded-3xl text-xl font-black text-pink-300 shadow-[0_6px_0_#db2777] hover:-translate-y-1 hover:shadow-[0_8px_0_#db2777] active:translate-y-1 active:shadow-none transition-all cursor-pointer backdrop-blur-sm"
+      (click)="openModal()"
     >
-      Add Tanzaku
+      + Add Tanzaku
     </button>
 
     <div
@@ -21,11 +21,80 @@
       [style.top.%]="ghostY()"
     >
       <div
-        class="relative w-12 h-32 bg-pink-300 shadow-lg shadow-yellow-300 flex justify-center items-center font-semibold"
+        class="relative w-16 h-36 bg-pink-100 shadow-[0_0_15px_#fbcfe8] flex justify-center items-center font-bold rounded-sm text-pink-800 rotate-3 border border-pink-300"
       >
-      <div class="absolute h-5 w-2 bg-amber-800 bottom-full"></div>
+        <div class="absolute h-5 w-2 bg-amber-800 bottom-full"></div>
         Hey
       </div>
     </div>
   </div>
+
+  @if (modalIsOpen()) {
+    <div
+      class="inset-0 bg-black/70 z-199 fixed flex items-center justify-center p-4"
+      (click)="closeModal()"
+    >
+      <div
+        class="relative w-full max-w-md bg-slate-800 rounded-3xl p-8 border-4 border-pink-500 shadow-[0_12px_0_#db2777]"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="text-center mb-6">
+          <h2 class="text-3xl font-black text-pink-300 drop-shadow-sm tracking-tight">
+            New Tanzaku
+          </h2>
+        </div>
+
+        <form class="flex flex-col gap-4">
+          <div class="flex flex-col gap-1">
+            <label class="text-pink-400 font-bold ml-4">Your Message</label>
+            <textarea
+              [formField]="messageForm.message"
+              class="w-full bg-slate-900 border-2 border-slate-600 rounded-2xl p-4 text-pink-100 focus:outline-none focus:border-pink-500 transition-colors h-32 resize-none shadow-inner"
+              placeholder="Write your wish..."
+            ></textarea>
+          </div>
+
+          <div class="flex items-center gap-3 ml-4 mt-2">
+            <input
+              type="checkbox"
+              id="secretCheckbox"
+              class="w-5 h-5 accent-pink-500 cursor-pointer"
+              [checked]="isSecret()"
+              (change)="isSecret.set(!isSecret())"
+            />
+            <label for="secretCheckbox" class="text-pink-300 font-bold cursor-pointer select-none"
+              >Make this a Secret Message?</label
+            >
+          </div>
+
+          @if (isSecret()) {
+            <div class="flex flex-col gap-1 animate-in fade-in slide-in-from-top-2 duration-300">
+              <label class="text-pink-400 font-bold ml-4">Unlock Date</label>
+              <input
+                type="date"
+                [formField]="messageForm.unlocked_at"
+                class="w-full bg-slate-900 border-2 border-slate-600 rounded-2xl p-3 text-pink-100 focus:outline-none focus:border-pink-500 transition-colors shadow-inner scheme-dark"
+              />
+            </div>
+          }
+
+          <div class="flex justify-end gap-3 mt-6">
+            <button
+              type="button"
+              class="px-6 py-3 rounded-full font-black text-slate-300 hover:bg-slate-700 transition-colors"
+              (click)="closeModal()"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="px-6 py-3 rounded-full font-black text-pink-900 bg-pink-400 border-b-4 border-pink-600 hover:-translate-y-1 hover:bg-pink-300 active:translate-y-1 active:border-b-0 transition-all"
+            >
+              Add Wish
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
 </div>

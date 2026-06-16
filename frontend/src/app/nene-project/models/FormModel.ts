@@ -10,3 +10,8 @@ export interface NotificationModel {
   title: string;
   message: string;
 }
+
+export interface SafeZoneModel {
+  message:string;
+  unlocked_at:string|null;
+}
