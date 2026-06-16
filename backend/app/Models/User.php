@@ -38,4 +38,8 @@ class User extends Authenticatable
     function gachaLogs(): HasMany{
         return $this->hasMany(GachaLog::class);
     }
+
+    function safeZoneMessages(): HasMany{
+        return $this->hasMany(SafeZoneMessage::class);
+    }
 }

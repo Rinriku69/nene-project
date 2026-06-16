@@ -6,27 +6,47 @@
     #sakuraImg
     class="relative min-w-full flex-1 overflow-hidden"
     (mousemove)="updateGhostPosition($event)"
+    (click)="placeTanzaku($event)"
   >
     <img src="images/sakurajpg.jpg" alt="sakura tree" class="w-full" />
     <button
       class="absolute top-5 left-10 border-4 border-pink-500 bg-slate-800/80 p-5 rounded-3xl text-xl font-black text-pink-300 shadow-[0_6px_0_#db2777] hover:-translate-y-1 hover:shadow-[0_8px_0_#db2777] active:translate-y-1 active:shadow-none transition-all cursor-pointer backdrop-blur-sm"
       (click)="openModal()"
+      [disabled]="isPlacementMode()"
     >
-      + Add Tanzaku
+      {{ isShownTanzaku() ? 'Edit Tanzaku' : '+ Add Tanzaku' }}
     </button>
 
-    <div
-      class="absolute pointer-events-none translate-x-[-50%] translate-y-[20%]"
-      [style.left.%]="ghostX()"
-      [style.top.%]="ghostY()"
-    >
+    @if (isShownTanzaku()) {
       <div
-        class="relative w-16 h-36 bg-pink-100 shadow-[0_0_15px_#fbcfe8] flex justify-center items-center font-bold rounded-sm text-pink-800 rotate-3 border border-pink-300"
+        class="absolute pointer-events-none translate-x-[-50%] translate-y-[20%]"
+        [style.left.%]="ghostX()"
+        [style.top.%]="ghostY()"
       >
-        <div class="absolute h-5 w-2 bg-amber-800 bottom-full"></div>
-        Hey
+        <div
+          class="relative w-16 h-36 flex justify-center items-center font-bold rounded-sm rotate-3 border transition-colors {{getTanzakuColorClasses()}}"
+        >
+          <span class="text-sm">{{ currentUser()?.username }}</span>
+          <div class="absolute h-5 w-2 bg-amber-800 bottom-full"></div>
+          @if (isConfirm()) {
+            <div class="absolute -top-14 w-30 h-10 flex justify-center gap-3">
+              <button
+                class="w-10 h-10 flex pointer-events-auto items-center justify-center rounded-full bg-slate-800 border-2 border-slate-600 shadow-[0_4px_0_#475569] hover:-translate-y-1 hover:shadow-[0_6px_0_#475569] active:translate-y-1 active:shadow-none font-black text-slate-300 cursor-pointer transition-all"
+                (click)="cancelPlacement(); $event.stopPropagation()"
+              >
+                ✕
+              </button>
+              <button
+                class="w-10 h-10 flex pointer-events-auto items-center justify-center rounded-full bg-pink-500 border-2 border-pink-400 shadow-[0_4px_0_#db2777] hover:-translate-y-1 hover:shadow-[0_6px_0_#db2777] active:translate-y-1 active:shadow-none font-black text-white cursor-pointer transition-all"
+                (click)="confirmPlacement();$event.stopPropagation()"
+              >
+                ✓
+              </button>
+            </div>
+          }
+        </div>
       </div>
-    </div>
+    }
   </div>
 
   @if (modalIsOpen()) {
@@ -42,6 +62,9 @@
           <h2 class="text-3xl font-black text-pink-300 drop-shadow-sm tracking-tight">
             New Tanzaku
           </h2>
+          @if (messageForm().invalid() && messageForm().touched()) {
+            <span class="text-sm font-semibold text-red-500">Please write down your wish</span>
+          }
         </div>
 
         <form class="flex flex-col gap-4">
@@ -52,6 +75,26 @@
               class="w-full bg-slate-900 border-2 border-slate-600 rounded-2xl p-4 text-pink-100 focus:outline-none focus:border-pink-500 transition-colors h-32 resize-none shadow-inner"
               placeholder="Write your wish..."
             ></textarea>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label class="text-pink-400 font-bold ml-4">Color Theme</label>
+            <div class="relative group">
+              <select
+                [formField]="messageForm.theme_color"
+                class="w-full appearance-none bg-slate-900 border-2 border-slate-600 rounded-2xl p-3 pl-4 pr-10 text-pink-100 font-bold focus:outline-none focus:border-pink-500 transition-colors shadow-inner cursor-pointer"
+              >
+                <option value="pink">Pink (Default)</option>
+                <option value="yellow">Yellow</option>
+                <option value="blue">Blue</option>
+                <option value="red">Red</option>
+                <option value="purple">Purple</option>
+                <option value="green">Green</option>
+              </select>
+              <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-pink-400 text-xs">
+                ▼
+              </div>
+            </div>
           </div>
 
           <div class="flex items-center gap-3 ml-4 mt-2">
@@ -89,6 +132,8 @@
             <button
               type="button"
               class="px-6 py-3 rounded-full font-black text-pink-900 bg-pink-400 border-b-4 border-pink-600 hover:-translate-y-1 hover:bg-pink-300 active:translate-y-1 active:border-b-0 transition-all"
+              (click)="addWishClick()"
+              [disabled]="messageForm().invalid()"
             >
               Add Wish
             </button>

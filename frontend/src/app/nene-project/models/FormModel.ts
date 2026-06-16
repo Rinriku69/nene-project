@@ -13,5 +13,8 @@ export interface NotificationModel {
 
 export interface SafeZoneModel {
   message:string;
+  theme_color:string;
+  pos_x:number;
+  pos_y:number;
   unlocked_at:string|null;
 }
