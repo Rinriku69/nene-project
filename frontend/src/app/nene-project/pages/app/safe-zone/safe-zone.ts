@@ -64,6 +64,7 @@ export class SafeZone implements OnInit {
 
   openModal(): void {
     this.modalIsOpen.set(true);
+    this.isConfirm.set(false);
   }
 
   updateGhostPosition(event: MouseEvent) {
@@ -87,6 +88,7 @@ export class SafeZone implements OnInit {
 
   cancelPlacement() {
     this.isPlacementMode.set(true);
+    this.isConfirm.set(false);
   }
 
   confirmPlacement(){
