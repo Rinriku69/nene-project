@@ -1,5 +1,7 @@
 import { Component, computed, effect, inject, input, linkedSignal, signal } from '@angular/core';
-import { RouterOutlet, RouterLinkWithHref, Router, RouterLinkActive } from '@angular/router';
+import { RouterOutlet, RouterLinkWithHref, Router, RouterLinkActive, NavigationEnd } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { filter, map } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { Icons } from '../../../components/icons/icons';
 import { DecimalPipe } from '@angular/common';
@@ -25,6 +27,14 @@ export class MainLayout {
   });
 
   protected readonly notiIsOpen = signal<boolean>(false);
+
+  protected readonly isDarkTheme = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map(event => event.urlAfterRedirects.includes('/safezone'))
+    ),
+    { initialValue: this.router.url.includes('/safezone') }
+  );
 
   toggleNoti(): void {
     this.notiIsOpen.set(!this.notiIsOpen());
