@@ -38,18 +38,18 @@
       }
 
       <div
-        class="absolute bottom-4 right-4 bg-white/80  px-4 py-2 rounded-full border-2 border-pink-200"
+        class="absolute bottom-4 right-4 hidden md:flex bg-white/80  px-4 py-2 rounded-full border-2 border-pink-200"
       >
-        <span class="text-pink-500 font-black">Featured Nene Flower SR!!</span>
+        <span class="text-pink-500 font-black ">Featured Nene Flower SR!!</span>
       </div>
     </div>
 
     <div
-      class="flex items-center gap-4 bg-white px-6 py-3 rounded-full border-2 border-pink-200 shadow-sm"
+      class="flex items-center  bg-white px-6 py-3 rounded-full border-2 border-pink-200 shadow-sm"
     >
-      <span class="text-pink-400 font-bold">Your Gems:</span>
-      <span class="text-pink-500 font-black text-xl flex items-center gap-2">
-        💎 {{ currentUser()?.currency || 0 }}
+      <span class="text-pink-400 font-bold mr-1">Your Gems:</span>
+      <span class="text-pink-500 font-black text-xl flex items-center">
+        💎{{ currentUser()?.currency || 0 }}
       </span>
       <button
         (click)="openLogModal()"
@@ -81,7 +81,7 @@
         [disabled]="isRolling()"
       >
         <div
-          class="absolute -top-3 -right-3 bg-yellow-400 text-yellow-900 text-xs font-black px-3 py-1 rounded-full border-2 border-yellow-500 shadow-sm rotate-12"
+          class="absolute -top-6 -right-6 md:-right-3 md:-top-3 bg-yellow-400 text-yellow-900 text-[0.6rem] md:text-xs font-black px-1 py-1 rounded-full border-2 border-yellow-500 shadow-sm rotate-12"
         >
           SR or Higher GUARANTEED!
         </div>

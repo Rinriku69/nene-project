@@ -1,4 +1,4 @@
-<div class="min-h-screen lg:pb-14 flex flex-col">
+<div class="min-h-screen flex flex-col">
   <div
     class="bg-size-[40px_40px] fixed inset-0 z-0 transition-colors duration-500"
     [class.bg-slate-900]="isDarkTheme()"
@@ -6,9 +6,9 @@
     [class.bg-pink-50]="!isDarkTheme()"
     [class.bg-[radial-gradient(#fbcfe8_6px,transparent_3px)]]="!isDarkTheme()"
   ></div>
-  <nav class="top-0 z-50 px-2 py-2 md:py-2 md:px-5 sm:px-2">
+  <nav class="hidden lg:flex top-0 z-50 px-2 py-2 md:py-2 md:px-5 sm:px-2">
     <div
-      class="flex flex-wrap items-center justify-between gap-4 px-6 py-2 md:py-2 lg:py-3 rounded-3xl  border-4 transition-all duration-500 w-full"
+      class="flex flex-wrap items-center justify-between gap-4 px-6 py-2 md:py-2 lg:py-3 rounded-3xl border-4 transition-all duration-500 w-full"
       [class.bg-slate-800]="isDarkTheme()"
       [class.bg-opacity-90]="isDarkTheme()"
       [class.border-pink-500]="isDarkTheme()"
@@ -44,17 +44,29 @@
           >
         </li>
         <li>
-          <a class="nav-list block" routerLink="/app/safezone" routerLinkActive="nav-list-active">Safe Zone</a>
+          <a class="nav-list block" routerLink="/app/safezone" routerLinkActive="nav-list-active"
+            >Safe Zone</a
+          >
         </li>
         <li>
           <a class="nav-list block">Co-op Mission</a>
         </li>
         @if (currentUser() && currentUser()?.role === 'admin') {
           <li>
-            <a class="nav-list block" routerLink="/admin/userManagement" routerLinkActive="nav-list-active">User</a>
+            <a
+              class="nav-list block"
+              routerLink="/admin/userManagement"
+              routerLinkActive="nav-list-active"
+              >User</a
+            >
           </li>
           <li>
-            <a class="nav-list block" routerLink="/admin/gachaManagement" routerLinkActive="nav-list-active">Gacha Item</a>
+            <a
+              class="nav-list block"
+              routerLink="/admin/gachaManagement"
+              routerLinkActive="nav-list-active"
+              >Gacha Item</a
+            >
           </li>
         }
       </ul>
@@ -90,7 +102,9 @@
               >
                 @for (noti of notifications(); track noti.id) {
                   @if (noti.read_at) {
-                    <div class="flex flex-col m-1 border-b-2 border-slate-300 p-2 pb-10 gap-2 rounded-2xl bg-slate-200">
+                    <div
+                      class="flex flex-col m-1 border-b-2 border-slate-300 p-2 pb-10 gap-2 rounded-2xl bg-slate-200"
+                    >
                       <div class="flex justify-between">
                         <span class="text-slate-500 font-semibold text-xl">{{ noti.title }}</span>
                         <span class="text-sm font-medium text-slate-400">{{
@@ -102,9 +116,13 @@
                       </div>
                     </div>
                   } @else {
-                    <div class="flex flex-col m-2 border-b-2 border-slate-400 rounded-2xl p-2 pb-10 gap-2 hover:bg-slate-100 cursor-pointer">
+                    <div
+                      class="flex flex-col m-2 border-b-2 border-slate-400 rounded-2xl p-2 pb-10 gap-2 hover:bg-slate-100 cursor-pointer"
+                    >
                       <div class="flex justify-between">
-                        <span class="text-slate-800 font-semibold text-xl animate-pulse">{{ noti.title }}</span>
+                        <span class="text-slate-800 font-semibold text-xl animate-pulse">{{
+                          noti.title
+                        }}</span>
                         <span class="text-sm font-medium text-slate-500">{{
                           noti.notification_date
                         }}</span>
@@ -118,7 +136,10 @@
               </div>
             }
           </div>
-          <div class="relative group shrink-0 z-50 w-auto md:w-60 lg:w-auto " (click)="toggleUserMenu()">
+          <div
+            class="relative group shrink-0 z-50 w-auto md:w-60 lg:w-auto"
+            (click)="toggleUserMenu()"
+          >
             <div
               class="font-black flex items-center gap-3 text-sm lg:text-xl px-6 py-3 rounded-full border-2 shadow-[0_4px_0_#fbcfe8] transition-all cursor-pointer"
               [class.text-pink-300]="isDarkTheme()"
@@ -137,10 +158,18 @@
               [class.active:translate-y-1]="true"
               [class.active:shadow-none]="true"
             >
-              <span class="flex items-center gap-1" [class.text-pink-400]="!isDarkTheme()" [class.text-pink-300]="isDarkTheme()" id="user-currency">
+              <span
+                class="flex items-center gap-1"
+                [class.text-pink-400]="!isDarkTheme()"
+                [class.text-pink-300]="isDarkTheme()"
+                id="user-currency"
+              >
                 💎 {{ currentUser()?.currency | number }}
               </span>
-              <div class="w-0.5 h-5 bg-pink-300 rounded-full" [class.bg-pink-500]="isDarkTheme()"></div>
+              <div
+                class="w-0.5 h-5 bg-pink-300 rounded-full"
+                [class.bg-pink-500]="isDarkTheme()"
+              ></div>
               <span>{{ currentUser()?.username }}</span>
               <app-icons [name]="'downIcon'"></app-icons>
             </div>
@@ -182,5 +211,204 @@
       }
     </div>
   </nav>
+  <nav
+    class="flex lg:hidden sticky top-0 z-40 px-4 py-3 items-center justify-between border-b-2 transition-all duration-500 shadow-sm "
+    [class.bg-slate-800]="isDarkTheme()"
+    [class.border-pink-500]="isDarkTheme()"
+    [class.bg-white]="!isDarkTheme()"
+    [class.border-pink-200]="!isDarkTheme()"
+  >
+    <div class="flex items-center gap-3">
+      <button
+        (click)="toggleMobileMenu()"
+        class="p-2 rounded-xl border-2 transition-all active:translate-y-1 active:shadow-none"
+        [class.bg-slate-700]="isDarkTheme()"
+        [class.text-pink-300]="isDarkTheme()"
+        [class.border-pink-500]="isDarkTheme()"
+        [class.shadow-[0_4px_0_#db2777]]="isDarkTheme()"
+        [class.bg-pink-100]="!isDarkTheme()"
+        [class.text-pink-500]="!isDarkTheme()"
+        [class.border-pink-300]="!isDarkTheme()"
+        [class.shadow-[0_4px_0_#fbcfe8]]="!isDarkTheme()"
+      >
+        <app-icons [name]="'bars'" [classAttribute]="'w-6 h-6'"></app-icons>
+      </button>
+      <div class="size-10 md:size-15 relative bg-pink-300 rounded-full flex gap-2 items-center shrink-0">
+        <img
+          src="icons/nene_flower.png"
+          alt="Nene flower logo"
+          class="w-full h-full object-cover"
+          routerLink="/app/dashboard"
+        />
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      @if (currentUser()) {
+        <div
+          class="font-black flex items-center gap-1 text-sm md:text-lg px-3 py-1.5 rounded-full border-2 transition-all"
+          [class.text-pink-300]="isDarkTheme()"
+          [class.bg-slate-700]="isDarkTheme()"
+          [class.border-pink-500]="isDarkTheme()"
+          [class.shadow-[0_2px_0_#db2777]]="isDarkTheme()"
+          [class.text-pink-500]="!isDarkTheme()"
+          [class.bg-pink-100]="!isDarkTheme()"
+          [class.border-pink-300]="!isDarkTheme()"
+          [class.shadow-[0_2px_0_#fbcfe8]]="!isDarkTheme()"
+        >
+          💎 {{ currentUser()?.currency | number }}
+        </div>
+      }
+    </div>
+  </nav>
+  @if (mobileMenuOpen()) {
+    <div class="fixed inset-0 z-51 flex lg:hidden">
+      <div class="fixed inset-0 bg-black/40 transition-opacity" (click)="toggleMobileMenu()"></div>
+
+      <div
+        class="relative flex flex-col w-64 h-full border-r-4 shadow-xl transition-transform duration-300 transform"
+        [class.bg-slate-800]="isDarkTheme()"
+        [class.border-pink-500]="isDarkTheme()"
+        [class.bg-pink-50]="!isDarkTheme()"
+        [class.border-pink-200]="!isDarkTheme()"
+      >
+        <div
+          class="flex items-center justify-between p-4 border-b-2"
+          [class.border-pink-500]="isDarkTheme()"
+          [class.border-pink-200]="!isDarkTheme()"
+        >
+          <span
+            class="font-black text-xl"
+            [class.text-pink-300]="isDarkTheme()"
+            [class.text-pink-500]="!isDarkTheme()"
+            >Menu</span
+          >
+          <button
+            (click)="toggleMobileMenu()"
+            class="p-1 transition-colors"
+            [class.text-pink-300]="isDarkTheme()"
+            [class.text-pink-400]="!isDarkTheme()"
+            [class.hover:text-pink-600]="!isDarkTheme()"
+          >
+            <app-icons [name]="'close'" [classAttribute]="'w-8 h-8'"></app-icons>
+          </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-2">
+          <a
+            routerLink="/app/gacha"
+            routerLinkActive="bg-pink-200 text-pink-600"
+            class="block px-4 py-3 rounded-2xl font-black transition-colors"
+            [class.text-pink-300]="isDarkTheme()"
+            [class.hover:bg-slate-700]="isDarkTheme()"
+            [class.text-pink-500]="!isDarkTheme()"
+            [class.hover:bg-pink-100]="!isDarkTheme()"
+            (click)="toggleMobileMenu()"
+            >Gacha</a
+          >
+          <a
+            routerLink="/app/inventory"
+            routerLinkActive="bg-pink-200 text-pink-600"
+            class="block px-4 py-3 rounded-2xl font-black transition-colors"
+            [class.text-pink-300]="isDarkTheme()"
+            [class.hover:bg-slate-700]="isDarkTheme()"
+            [class.text-pink-500]="!isDarkTheme()"
+            [class.hover:bg-pink-100]="!isDarkTheme()"
+            (click)="toggleMobileMenu()"
+            >Inventory</a
+          >
+          <a
+            routerLink="/app/safezone"
+            routerLinkActive="bg-pink-200 text-pink-600"
+            class="block px-4 py-3 rounded-2xl font-black transition-colors"
+            [class.text-pink-300]="isDarkTheme()"
+            [class.hover:bg-slate-700]="isDarkTheme()"
+            [class.text-pink-500]="!isDarkTheme()"
+            [class.hover:bg-pink-100]="!isDarkTheme()"
+            (click)="toggleMobileMenu()"
+            >Safe Zone</a
+          >
+          <a
+            class="block px-4 py-3 rounded-2xl font-black transition-colors"
+            [class.text-pink-300]="isDarkTheme()"
+            [class.hover:bg-slate-700]="isDarkTheme()"
+            [class.text-pink-500]="!isDarkTheme()"
+            [class.hover:bg-pink-100]="!isDarkTheme()"
+            (click)="toggleMobileMenu()"
+            >Co-op Mission</a
+          >
+
+          @if (currentUser() && currentUser()?.role === 'admin') {
+            <div
+              class="my-2 border-t-2"
+              [class.border-pink-500]="isDarkTheme()"
+              [class.border-pink-200]="!isDarkTheme()"
+            ></div>
+            <a
+              routerLink="/admin/userManagement"
+              routerLinkActive="bg-pink-200 text-pink-600"
+              class="block px-4 py-3 rounded-2xl font-black transition-colors"
+              [class.text-pink-300]="isDarkTheme()"
+              [class.hover:bg-slate-700]="isDarkTheme()"
+              [class.text-pink-500]="!isDarkTheme()"
+              [class.hover:bg-pink-100]="!isDarkTheme()"
+              (click)="toggleMobileMenu()"
+              >User</a
+            >
+            <a
+              routerLink="/admin/gachaManagement"
+              routerLinkActive="bg-pink-200 text-pink-600"
+              class="block px-4 py-3 rounded-2xl font-black transition-colors"
+              [class.text-pink-300]="isDarkTheme()"
+              [class.hover:bg-slate-700]="isDarkTheme()"
+              [class.text-pink-500]="!isDarkTheme()"
+              [class.hover:bg-pink-100]="!isDarkTheme()"
+              (click)="toggleMobileMenu()"
+              >Gacha Item</a
+            >
+          }
+        </div>
+
+        <div
+          class="p-4 border-t-2"
+          [class.border-pink-500]="isDarkTheme()"
+          [class.border-pink-200]="!isDarkTheme()"
+        >
+          @if (currentUser()) {
+            <div class="flex items-center gap-3 mb-4">
+              <app-icons
+                [name]="'profile'"
+                [classAttribute]="'w-10 h-10 text-pink-400'"
+              ></app-icons>
+              <div class="flex flex-col">
+                <span
+                  class="font-black"
+                  [class.text-pink-300]="isDarkTheme()"
+                  [class.text-pink-600]="!isDarkTheme()"
+                  >{{ currentUser()?.username }}</span
+                >
+                <span class="text-sm text-pink-400">💎 {{ currentUser()?.currency | number }}</span>
+              </div>
+            </div>
+            <button
+              (click)="logout(); toggleMobileMenu()"
+              class="w-full py-3 flex justify-center items-center gap-2 rounded-2xl font-black text-white bg-red-400 hover:bg-red-500 border-2 border-red-500 shadow-[0_4px_0_#ef4444] active:translate-y-1 active:shadow-none transition-all"
+            >
+              <app-icons [name]="'logout'"></app-icons>
+              Logout
+            </button>
+          } @else {
+            <a
+              routerLink="/auth/login"
+              (click)="toggleMobileMenu()"
+              class="w-full block text-center py-3 rounded-2xl font-black text-pink-500 bg-pink-100 border-2 border-pink-300 shadow-[0_4px_0_#fbcfe8] hover:bg-pink-200 active:translate-y-1 active:shadow-none transition-all"
+            >
+              Please Login
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+  }
   <router-outlet></router-outlet>
 </div>
