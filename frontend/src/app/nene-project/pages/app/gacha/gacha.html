@@ -220,17 +220,17 @@
                 <app-item-result-component
                   [item]="item"
                   (selectedItem)="viewItem(item)"
-                  [classAttribute]="'md:w-60 lg:w-65'"
+                  [classAttribute]="'w-30 md:w-60 lg:w-65'"
                 ></app-item-result-component>
               }
             </div>
 
-            <div class="flex justify-center gap-3 md:gap-6">
+            <div class="flex flex-wrap justify-center gap-1">
               @for (item of pullResults()!.slice(3, 7); track $index) {
                 <app-item-result-component
                   [item]="item"
                   (selectedItem)="viewItem(item)"
-                  [classAttribute]="'md:w-45 lg:w-60'"
+                  [classAttribute]="'w-29 md:w-45 lg:w-60'"
                 ></app-item-result-component>
               }
             </div>
@@ -240,7 +240,7 @@
                 <app-item-result-component
                   [item]="item"
                   (selectedItem)="viewItem(item)"
-                  [classAttribute]="'md:w-60 lg:w-65'"
+                  [classAttribute]="'w-30 md:w-60 lg:w-65'"
                 ></app-item-result-component>
               }
             </div>
