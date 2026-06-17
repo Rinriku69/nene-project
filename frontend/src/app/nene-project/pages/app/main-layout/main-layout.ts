@@ -17,6 +17,7 @@ export class MainLayout {
   private readonly router = inject(Router);
   protected readonly currentUser = computed(() => this.authService.currentUserState());
   protected readonly userMenuShow = signal<boolean>(false);
+  protected readonly mobileMenuOpen = signal<boolean>(false);
   protected readonly notifications = computed(() => this.authService.notifications());
   protected readonly unreadCount = linkedSignal<number>(() => {
     const noti = this.notifications();
@@ -46,6 +47,10 @@ export class MainLayout {
 
   toggleUserMenu(): void {
     this.userMenuShow.set(!this.userMenuShow());
+  }
+
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen.set(!this.mobileMenuOpen());
   }
 
   markNotiAsReadAll() {
