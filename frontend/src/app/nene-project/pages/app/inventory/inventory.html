@@ -77,7 +77,6 @@
         ></app-item-view-component>
       }
 
-      <!-- Pagination -->
       @if (inventoryData()!.last_page > 1) {
         <div
           class="flex justify-between items-center w-full max-w-md mt-8 bg-white/80  px-6 py-4 rounded-3xl border-4 border-pink-200 shadow-[0_6px_0_#fbcfe8]"
@@ -89,7 +88,7 @@
           >
             Previous
           </button>
-          <span class="text-pink-500 font-black text-xl">
+          <span class="text-pink-500 font-black text-sm lg:text-lg">
             Page {{ inventoryData()!.current_page }} of {{ inventoryData()!.last_page }}
           </span>
           <button
