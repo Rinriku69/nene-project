@@ -10,7 +10,7 @@ import co from '@angular/common/locales/co';
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
-  private readonly baseApiUrl = "/api";
+  private readonly baseApiUrl = "http://localhost:8000/api";
   private readonly currentUser = signal<User|null>(null);
   readonly currentUserState = linkedSignal(()=>this.currentUser());
   readonly isLoggedIn = computed(()=> this.currentUser()!== null);

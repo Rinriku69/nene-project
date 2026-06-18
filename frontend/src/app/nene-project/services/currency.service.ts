@@ -7,7 +7,7 @@ import { ResourceResponse } from '../models/Resource';
   providedIn: 'root',
 })
 export class CurrencyService {
-  private readonly baseApiUrl = '/api';
+  private readonly baseApiUrl = 'http://localhost:8000/api';
   private readonly http = inject(HttpClient);
 
   getDailyLogin(): Observable<ResourceResponse>{
