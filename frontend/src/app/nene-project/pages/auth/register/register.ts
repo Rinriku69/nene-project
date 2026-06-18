@@ -55,11 +55,6 @@ export class Register {
     minLength(path.password, 8, { message: 'Password must have atleast 8 characters' });
   });
 
-  /* constructor(){
-    effect(()=>{
-      console.log(this.registerForm.password_confirmation().errors())
-    })
-  } */
 
   protected submit(){
     if(this.registerForm().invalid()){
