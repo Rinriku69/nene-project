@@ -1,7 +1,9 @@
 {
-  "name": "frontend",
-  "short_name": "frontend",
+  "name": "Nene Project",
+  "short_name": "Nene",
   "display": "standalone",
+  "theme_color": "#fbcfe8",
+  "background_color": "#ffffff",
   "scope": "./",
   "start_url": "./",
   "icons": [
