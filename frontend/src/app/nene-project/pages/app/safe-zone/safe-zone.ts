@@ -1,4 +1,14 @@
-import { Component, computed, effect, ElementRef, inject, OnInit, signal, viewChild } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  OnInit,
+  signal,
+  viewChild,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { SakuraComponent } from '../../../components/sakura-component/sakura-component';
 import { SafeZoneModel } from '../../../models/FormModel';
 import { form, FormField, required } from '@angular/forms/signals';
@@ -9,8 +19,9 @@ import { DatePipe, UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-safe-zone',
-  imports: [SakuraComponent, FormField,UpperCasePipe,],
+  imports: [SakuraComponent, FormField, UpperCasePipe],
   templateUrl: './safe-zone.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './safe-zone.css',
 })
 export class SafeZone implements OnInit {
@@ -51,7 +62,13 @@ export class SafeZone implements OnInit {
 
   closeModal(): void {
     this.modalIsOpen.set(false);
-    this.messageModel.set({ message: '', theme_color: 'pink', pos_x: 0, pos_y: 0, unlocked_at: null });
+    this.messageModel.set({
+      message: '',
+      theme_color: 'pink',
+      pos_x: 0,
+      pos_y: 0,
+      unlocked_at: null,
+    });
     this.isSecret.set(false);
     this.isShownTanzaku.set(false);
   }
@@ -70,7 +87,7 @@ export class SafeZone implements OnInit {
   updateGhostPosition(event: MouseEvent) {
     if (!this.isPlacementMode()) return;
     const rect: DOMRect = this.sakuraImg()?.nativeElement.getBoundingClientRect();
-    console.log(this.sakuraImg()?.nativeElement)
+    console.log(this.sakuraImg()?.nativeElement);
     const xPercent = ((event.clientX - rect.left) / rect.width) * 100;
     const yPercent = ((event.clientY - rect.top) / rect.height) * 100;
     this.ghostX.set(xPercent);
@@ -92,21 +109,22 @@ export class SafeZone implements OnInit {
     this.isConfirm.set(false);
   }
 
-  confirmPlacement(){
+  confirmPlacement() {
     this.isConfirm.set(false);
-    const messageTranform = {...this.messageForm().value(), 
-      unlocked_at: this.messageForm().value().unlocked_at ? 
-      this.datePipe.transform(this.messageForm().value().unlocked_at,'yyyy-MM-dd')
-    : null};
+    const messageTranform = {
+      ...this.messageForm().value(),
+      unlocked_at: this.messageForm().value().unlocked_at
+        ? this.datePipe.transform(this.messageForm().value().unlocked_at, 'yyyy-MM-dd')
+        : null,
+    };
     this.safeZoneService.addTanzaku(messageTranform).subscribe({
-      next: (res)=>{
-        console.log(res.message)
-
+      next: (res) => {
+        console.log(res.message);
       },
-      error:(err:ResourceErrorResponse)=>{
-        console.log(err.message)
-      }
-    })
+      error: (err: ResourceErrorResponse) => {
+        console.log(err.message);
+      },
+    });
   }
 
   getTanzakuColorClasses(): string {
@@ -118,11 +136,16 @@ export class SafeZone implements OnInit {
       return 'bg-slate-300 border-slate-500 text-slate-700 shadow-[0_0_15px_#94a3b8] grayscale brightness-75';
     }
     switch (color) {
-      case 'yellow': return 'bg-yellow-100 border-yellow-300 text-yellow-800 shadow-[0_0_15px_#fef08a]';
-      case 'blue': return 'bg-blue-100 border-blue-300 text-blue-800 shadow-[0_0_15px_#bfdbfe]';
-      case 'red': return 'bg-red-100 border-red-300 text-red-800 shadow-[0_0_15px_#fecaca]';
-      case 'purple': return 'bg-purple-100 border-purple-300 text-purple-800 shadow-[0_0_15px_#e9d5ff]';
-      case 'green': return 'bg-green-100 border-green-300 text-green-800 shadow-[0_0_15px_#bbf7d0]';
+      case 'yellow':
+        return 'bg-yellow-100 border-yellow-300 text-yellow-800 shadow-[0_0_15px_#fef08a]';
+      case 'blue':
+        return 'bg-blue-100 border-blue-300 text-blue-800 shadow-[0_0_15px_#bfdbfe]';
+      case 'red':
+        return 'bg-red-100 border-red-300 text-red-800 shadow-[0_0_15px_#fecaca]';
+      case 'purple':
+        return 'bg-purple-100 border-purple-300 text-purple-800 shadow-[0_0_15px_#e9d5ff]';
+      case 'green':
+        return 'bg-green-100 border-green-300 text-green-800 shadow-[0_0_15px_#bbf7d0]';
       case 'pink':
       default:
         return 'bg-pink-100 border-pink-300 text-pink-800 shadow-[0_0_15px_#fbcfe8]';
@@ -140,15 +163,14 @@ export class SafeZone implements OnInit {
     this.selectedTanzaku.set(null);
   }
 
-
-  ngOnInit(){
+  ngOnInit() {
     this.safeZoneService.getMessages().subscribe({
-      next:(res)=>{
+      next: (res) => {
         this.safeZoneMessages.set(res);
       },
-      error:(err:ResourceErrorResponse)=>{
-        console.log(err.error.message)
-      }
-    })
+      error: (err: ResourceErrorResponse) => {
+        console.log(err.error.message);
+      },
+    });
   }
 }

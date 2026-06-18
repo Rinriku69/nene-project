@@ -1,5 +1,26 @@
-import { afterNextRender, Component, computed, effect, ElementRef, inject, input, linkedSignal, OnInit, QueryList, signal, viewChild, viewChildren } from '@angular/core';
-import { RouterOutlet, RouterLinkWithHref, Router, RouterLinkActive, NavigationEnd } from '@angular/router';
+import {
+  afterNextRender,
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  linkedSignal,
+  OnInit,
+  QueryList,
+  signal,
+  viewChild,
+  viewChildren,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import {
+  RouterOutlet,
+  RouterLinkWithHref,
+  Router,
+  RouterLinkActive,
+  NavigationEnd,
+} from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
@@ -11,6 +32,7 @@ import { LayoutService } from '../../../services/layout.service';
   selector: 'app-main-layout',
   imports: [DecimalPipe, RouterOutlet, RouterLinkWithHref, Icons, RouterLinkActive],
   templateUrl: './main-layout.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './main-layout.css',
 })
 export class MainLayout {
@@ -36,9 +58,9 @@ export class MainLayout {
   protected readonly isDarkTheme = toSignal(
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd),
-      map(event => event.urlAfterRedirects.includes('/safezone'))
+      map((event) => event.urlAfterRedirects.includes('/safezone')),
     ),
-    { initialValue: this.router.url.includes('/safezone') }
+    { initialValue: this.router.url.includes('/safezone') },
   );
 
   toggleNoti(): void {
@@ -73,8 +95,8 @@ export class MainLayout {
   }
 
   updateActiveCurrencyPosition() {
-    const activeTarget = this.userCurrency().find(t => t.nativeElement.checkVisibility());
-    
+    const activeTarget = this.userCurrency().find((t) => t.nativeElement.checkVisibility());
+
     if (activeTarget) {
       this.layoutService.updateUserCurrencyElem(activeTarget);
     }
@@ -83,9 +105,8 @@ export class MainLayout {
   constructor() {
     afterNextRender(() => {
       this.updateActiveCurrencyPosition();
-      
+
       window.addEventListener('resize', () => this.updateActiveCurrencyPosition());
     });
   }
-
 }

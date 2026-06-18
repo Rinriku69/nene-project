@@ -7,6 +7,7 @@ import {
   linkedSignal,
   viewChild,
   ɵAcxViewEncapsulation,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { CurrencyService } from '../../../services/currency.service';
@@ -18,6 +19,7 @@ import { LayoutService } from '../../../services/layout.service';
   selector: 'app-dashboard',
   imports: [Icons],
   templateUrl: './dashboard.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
@@ -25,7 +27,7 @@ export class Dashboard {
   private readonly currencyService = inject(CurrencyService);
   private readonly layoutService = inject(LayoutService);
   currentUser = computed(() => this.authService.currentUserState());
-  userCurrency = computed(()=> this.layoutService.userCurrencyElement());
+  userCurrency = computed(() => this.layoutService.userCurrencyElement());
   canClaimDaily = linkedSignal(() => {
     const lastClaimedStr = this.currentUser()?.last_login_at;
     if (!lastClaimedStr) {
@@ -62,13 +64,12 @@ export class Dashboard {
     const userCurrecny = this.userCurrency()?.nativeElement;
     if (!userCurrecny) return;
 
-
     const claimBtnRect = claimBtn.getBoundingClientRect();
     const userCurrencyRect = userCurrecny.getBoundingClientRect();
 
     const flyDiv = document.createElement('div');
     flyDiv.className = 'fixed z-2000 w-4 h-4 bg-blue-500 rounded-full transition-all duration-1000';
-    flyDiv.style.left = `${claimBtnRect.left + claimBtnRect.width /2 }px`;
+    flyDiv.style.left = `${claimBtnRect.left + claimBtnRect.width / 2}px`;
     flyDiv.style.top = `${claimBtnRect.top}px`;
     flyDiv.style.transform = 'translate(0,0) scale(3)';
     flyDiv.style.opacity = '1';
@@ -77,19 +78,19 @@ export class Dashboard {
 
     requestAnimationFrame(() => {
       flyDiv.style.transform = `translate(
-      ${userCurrencyRect.left - claimBtnRect.left - claimBtnRect.width /2 }px,${userCurrencyRect.top - claimBtnRect.top}px) scale(1)`;
+      ${userCurrencyRect.left - claimBtnRect.left - claimBtnRect.width / 2}px,${userCurrencyRect.top - claimBtnRect.top}px) scale(1)`;
       flyDiv.style.opacity = '0.3';
     });
-    this.currencyPulse()
+    this.currencyPulse();
     setTimeout(() => flyDiv.remove(), 1200);
   }
 
-  currencyPulse(){
+  currencyPulse() {
     const userCurrency = this.userCurrency()?.nativeElement;
 
     userCurrency?.classList.add('animate-pulse');
-    setTimeout(()=>{
-      userCurrency?.classList.remove('animate-pulse')
-    },4000)
+    setTimeout(() => {
+      userCurrency?.classList.remove('animate-pulse');
+    }, 4000);
   }
 }

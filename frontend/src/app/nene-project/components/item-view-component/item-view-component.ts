@@ -1,11 +1,12 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { GachaItem } from '../../models/Resource';
-import { Icons } from "../icons/icons";
+import { Icons } from '../icons/icons';
 
 @Component({
   selector: 'app-item-view-component',
   imports: [Icons],
   templateUrl: './item-view-component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './item-view-component.css',
 })
 export class ItemViewComponent {
@@ -13,8 +14,7 @@ export class ItemViewComponent {
   classAttribute = input.required<string>();
   close = output<void>();
 
-  closeItem(){
+  closeItem() {
     this.close.emit();
   }
-
 }

@@ -164,7 +164,7 @@
                 [class.text-pink-400]="!isDarkTheme()"
                 [class.text-pink-300]="isDarkTheme()"
               >
-                💎 {{ currentUser()?.currency | number }}
+                💎 {{ $safeNavigationMigration(currentUser()?.currency) | number }}
               </span>
               <div
                 class="w-0.5 h-5 bg-pink-300 rounded-full"
@@ -323,7 +323,7 @@
             [class.border-pink-300]="!isDarkTheme()"
             [class.shadow-[0_2px_0_#fbcfe8]]="!isDarkTheme()"
           >
-            💎 {{ currentUser()?.currency | number }}
+            💎 {{ $safeNavigationMigration(currentUser()?.currency) | number }}
           </div>
         }
       </div>
@@ -455,7 +455,9 @@
                   [class.text-pink-600]="!isDarkTheme()"
                   >{{ currentUser()?.username }}</span
                 >
-                <span class="text-sm text-pink-400">💎 {{ currentUser()?.currency | number }}</span>
+                <span class="text-sm text-pink-400"
+                  >💎 {{ $safeNavigationMigration(currentUser()?.currency) | number }}</span
+                >
               </div>
             </div>
             <button

@@ -1,4 +1,11 @@
-import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { form, FormField, required, min } from '@angular/forms/signals';
 import { Icons } from '../../../components/icons/icons';
 import { AdminService } from '../../../services/admin.service';
@@ -9,6 +16,7 @@ import { registerAppScopedDispatcher } from '@angular/core/primitives/event-disp
   selector: 'app-gacha-management',
   imports: [FormField, Icons],
   templateUrl: './gacha-management.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './gacha-management.css',
 })
 export class GachaManagement implements OnInit {

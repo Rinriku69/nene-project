@@ -1,4 +1,11 @@
-import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
 import {
   filterTerm,
@@ -14,6 +21,7 @@ import { NotificationModel, UpdateUserForm } from '../../../models/FormModel';
   selector: 'app-user-management',
   imports: [Icons, FormField],
   templateUrl: './user-management.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './user-management.css',
 })
 export class UserManagement implements OnInit {

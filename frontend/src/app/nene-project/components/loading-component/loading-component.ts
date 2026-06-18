@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { LoadingService } from '../../services/loading.service';
 import { Icons } from '../icons/icons';
 
@@ -6,9 +6,10 @@ import { Icons } from '../icons/icons';
   selector: 'app-loading-component',
   imports: [Icons],
   templateUrl: './loading-component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './loading-component.css',
 })
 export class LoadingComponent {
   protected readonly loadingService = inject(LoadingService);
-  classAttribute = input<string>("");
+  classAttribute = input<string>('');
 }

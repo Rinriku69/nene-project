@@ -1,4 +1,13 @@
-import { Component, computed, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import {
   GachaItem,
@@ -15,6 +24,7 @@ import { ItemViewComponent } from '../../../components/item-view-component/item-
   selector: 'app-gacha',
   imports: [ItemResultComponent, ItemViewComponent],
   templateUrl: './gacha.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './gacha.css',
 })
 export class Gacha implements OnInit, OnDestroy {

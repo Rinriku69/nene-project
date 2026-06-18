@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { InventoryService } from '../../../services/inventory.service';
 import { GachaItem, InventoryItem, PaginationResponse } from '../../../models/Resource';
 import { ItemViewComponent } from '../../../components/item-view-component/item-view-component';
@@ -7,6 +7,7 @@ import { ItemViewComponent } from '../../../components/item-view-component/item-
   selector: 'app-inventory',
   imports: [ItemViewComponent],
   templateUrl: './inventory.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './inventory.css',
 })
 export class Inventory {
