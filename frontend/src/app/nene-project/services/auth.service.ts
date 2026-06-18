@@ -17,7 +17,7 @@ export class AuthService {
   readonly notifications = signal<NotificationItem[]|null>(null);
 
   getCSRFToken():Observable<ResourceResponse>{
-    return this.http.get<ResourceResponse>("/sanctum/csrf-cookie");
+    return this.http.get<ResourceResponse>("http://localhost:8000/sanctum/csrf-cookie");
   }
 
   register(registerFormData: RegisterModel):Observable<ResourceResponse>{
