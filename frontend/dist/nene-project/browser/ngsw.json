@@ -1,0 +1,99 @@
+{
+  "configVersion": 1,
+  "timestamp": 1781767983669,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/chunk-0T_5wdw2.js",
+        "/chunk-BCRyTJUI.js",
+        "/chunk-BqO1RJA9.js",
+        "/chunk-BvU5QEk2.js",
+        "/chunk-CWUmQV7z.js",
+        "/chunk-Cxb-vNY0.js",
+        "/chunk-DUKXnZCi.js",
+        "/chunk-ecvfBFii.js",
+        "/chunk-u-C79OL0.js",
+        "/index.html",
+        "/main-WEULKMVS.js",
+        "/manifest.webmanifest",
+        "/styles-MHOKOCS5.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/icons/icon-128x128.png",
+        "/icons/icon-144x144.png",
+        "/icons/icon-152x152.png",
+        "/icons/icon-192x192.png",
+        "/icons/icon-384x384.png",
+        "/icons/icon-512x512.png",
+        "/icons/icon-72x72.png",
+        "/icons/icon-96x96.png",
+        "/icons/logo.png",
+        "/icons/nene_flower.png",
+        "/images/sakurajpg.jpg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/chunk-0T_5wdw2.js": "0da20155d33c76175e5c5f19b8a26a7665c9aaae",
+    "/chunk-BCRyTJUI.js": "bb42e8b9d35cbb6b696d7f34b9c6e0196ef60e0f",
+    "/chunk-BqO1RJA9.js": "1b79241763732d152c06de5fd87424e2ffb1a2fe",
+    "/chunk-BvU5QEk2.js": "680ca87dc6f3dc9f107a1b22905edd94079de0bb",
+    "/chunk-CWUmQV7z.js": "5f22d6164819769823c8d459a4dbb86816a2b429",
+    "/chunk-Cxb-vNY0.js": "4944b573976f0f48e2208057cd9895fe6d2e268a",
+    "/chunk-DUKXnZCi.js": "2a84ebb497ab6f1126ca87268012047885dd5747",
+    "/chunk-ecvfBFii.js": "04c71654510525c3350508b117d71b4b2230bffd",
+    "/chunk-u-C79OL0.js": "a5c44ea51d16295209691cd0a1bb09a9dd0be63d",
+    "/icons/icon-128x128.png": "a63cf8c084ffee2838f207b81859a979d9e99335",
+    "/icons/icon-144x144.png": "1a24d586313cf5cb8ca5acd96f950712ee06471c",
+    "/icons/icon-152x152.png": "291a56f585d1a8633a912d19be4d87ed698b4f9a",
+    "/icons/icon-192x192.png": "5744791d8c4f89b15d2c075cc59681f93e2f453a",
+    "/icons/icon-384x384.png": "7297a38487cc9d6122519f8c3172b7f83a65c920",
+    "/icons/icon-512x512.png": "214c055aa02f3df58d4f3ce54135288d3cda4c0e",
+    "/icons/icon-72x72.png": "814216bfe5e323b9643e40592a5dae3351830548",
+    "/icons/icon-96x96.png": "0e9d4fb235ea655b4b8962c5c509874c50085dfd",
+    "/icons/logo.png": "ce16164ca0c4f232fef9413b6fad3c5b39f2dddd",
+    "/icons/nene_flower.png": "4d2c2993c69d3ff7d0c53e6583cef7889b38c6f9",
+    "/images/sakurajpg.jpg": "17ae3e54955839688c229fa4fe6e89ed6d0b8b49",
+    "/index.html": "46dc79c83d411c0295a0ce0da19fd9ebf30b3641",
+    "/main-WEULKMVS.js": "33a6b4edf5b1e2376a427fffd3a52894f59ddace",
+    "/manifest.webmanifest": "2913904731e2a365ed83648675f8a79eef6d6868",
+    "/styles-MHOKOCS5.css": "09cfef09f725f64889a9d1a4b1df6593d41379fd"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
