@@ -1,4 +1,4 @@
-<section class="relative w-full h-svh flex flex-col gap-5 justify-center items-center overflow-hidden bg-pink-50">
+<section class="fixed w-full h-svh flex flex-col gap-5 justify-center items-center overflow-hidden bg-pink-50">
   <div
     class="absolute inset-0 z-0 opacity-60 bg-[radial-gradient(#fbcfe8_6px,transparent_3px)] bg-size-[40px_40px]"
   ></div>
@@ -9,25 +9,25 @@
       fetchpriority="high"
     />
   </div>
-  <h1 class="absolute top-[10%] z-200 text-4xl font-black text-pink-400">Nene Project</h1>
+  <h1 class="absolute animate-pulse top-[15%] z-200 text-4xl md:text-5xl font-black text-pink-400">Nene Project</h1>
   <div
-    class="relative z-10 rounded-[3rem] px-5 py-16 md:px-20 md:py-20 flex flex-col items-center gap-10 bg-white border-4 border-pink-200 shadow-[0_12px_0_#fbcfe8] hover:-translate-y-2 hover:shadow-[0_20px_0_#fbcfe8] transition-all duration-300"
+    class="relative z-10 rounded-[3rem] px-10 py-16 md:px-20 md:py-20 flex flex-col items-center gap-10 bg-white border-4 border-pink-200 shadow-[0_12px_0_#fbcfe8] hover:-translate-y-2 hover:shadow-[0_20px_0_#fbcfe8] transition-all duration-300"
   >
     <div class="text-center animate-bounce">
-      <h2 class="text-5xl md:text-7xl font-black text-pink-400 drop-shadow-sm tracking-tighter">
+      <h2 class="text-4xl md:text-7xl font-black text-pink-400 drop-shadow-sm tracking-tighter">
         Hi Cutie! <br />
         ૮ ˶ᵔ ᵕ ᵔ˶ ა
       </h2>
     </div>
 
     <div>
-      <button class="main-btn group mt-6 flex justify-end gap-2" (click)="boopClick()">
+      <button class="main-btn py-2 px-8 group  flex justify-end gap-2" (click)="boopClick()">
         <app-icons
           [name]="'pointer'"
-          [classAttribute]="'size-15 fill-white group-hover:scale-110 transition-transform mr-3'"
+          [classAttribute]="'size-8 md:size-15 fill-white group-hover:scale-110 transition-transform mr-3'"
         ></app-icons>
         <span
-          class="flex items-center text-2xl md:text-3xl font-black text-white group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300"
+          class="flex items-center text-lg md:text-3xl font-black text-white group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300"
         >
           Boop Me!
         </span>

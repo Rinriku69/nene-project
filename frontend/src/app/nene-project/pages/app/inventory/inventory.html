@@ -82,7 +82,7 @@
           class="flex justify-between items-center w-full max-w-md mt-8 bg-white/80  px-6 py-4 rounded-3xl border-4 border-pink-200 shadow-[0_6px_0_#fbcfe8]"
         >
           <button
-            class="px-5 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_0_#fbcfe8] active:translate-y-1 active:shadow-[0_0px_0_#fbcfe8]"
+            class="px-2 md:px-5 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_0_#fbcfe8] active:translate-y-1 active:shadow-[0_0px_0_#fbcfe8]"
             (click)="changePage(inventoryData()!.current_page - 1)"
             [disabled]="inventoryData()!.current_page === 1"
           >
@@ -92,7 +92,7 @@
             Page {{ inventoryData()!.current_page }} of {{ inventoryData()!.last_page }}
           </span>
           <button
-            class="px-5 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_0_#fbcfe8] active:translate-y-1 active:shadow-[0_0px_0_#fbcfe8]"
+            class="px-2 md:px-5 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_0_#fbcfe8] active:translate-y-1 active:shadow-[0_0px_0_#fbcfe8]"
             (click)="changePage(inventoryData()!.current_page + 1)"
             [disabled]="inventoryData()!.current_page === inventoryData()!.last_page"
           >

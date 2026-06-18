@@ -19,10 +19,11 @@ import { GachaService } from '../../../services/gacha.service';
 import { AudioService } from '../../../services/audio.service';
 import { ItemResultComponent } from '../../../components/item-result-component/item-result-component';
 import { ItemViewComponent } from '../../../components/item-view-component/item-view-component';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-gacha',
-  imports: [ItemResultComponent, ItemViewComponent],
+  imports: [ItemResultComponent, ItemViewComponent, DecimalPipe],
   templateUrl: './gacha.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './gacha.css',

@@ -3,17 +3,18 @@
 >
   <div class="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center gap-8">
     <div class="text-center mt-4">
-      <h1 class="text-4xl md:text-5xl font-black text-pink-500 drop-shadow-md tracking-tight">
+      <h1 class="text-2xl md:text-5xl font-black text-pink-500 drop-shadow-md tracking-tight">
         Nene and The GANG
       </h1>
       <p class="text-pink-400 font-medium mt-2 text-lg">Unlock your precious memories!</p>
     </div>
 
     <div
-      class="w-full relative rounded-4xl overflow-hidden border-4 border-pink-300 shadow-[0_12px_0_#fbcfe8] bg-white aspect-21/9"
+      class="w-full relative rounded-4xl overflow-hidden border-4 border-pink-300 shadow-[0_12px_0_#fbcfe8] bg-white aspect-8/5"
     >
       @if (featuredItems.hasValue()) {
         @for (item of featuredItems.value(); track $index) {
+          
           <div
             class="absolute inset-0 transition-opacity duration-1000 ease-in-out"
             [class.opacity-100]="$index === currentSlide()"
@@ -34,26 +35,28 @@
         }
       } @else if (featuredItems.isLoading() || featuredItems.error()) {
         <div class="absolute inset-0 bg-pink-300 animate-pulse"></div>
-        <div class="absolute w-60 h-10 bottom-4 bg-slate-200 animate-pulse left-4 rounded-full"></div>
+        <div
+          class="absolute w-60 h-10 bottom-4 bg-slate-200 animate-pulse left-4 rounded-full"
+        ></div>
       }
 
       <div
-        class="absolute bottom-4 right-4 hidden md:flex bg-white/80  px-4 py-2 rounded-full border-2 border-pink-200"
+        class="absolute bottom-4 right-4 hidden md:flex bg-white/80 px-4 py-2 rounded-full border-2 border-pink-200"
       >
-        <span class="text-pink-500 font-black ">Featured Nene Flower SR!!</span>
+        <span class="text-pink-500 font-black">Featured Nene Flower SR!!</span>
       </div>
     </div>
 
     <div
-      class="flex items-center  bg-white px-6 py-3 rounded-full border-2 border-pink-200 shadow-sm"
+      class="flex items-center bg-white px-6 py-3 rounded-full border-2 border-pink-200 shadow-sm"
     >
-      <span class="text-pink-400 font-bold mr-1">Your Gems:</span>
-      <span class="text-pink-500 font-black text-xl flex items-center">
-        💎{{ currentUser()?.currency || 0 }}
+      <span class="text-pink-400 text-sm md:text-base font-bold mr-1">Your Gems:</span>
+      <span class="text-pink-500 font-black text-md flex items-center">
+        💎{{ currentUser()?.currency || 0 | number }}
       </span>
       <button
         (click)="openLogModal()"
-        class="ml-2 px-4 py-1.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold rounded-full text-sm transition-colors border-2 border-pink-300 active:scale-95"
+        class="ml-2 px-3 md:px-4 py-1.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold rounded-full text-sm transition-colors border-2 border-pink-300 active:scale-95"
       >
         See Log
       </button>
@@ -61,7 +64,7 @@
 
     <div class="flex flex-row gap-6 w-full max-w-lg mt-4 justify-center">
       <button
-        class="flex-1 group relative flex flex-col items-center justify-center gap-2 bg-white border-4 border-pink-300 rounded-4xl p-4 pb-6 hover:-translate-y-1 transition-transform duration-300 shadow-[0_8px_0_#fbcfe8] hover:shadow-[0_12px_0_#fbcfe8] active:translate-y-2 active:shadow-[0_0px_0_#fbcfe8] disabled:opacity-70 disabled:cursor-not-allowed"
+        class="flex-1 group relative flex flex-col items-center justify-center md:gap-2 bg-white border-4 border-pink-300 rounded-4xl p-3 md:p-5 hover:-translate-y-1 transition-transform duration-300 shadow-[0_8px_0_#fbcfe8] hover:shadow-[0_12px_0_#fbcfe8] active:translate-y-2 active:shadow-[0_0px_0_#fbcfe8] disabled:opacity-70 disabled:cursor-not-allowed"
         (click)="confirmPull(1)"
         [disabled]="isRolling()"
       >
@@ -76,16 +79,16 @@
       </button>
 
       <button
-        class="flex-1 group relative flex flex-col items-center justify-center gap-2 bg-pink-400 border-4 border-pink-500 rounded-4xl p-4 pb-6 hover:-translate-y-1 transition-transform duration-300 shadow-[0_8px_0_#f472b6] hover:shadow-[0_12px_0_#f472b6] active:translate-y-2 active:shadow-[0_0px_0_#f472b6] disabled:opacity-70 disabled:cursor-not-allowed"
+        class="flex-1 group relative flex flex-col items-center justify-center md:gap-2 bg-pink-400 border-4 border-pink-500 rounded-4xl p-3 md:p-5 hover:-translate-y-1 transition-transform duration-300 shadow-[0_8px_0_#f472b6] hover:shadow-[0_12px_0_#f472b6] active:translate-y-2 active:shadow-[0_0px_0_#f472b6] disabled:opacity-70 disabled:cursor-not-allowed"
         (click)="confirmPull(10)"
         [disabled]="isRolling()"
       >
         <div
-          class="absolute -top-6 -right-6 md:-right-3 md:-top-3 bg-yellow-400 text-yellow-900 text-[0.6rem] md:text-xs font-black px-1 py-1 rounded-full border-2 border-yellow-500 shadow-sm rotate-12"
+          class="absolute animate-bounce -top-6 -right-6 md:-right-3 md:-top-3 bg-yellow-400 text-yellow-900 text-[0.6rem] md:text-xs font-black px-1 py-1 rounded-full border-2 border-yellow-500 shadow-sm rotate-12"
         >
           SR or Higher GUARANTEED!
         </div>
-        <span class="text-2xl font-black text-white group-hover:scale-110 transition-transform"
+        <span class="text-xl font-black text-white group-hover:scale-110 transition-transform"
           >10x Roll</span
         >
         <span
@@ -99,7 +102,7 @@
 
   @if (confirmModal()) {
     <div
-      class="fixed inset-0 z-50 bg-black/50  flex items-center justify-center p-4"
+      class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
       (click)="closeConfirmModal()"
     >
       <div
@@ -184,9 +187,7 @@
   }
 
   @if (isRolling()) {
-    <div
-      class="fixed inset-0 z-50 bg-pink-100/80 flex flex-col items-center justify-center gap-4"
-    >
+    <div class="fixed inset-0 z-50 bg-pink-100/80 flex flex-col items-center justify-center gap-4">
       <div class="text-6xl animate-bounce">✨</div>
       <h2 class="text-3xl font-black text-pink-500 animate-pulse">Pulling...</h2>
     </div>
@@ -194,7 +195,7 @@
 
   @if (pullResults()) {
     <div
-      class="fixed inset-0 z-100 bg-black/90  flex flex-col items-center justify-center p-4 overflow-y-auto"
+      class="fixed inset-0 z-100 bg-black/90 flex flex-col items-center justify-center p-4 overflow-y-auto"
     >
       <div
         class="w-full max-w-8xl flex-1 flex flex-col items-center justify-center relative min-h-max py-10"
@@ -214,42 +215,89 @@
             ></app-item-result-component>
           </div>
         } @else {
-          <div class="flex flex-col gap-4 md:gap-6 w-full max-w-10xl animate-smooth-appear">
-            <div class="flex justify-center gap-3 md:gap-6">
-              @for (item of pullResults()!.slice(0, 3); track $index) {
-                <app-item-result-component
-                  [item]="item"
-                  (selectedItem)="viewItem(item)"
-                  [classAttribute]="'w-28 md:w-60 lg:w-65'"
-                ></app-item-result-component>
-              }
+          <!-- mobile result -->
+          <div class="flex md:hidden">
+            <div class="flex flex-col gap-2 md:gap-6 w-full max-w-10xl animate-smooth-appear">
+              <div class="flex justify-center gap-1 md:gap-6">
+                @for (item of pullResults()!.slice(0, 3); track $index) {
+                  <app-item-result-component
+                    [item]="item"
+                    (selectedItem)="viewItem(item)"
+                    [classAttribute]="'w-28 md:w-60 lg:w-65'"
+                  ></app-item-result-component>
+                }
+              </div>
+
+              <div class="flex flex-wrap justify-center gap-1">
+                @for (item of pullResults()!.slice(3, 6); track $index) {
+                  <app-item-result-component
+                    [item]="item"
+                    (selectedItem)="viewItem(item)"
+                    [classAttribute]="'w-28 md:w-45 lg:w-60'"
+                  ></app-item-result-component>
+                }
+              </div>
+
+              <div class="flex justify-center gap-1 md:gap-6">
+                @for (item of pullResults()!.slice(6, 9); track $index) {
+                  <app-item-result-component
+                    [item]="item"
+                    (selectedItem)="viewItem(item)"
+                    [classAttribute]="'w-28 md:w-60 lg:w-65'"
+                  ></app-item-result-component>
+                }
+              </div>
+              <div class="flex justify-center gap-1 md:gap-6">
+                @for (item of pullResults()!.slice(9, 10); track $index) {
+                  <app-item-result-component
+                    [item]="item"
+                    (selectedItem)="viewItem(item)"
+                    [classAttribute]="'w-28 md:w-60 lg:w-65'"
+                  ></app-item-result-component>
+                }
+              </div>
             </div>
 
-            <div class="flex flex-wrap justify-center gap-1">
-              @for (item of pullResults()!.slice(3, 7); track $index) {
-                <app-item-result-component
-                  [item]="item"
-                  (selectedItem)="viewItem(item)"
-                  [classAttribute]="'w-26 md:w-45 lg:w-60'"
-                ></app-item-result-component>
-              }
-            </div>
+          </div>
+          <!-- medium result -->
+          <div class="hidden md:flex">
+            <div class="flex flex-col gap-2 md:gap-6 w-full max-w-10xl animate-smooth-appear">
+              <div class="flex justify-center gap-1 md:gap-6">
+                @for (item of pullResults()!.slice(0, 3); track $index) {
+                  <app-item-result-component
+                    [item]="item"
+                    (selectedItem)="viewItem(item)"
+                    [classAttribute]="'w-28 md:w-60 lg:w-65'"
+                  ></app-item-result-component>
+                }
+              </div>
 
-            <div class="flex justify-center gap-3 md:gap-6">
-              @for (item of pullResults()!.slice(7, 10); track $index) {
-                <app-item-result-component
-                  [item]="item"
-                  (selectedItem)="viewItem(item)"
-                  [classAttribute]="'w-28 md:w-60 lg:w-65'"
-                ></app-item-result-component>
-              }
+              <div class="flex flex-wrap justify-center gap-3">
+                @for (item of pullResults()!.slice(3, 7); track $index) {
+                  <app-item-result-component
+                    [item]="item"
+                    (selectedItem)="viewItem(item)"
+                    [classAttribute]="'w-28 md:w-45 lg:w-60'"
+                  ></app-item-result-component>
+                }
+              </div>
+
+              <div class="flex justify-center gap-3 md:gap-6">
+                @for (item of pullResults()!.slice(7, 10); track $index) {
+                  <app-item-result-component
+                    [item]="item"
+                    (selectedItem)="viewItem(item)"
+                    [classAttribute]="'w-28 md:w-60 lg:w-65'"
+                  ></app-item-result-component>
+                }
+              </div>
             </div>
           </div>
         }
 
         <button
           (click)="closeResults()"
-          class="mt-8 px-12 py-4 bg-white hover:bg-pink-100 hover:scale-110 duration-200 cursor-pointer text-pink-500 font-black text-xl rounded-full border-4 border-pink-300 shadow-[0_6px_0_#fbcfe8] active:translate-y-2 active:shadow-[0_0px_0_#fbcfe8] transition-all"
+          class="mt-8 px-8 md:px-12 py-3 md:py-4 bg-white hover:bg-pink-100 hover:scale-110 duration-200 cursor-pointer text-pink-500 font-black text-lg md:text-xl rounded-full border-4 border-pink-300 shadow-[0_6px_0_#fbcfe8] active:translate-y-2 active:shadow-[0_0px_0_#fbcfe8] transition-all"
         >
           Confirm
         </button>
@@ -268,7 +316,7 @@
   <!-- Gacha Log Modal -->
   @if (logModal()) {
     <div
-      class="fixed inset-0 z-50 bg-black/50  flex items-center justify-center p-4"
+      class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
       (click)="closeLogModal()"
     >
       <div
@@ -313,17 +361,17 @@
         @if (gachaLogs() && gachaLogs()!.last_page > 1) {
           <div class="flex justify-between items-center mt-6">
             <button
-              class="px-5 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_0_#fbcfe8] active:translate-y-1 active:shadow-[0_0px_0_#fbcfe8]"
+              class="px-2 md:px-5 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_0_#fbcfe8] active:translate-y-1 active:shadow-[0_0px_0_#fbcfe8]"
               (click)="changeLogPage(gachaLogs()!.current_page - 1)"
               [disabled]="gachaLogs()!.current_page === 1"
             >
               Previous
             </button>
-            <span class="text-pink-500 font-bold text-lg">
+            <span class="text-pink-500 font-bold text-sm md:text-lg">
               Page {{ gachaLogs()!.current_page }} of {{ gachaLogs()!.last_page }}
             </span>
             <button
-              class="px-5 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_0_#fbcfe8] active:translate-y-1 active:shadow-[0_0px_0_#fbcfe8]"
+              class="px-2 md:px-5 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_0_#fbcfe8] active:translate-y-1 active:shadow-[0_0px_0_#fbcfe8]"
               (click)="changeLogPage(gachaLogs()!.current_page + 1)"
               [disabled]="gachaLogs()!.current_page === gachaLogs()!.last_page"
             >
