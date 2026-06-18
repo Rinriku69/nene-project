@@ -1,5 +1,5 @@
 <div
-  class="relative h-125 md:h-170 lg:h-190 p-2 sm:p-3 lg:p-2 md:p-2 font-sans flex flex-col items-center gap-2"
+  class="relative h-180 md:h-250 lg:h-225 p-1 lg:p-2 md:p-2 font-sans flex flex-col items-center gap-2"
 >
   <app-sakura-component></app-sakura-component>
   <div
@@ -23,7 +23,7 @@
         [style.top.%]="ghostY()"
       >
         <div
-          class="relative  w-10 h-20 md:w-16 md:h-36 flex flex-col justify-center items-center font-bold rounded-sm rotate-3 border transition-colors {{
+          class="relative  w-10 h-18 md:w-16 md:h-36 flex flex-col justify-center items-center font-bold rounded-sm rotate-3 border transition-colors {{
             getTanzakuColorClasses()
           }}"
         >
@@ -61,7 +61,7 @@
           (click)="openViewModal(tanzaku)"
         >
           <div
-            class="relative w-10 h-20 md:w-16 md:h-36 flex flex-col items-center justify-center gap-2 font-bold rounded-sm rotate-3 border transition-colors {{
+            class="relative w-10 h-18 md:w-16 md:h-36 flex flex-col items-center justify-center gap-2 font-bold rounded-sm rotate-3 border transition-colors {{
               getColorForTanzaku(tanzaku.theme_color, tanzaku.is_locked)
             }}"
           >

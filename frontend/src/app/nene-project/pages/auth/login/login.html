@@ -1,12 +1,12 @@
 <section
-  class="relative w-full min-h-svh flex justify-center items-center py-10 overflow-hidden bg-pink-50"
+  class="fixed w-full min-h-svh flex justify-center items-center py-10 overflow-hidden bg-pink-50"
 >
   <div
     class="absolute inset-0 z-0 opacity-60 bg-[radial-gradient(#fbcfe8_6px,transparent_3px)] bg-size-[40px_40px]"
   ></div>
 
   <div
-    class="relative z-10 w-full max-w-md rounded-[3rem] px-10 py-12 flex flex-col gap-8 bg-white border-4 border-pink-200 shadow-[0_12px_0_#fbcfe8]"
+    class="relative z-10 w-full max-w-80 rounded-[3rem] px-10 py-12 flex flex-col gap-8 bg-white border-4 border-pink-200 shadow-[0_12px_0_#fbcfe8]"
   >
     <div class="text-center">
       <h2 class="text-4xl font-black text-pink-400 drop-shadow-sm tracking-tighter">
@@ -54,7 +54,7 @@
       [disabled]="loginForm().invalid() || isLoading()">
       <app-loading-component [classAttribute]="'size-10 animate-spin mx-1'"></app-loading-component>
         <span
-          class="text-2xl font-black text-white group-hover:scale-110 transition-transform duration-300"
+          class="text-2xl font-black py-2 text-white group-hover:scale-110 transition-transform duration-300"
         >
           Login
         </span>

@@ -38,7 +38,7 @@
 }
 
 .main-btn {
-  @apply relative px-12 py-5 bg-pink-400 border-4 border-pink-500 rounded-full cursor-pointer transition-all duration-200 shadow-[0_8px_0_#db2777];
+  @apply relative bg-pink-400 border-4 border-pink-500 rounded-full cursor-pointer transition-all duration-200 shadow-[0_8px_0_#db2777];
 }
 
 .main-btn:hover {

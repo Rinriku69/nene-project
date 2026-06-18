@@ -2,7 +2,7 @@
   class="relative w-full min-h-svh flex justify-center items-center py-10 overflow-hidden bg-pink-50"
 >
   <div
-    class="absolute inset-0 z-0 opacity-60 bg-[radial-gradient(#fbcfe8_6px,transparent_3px)] bg-size-[40px_40px]"
+    class="fixed inset-0 z-0 opacity-60 bg-[radial-gradient(#fbcfe8_6px,transparent_3px)] bg-size-[40px_40px]"
   ></div>
 
   <div
@@ -86,7 +86,7 @@
       [disabled]="formSubmitDisable() || isLoading()" (click)="submit()">
        <app-loading-component [classAttribute]="'size-10 animate-spin mx-1'"></app-loading-component>
         <span
-          class="text-2xl font-black text-white group-hover:scale-110 transition-transform duration-300"
+          class="text-2xl py-2 font-black text-white group-hover:scale-110 transition-transform duration-300"
         >
           Sign Up 
         </span>
