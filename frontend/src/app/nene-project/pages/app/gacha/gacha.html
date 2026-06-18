@@ -106,30 +106,30 @@
       (click)="closeConfirmModal()"
     >
       <div
-        class="w-full max-w-md rounded-2xl bg-brand-white shadow-2xl border border-white/50 p-8"
+        class="w-full max-w-80 md:max-w-md rounded-2xl bg-brand-white shadow-2xl border border-white/50 p-8"
         (click)="$event.stopPropagation()"
       >
         @if (gemLeft() >= 0) {
           <div class="flex flex-col items-center gap-3">
-            <h2 class="text-3xl font-black text-brand-pink">Confirm your pull</h2>
+            <h2 class="text-2xl md:text-3xl font-black text-brand-pink">Confirm your pull</h2>
 
-            <p class="text-center text-gray-500">Spend gems to perform this pull.</p>
+            <p class="text-center text-sm md:text-base text-gray-500">Spend gems to perform this pull.</p>
           </div>
 
-          <div class="my-8 rounded-xl bg-pink-50 border border-pink-200 p-5 text-center">
+          <div class="my-3 rounded-xl bg-pink-50 border border-pink-200 p-3 text-center">
             <div class="text-sm font-semibold text-pink-700 uppercase tracking-wide">Cost</div>
 
-            <div class="mt-2 text-4xl font-bold text-pink-950">💎 {{ pullAmount() }}</div>
+            <div class="mt-2 text-xl md:text-4xl font-bold text-pink-950">💎 {{ pullAmount() | number}}</div>
             <div class="border-2 border-slate-200 w-full mt-2"></div>
             <div class="flex justify-center items-baseline">
-              <span class="text-sm mt-5 font-medium">💎{{ currentUser()?.currency }}</span>
+              <span class="text-sm mt-5 font-medium">💎{{ currentUser()?.currency | number }}</span>
               <span class="ml-2">-></span>
-              <span class="text-sm mt-5 text-red-600 font-medium">💎{{ gemLeft() }}</span>
+              <span class="text-sm mt-5 text-red-600 font-medium">💎{{ gemLeft() | number }}</span>
             </div>
           </div>
 
           <div
-            class="mb-8 rounded-lg bg-amber-50 border border-amber-200 p-3 text-sm text-amber-800"
+            class="mb-4 rounded-lg bg-amber-50 border border-amber-200 p-3 text-sm text-amber-800"
           >
             This action will consume your gems immediately.
           </div>
