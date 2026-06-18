@@ -1,10 +1,11 @@
-import { Component, computed, effect, inject, input, linkedSignal, signal } from '@angular/core';
+import { afterNextRender, Component, computed, effect, ElementRef, inject, input, linkedSignal, OnInit, QueryList, signal, viewChild, viewChildren } from '@angular/core';
 import { RouterOutlet, RouterLinkWithHref, Router, RouterLinkActive, NavigationEnd } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { Icons } from '../../../components/icons/icons';
 import { DecimalPipe } from '@angular/common';
+import { LayoutService } from '../../../services/layout.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -15,6 +16,7 @@ import { DecimalPipe } from '@angular/common';
 export class MainLayout {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly layoutService = inject(LayoutService);
   protected readonly currentUser = computed(() => this.authService.currentUserState());
   protected readonly userMenuShow = signal<boolean>(false);
   protected readonly mobileMenuOpen = signal<boolean>(false);
@@ -26,6 +28,8 @@ export class MainLayout {
       return (curr.read_at === null ? 1 : 0) + acc;
     }, 0);
   });
+
+  userCurrency = viewChildren<ElementRef<HTMLElement>>('userCurrency');
 
   protected readonly notiIsOpen = signal<boolean>(false);
 
@@ -67,4 +71,21 @@ export class MainLayout {
       },
     });
   }
+
+  updateActiveCurrencyPosition() {
+    const activeTarget = this.userCurrency().find(t => t.nativeElement.checkVisibility());
+    
+    if (activeTarget) {
+      this.layoutService.updateUserCurrencyElem(activeTarget);
+    }
+  }
+
+  constructor() {
+    afterNextRender(() => {
+      this.updateActiveCurrencyPosition();
+      
+      window.addEventListener('resize', () => this.updateActiveCurrencyPosition());
+    });
+  }
+
 }

@@ -70,6 +70,7 @@ export class SafeZone implements OnInit {
   updateGhostPosition(event: MouseEvent) {
     if (!this.isPlacementMode()) return;
     const rect: DOMRect = this.sakuraImg()?.nativeElement.getBoundingClientRect();
+    console.log(this.sakuraImg()?.nativeElement)
     const xPercent = ((event.clientX - rect.left) / rect.width) * 100;
     const yPercent = ((event.clientY - rect.top) / rect.height) * 100;
     this.ghostX.set(xPercent);
