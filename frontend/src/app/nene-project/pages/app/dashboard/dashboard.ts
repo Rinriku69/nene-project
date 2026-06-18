@@ -2,14 +2,17 @@ import {
   Component,
   computed,
   effect,
+  ElementRef,
   inject,
   linkedSignal,
+  viewChild,
   ɵAcxViewEncapsulation,
 } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { CurrencyService } from '../../../services/currency.service';
 import { ResourceErrorResponse } from '../../../models/Resource';
 import { Icons } from '../../../components/icons/icons';
+import { LayoutService } from '../../../services/layout.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,10 +23,9 @@ import { Icons } from '../../../components/icons/icons';
 export class Dashboard {
   private readonly authService = inject(AuthService);
   private readonly currencyService = inject(CurrencyService);
-
-  userCurrencyId = '#user-currency';
+  private readonly layoutService = inject(LayoutService);
   currentUser = computed(() => this.authService.currentUserState());
-
+  userCurrency = computed(()=> this.layoutService.userCurrencyElement());
   canClaimDaily = linkedSignal(() => {
     const lastClaimedStr = this.currentUser()?.last_login_at;
     if (!lastClaimedStr) {
@@ -57,9 +59,9 @@ export class Dashboard {
   }
 
   claimLoginAnimate(claimBtn: HTMLElement): void {
-    const userCurrecny = document.querySelector(this.userCurrencyId);
+    const userCurrecny = this.userCurrency()?.nativeElement;
     if (!userCurrecny) return;
-    
+
 
     const claimBtnRect = claimBtn.getBoundingClientRect();
     const userCurrencyRect = userCurrecny.getBoundingClientRect();
@@ -78,12 +80,12 @@ export class Dashboard {
       ${userCurrencyRect.left - claimBtnRect.left - claimBtnRect.width /2 }px,${userCurrencyRect.top - claimBtnRect.top}px) scale(1)`;
       flyDiv.style.opacity = '0.3';
     });
-    this.currencyBounce()
+    this.currencyPulse()
     setTimeout(() => flyDiv.remove(), 1200);
   }
 
-  currencyBounce(){
-    const userCurrency = document.querySelector(this.userCurrencyId);
+  currencyPulse(){
+    const userCurrency = this.userCurrency()?.nativeElement;
 
     userCurrency?.classList.add('animate-pulse');
     setTimeout(()=>{
