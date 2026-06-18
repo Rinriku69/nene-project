@@ -80,11 +80,11 @@ export class Dashboard {
       ${userCurrencyRect.left - claimBtnRect.left - claimBtnRect.width /2 }px,${userCurrencyRect.top - claimBtnRect.top}px) scale(1)`;
       flyDiv.style.opacity = '0.3';
     });
-    this.currencyBounce()
+    this.currencyPulse()
     setTimeout(() => flyDiv.remove(), 1200);
   }
 
-  currencyBounce(){
+  currencyPulse(){
     const userCurrency = this.userCurrency()?.nativeElement;
 
     userCurrency?.classList.add('animate-pulse');
