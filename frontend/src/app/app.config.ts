@@ -3,6 +3,7 @@ import {
   inject,
   provideAppInitializer,
   provideBrowserGlobalErrorListeners,
+  isDevMode,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
@@ -11,6 +12,7 @@ import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/ht
 import { xsrfInterceptor } from './interceptors/xsrf.interceptor';
 import { loadingInterceptor } from './interceptors/loading.interceptor';
 import { AuthService } from './nene-project/services/auth.service';
+import { provideServiceWorker } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,6 +23,10 @@ export const appConfig: ApplicationConfig = {
       const authService = inject(AuthService);
 
       return authService.hydrateAuthState();
+    }),
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
 };
