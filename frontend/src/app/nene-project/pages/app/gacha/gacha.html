@@ -188,7 +188,7 @@
 
   @if (isRolling()) {
     <div class="fixed inset-0 z-50 bg-pink-100/80 flex flex-col items-center justify-center gap-4">
-      <div class="text-6xl animate-bounce">✨</div>
+      <app-icons [name]="'clock_loading'" [classAttribute]="'fill-pink-500 size-20 md:size-30 animate-bounce'"></app-icons>
       <h2 class="text-3xl font-black text-pink-500 animate-pulse">Pulling...</h2>
     </div>
   }
