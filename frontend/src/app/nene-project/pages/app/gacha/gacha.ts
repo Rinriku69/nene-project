@@ -20,10 +20,11 @@ import { AudioService } from '../../../services/audio.service';
 import { ItemResultComponent } from '../../../components/item-result-component/item-result-component';
 import { ItemViewComponent } from '../../../components/item-view-component/item-view-component';
 import { DecimalPipe } from '@angular/common';
+import { Icons } from "../../../components/icons/icons";
 
 @Component({
   selector: 'app-gacha',
-  imports: [ItemResultComponent, ItemViewComponent, DecimalPipe],
+  imports: [ItemResultComponent, ItemViewComponent, DecimalPipe, Icons],
   templateUrl: './gacha.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './gacha.css',
