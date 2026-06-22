@@ -1,0 +1,24 @@
+name: Deploy Nene Project to DigitalOcean
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest 
+
+    steps:
+      - name: SSH into VPS and Deploy
+        uses: appleboy/ssh-action@v1.2.5
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{secrets.USERNAME}}
+          key: ${{ secrets.SSH_KEY }}
+          
+          script: |
+            cd ~/nene-project
+            git pull origin production
+            docker compose up -d --build
