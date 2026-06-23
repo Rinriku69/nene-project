@@ -55,7 +55,7 @@
     @if (safeZoneMessages()) {
       @for (tanzaku of safeZoneMessages(); track $index) {
         <div
-          class="absolute cursor-pointer hover:scale-110 transition-transform translate-x-[-50%] translate-y-[20%]"
+          class="absolute cursor-pointer animate-sway hover:scale-110 transition-transform translate-x-[-50%] translate-y-[20%]"
           [style.left.%]="tanzaku.pos_x"
           [style.top.%]="tanzaku.pos_y"
           (click)="openViewModal(tanzaku)"

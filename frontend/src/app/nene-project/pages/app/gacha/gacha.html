@@ -64,7 +64,7 @@
 
     <div class="flex flex-row gap-6 w-full max-w-lg mt-4 justify-center">
       <button
-        class="flex-1 group relative flex flex-col items-center justify-center md:gap-2 bg-white border-4 border-pink-300 rounded-4xl p-3 md:p-5 hover:-translate-y-1 transition-transform duration-300 shadow-[0_8px_0_#fbcfe8] hover:shadow-[0_12px_0_#fbcfe8] active:translate-y-2 active:shadow-[0_0px_0_#fbcfe8] disabled:opacity-70 disabled:cursor-not-allowed"
+        class="flex-1 group relative flex flex-col items-center justify-center md:gap-2 bg-white border-4 border-pink-300 rounded-4xl p-3 md:p-5 cursor-pointer hover:-translate-y-1 transition-transform duration-300 shadow-[0_8px_0_#fbcfe8] hover:shadow-[0_12px_0_#fbcfe8] active:translate-y-2 active:shadow-[0_0px_0_#fbcfe8] disabled:opacity-70 disabled:cursor-not-allowed"
         (click)="confirmPull(1)"
         [disabled]="isRolling()"
       >
@@ -79,7 +79,7 @@
       </button>
 
       <button
-        class="flex-1 group relative flex flex-col items-center justify-center md:gap-2 bg-pink-400 border-4 border-pink-500 rounded-4xl p-3 md:p-5 hover:-translate-y-1 transition-transform duration-300 shadow-[0_8px_0_#f472b6] hover:shadow-[0_12px_0_#f472b6] active:translate-y-2 active:shadow-[0_0px_0_#f472b6] disabled:opacity-70 disabled:cursor-not-allowed"
+        class="flex-1 group relative flex flex-col items-center justify-center md:gap-2 bg-pink-400 border-4 border-pink-500 cursor-pointer rounded-4xl p-3 md:p-5 hover:-translate-y-1 transition-transform duration-300 shadow-[0_8px_0_#f472b6] hover:shadow-[0_12px_0_#f472b6] active:translate-y-2 active:shadow-[0_0px_0_#f472b6] disabled:opacity-70 disabled:cursor-not-allowed"
         (click)="confirmPull(10)"
         [disabled]="isRolling()"
       >
@@ -143,7 +143,7 @@
             </button>
 
             <button
-              class="flex-1 rounded-xl bg-brand-pink px-4 py-3 font-bold text-white shadow-lg shadow-pink-300 transition hover:scale-105 hover:brightness-110 active:scale-95"
+              class="flex-1 rounded-xl bg-brand-pink px-4 py-3 font-bold text-white shadow-lg shadow-pink-300 cursor-pointer transition hover:scale-105 hover:brightness-110 active:scale-95"
               (click)="roll()"
             >
               Confirm
@@ -259,7 +259,7 @@
             </div>
 
           </div>
-          <!-- medium result -->
+          <!-- mobile result -->
           <div class="hidden md:flex">
             <div class="flex flex-col gap-2 md:gap-6 w-full max-w-10xl animate-smooth-appear">
               <div class="flex justify-center gap-1 md:gap-6">
