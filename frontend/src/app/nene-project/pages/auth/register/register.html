@@ -6,10 +6,10 @@
   ></div>
 
   <div
-    class="relative z-10 w-full max-w-md rounded-[3rem] px-10 py-12 flex flex-col gap-8 bg-white border-4 border-pink-200 shadow-[0_12px_0_#fbcfe8]"
+    class="relative z-10 w-full max-w-md rounded-none px-10 py-12 flex flex-col gap-8 bg-white border-4 border-pink-200 shadow-[0_12px_0_#fbcfe8]"
   >
     <div class="text-center">
-      <h2 class="text-4xl font-black text-pink-400 drop-shadow-sm tracking-tighter">
+      <h2 class="text-4xl font-black font-pixel text-pink-400 drop-shadow-sm tracking-tighter">
         Join the fun! <br />
       </h2>
     </div>
@@ -18,66 +18,66 @@
       
 
       <div class="flex flex-col gap-2">
-        <label class="text-pink-400 font-bold ml-4">Username</label>
+        <label class="text-pink-400 font-bold font-pixel ml-4">Username</label>
         <input
           type="text"
           placeholder="Pick a cute username!"
           [formField]="registerForm.username"
-          class="w-full px-6 py-4 rounded-full bg-pink-50 border-2 border-pink-200 text-pink-500 font-medium placeholder-pink-300 focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all"
+          class="w-full px-6 py-4 rounded-none bg-pink-50 border-2 border-pink-200 text-pink-500 font-medium font-pixel placeholder-pink-300 focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all"
         />
         @if(registerForm.username().invalid() && registerForm.username().touched()){
           @for (error of registerForm.username().errors(); track $index) {
-                <p class="ml-4 text-xs text-red-600 mt-1">{{ error.message }}</p>
+                <p class="ml-4 text-xs font-pixel text-red-600 mt-1">{{ error.message }}</p>
               }
         }
         @if(errorMessage().errors.username!.length > 0){
-          <p class="ml-4 text-xs text-red-600 mt-1">{{ errorMessage().errors.username![0] }}</p>
+          <p class="ml-4 text-xs font-pixel text-red-600 mt-1">{{ errorMessage().errors.username![0] }}</p>
         }
       </div>
 
       <div class="flex flex-col gap-2">
-        <label class="text-pink-400 font-bold ml-4">Email</label>
+        <label class="text-pink-400 font-bold font-pixel ml-4">Email</label>
         <input
           type="text"
           placeholder="Tell me your email!"
           [formField]="registerForm.email"
-          class="w-full px-6 py-4 rounded-full bg-pink-50 border-2 border-pink-200 text-pink-500 font-medium placeholder-pink-300 focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all"
+          class="w-full px-6 py-4 rounded-none bg-pink-50 border-2 border-pink-200 text-pink-500 font-medium font-pixel placeholder-pink-300 focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all"
         />
         @if(registerForm.email().invalid() && registerForm.email().touched()){
           @for (error of registerForm.email().errors(); track $index) {
-                <p class="ml-4 text-xs text-red-600 mt-1">{{ error.message }}</p>
+                <p class="ml-4 text-xs font-pixel text-red-600 mt-1">{{ error.message }}</p>
               }
         }
         @if(errorMessage().errors.email!.length > 0){
-          <p class="ml-4 text-xs text-red-600 mt-1">{{ errorMessage().errors!.email![0] }}</p>
+          <p class="ml-4 text-xs font-pixel text-red-600 mt-1">{{ errorMessage().errors!.email![0] }}</p>
         }
       </div>
 
       <div class="flex flex-col gap-2">
-        <label class="text-pink-400 font-bold ml-4">Password</label>
+        <label class="text-pink-400 font-bold font-pixel ml-4">Password</label>
         <input
           type="password"
           [formField]="registerForm.password"
           placeholder="Make it super secret!"
-          class="w-full px-6 py-4 rounded-full bg-pink-50 border-2 border-pink-200 text-pink-500 font-medium placeholder-pink-300 focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all"
+          class="w-full px-6 py-4 rounded-none bg-pink-50 border-2 border-pink-200 text-pink-500 font-medium font-pixel placeholder-pink-300 focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all"
         />
         @if(registerForm.password().invalid() && registerForm.password().touched()){
           @for (error of registerForm.password().errors(); track $index) {
-                <p class="ml-4 text-xs text-red-600 mt-1">{{ error.message }}</p>
+                <p class="ml-4 text-xs font-pixel text-red-600 mt-1">{{ error.message }}</p>
               }
         }
       </div>
       <div class="flex flex-col gap-2">
-        <label class="text-pink-400 font-bold ml-4">Confirm Password</label>
+        <label class="text-pink-400 font-bold font-pixel ml-4">Confirm Password</label>
         <input
           type="password"
           [formField]="registerForm.password_confirmation"
           placeholder="Confirm your super scret password"
-          class="w-full px-6 py-4 rounded-full bg-pink-50 border-2 border-pink-200 text-pink-500 font-medium placeholder-pink-300 focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all"
+          class="w-full px-6 py-4 rounded-none bg-pink-50 border-2 border-pink-200 text-pink-500 font-medium font-pixel placeholder-pink-300 focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all"
         />
         @if(registerForm.password_confirmation().invalid() && registerForm.password_confirmation().touched()){
           @for (error of registerForm.password_confirmation().errors(); track $index) {
-                <p class="ml-4 text-xs text-red-600 mt-1">{{ error.message }}</p>
+                <p class="ml-4 text-xs font-pixel text-red-600 mt-1">{{ error.message }}</p>
               }
         }
       </div>
@@ -86,7 +86,7 @@
       [disabled]="formSubmitDisable() || isLoading()" (click)="submit()">
        <app-loading-component [classAttribute]="'size-10 animate-spin mx-1 fill-white'"></app-loading-component>
         <span
-          class="text-2xl py-2 font-black text-white group-hover:scale-110 transition-transform duration-300"
+          class="text-2xl py-2 font-black font-pixel text-white group-hover:scale-110 transition-transform duration-300"
         >
           Sign Up 
         </span>
@@ -94,11 +94,11 @@
     </form>
 
     <div class="text-center mt-2">
-      <p class="text-pink-400 font-medium">
+      <p class="text-pink-400 font-medium font-pixel">
         Already our bestie?
         <a
           routerLink="/auth/login"
-          class="text-pink-500 font-bold hover:text-pink-400 underline decoration-2 decoration-pink-300 underline-offset-4 cursor-pointer"
+          class="text-pink-500 font-bold font-pixel hover:text-pink-400 underline decoration-2 decoration-pink-300 underline-offset-4 cursor-pointer"
         >
           Log in! 💌
         </a>

@@ -3,14 +3,14 @@
 >
   <div class="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center gap-8">
     <div class="text-center mt-4">
-      <h1 class="text-2xl md:text-5xl font-black text-pink-500 drop-shadow-md tracking-tight">
+      <h1 class="text-2xl md:text-5xl font-black font-pixel text-pink-500 drop-shadow-md tracking-tight">
         Nene and The GANG
       </h1>
-      <p class="text-pink-400 font-medium mt-2 text-lg">Unlock your precious memories!</p>
+      <p class="text-pink-400 font-medium font-pixel mt-2 text-lg">Unlock your precious memories!</p>
     </div>
 
     <div
-      class="w-full relative rounded-4xl overflow-hidden border-4 border-pink-300 shadow-[0_12px_0_#fbcfe8] bg-white aspect-8/5"
+      class="w-full relative rounded-none overflow-hidden border-4 border-pink-300 shadow-[8px_12px_0_#fbcfe8] bg-white aspect-8/5"
     >
       @if (featuredItems.hasValue()) {
         @for (item of featuredItems.value(); track $index) {
@@ -29,34 +29,34 @@
             <div
               class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/80 to-transparent p-4"
             >
-              <p class="text-white text-lg font-bold drop-shadow-md">{{ item.alt }}</p>
+              <p class="text-white text-lg font-bold font-pixel drop-shadow-md">{{ item.alt }}</p>
             </div>
           </div>
         }
       } @else if (featuredItems.isLoading() || featuredItems.error()) {
         <div class="absolute inset-0 bg-pink-300 animate-pulse"></div>
         <div
-          class="absolute w-60 h-10 bottom-4 bg-slate-200 animate-pulse left-4 rounded-full"
+          class="absolute w-60 h-10 bottom-4 bg-slate-200 animate-pulse left-4 rounded-none"
         ></div>
       }
 
       <div
-        class="absolute bottom-4 right-4 hidden md:flex bg-white/80 px-4 py-2 rounded-full border-2 border-pink-200"
+        class="absolute bottom-4 right-4 hidden md:flex bg-white/80 px-4 py-2 rounded-none border-2 border-pink-200"
       >
-        <span class="text-pink-500 font-black">Featured Nene Flower SR!!</span>
+        <span class="text-pink-500 font-black font-pixel">Featured Nene Flower SR!!</span>
       </div>
     </div>
 
     <div
-      class="flex items-center bg-white px-6 py-3 rounded-full border-2 border-pink-200 shadow-sm"
+      class="flex items-center bg-white px-6 py-3 rounded-none border-2 border-pink-200 shadow-sm"
     >
-      <span class="text-pink-400 text-sm md:text-base font-bold mr-1">Your Gems:</span>
-      <span class="text-pink-500 font-black text-md flex items-center">
+      <span class="text-pink-400 text-sm md:text-base font-bold font-pixel mr-1">Your Gems:</span>
+      <span class="text-pink-500 font-black font-pixel text-md flex items-center">
         💎{{ currentUser()?.currency || 0 | number }}
       </span>
       <button
         (click)="openLogModal()"
-        class="ml-2 px-3 md:px-4 py-1.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold rounded-full text-sm transition-colors border-2 border-pink-300 active:scale-95"
+        class="ml-2 px-3 md:px-4 py-1.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold font-pixel rounded-none text-sm transition-colors border-2 border-pink-300 active:scale-95"
       >
         See Log
       </button>
@@ -64,35 +64,35 @@
 
     <div class="flex flex-row gap-6 w-full max-w-lg mt-4 justify-center">
       <button
-        class="flex-1 group relative flex flex-col items-center justify-center md:gap-2 bg-white border-4 border-pink-300 rounded-4xl p-3 md:p-5 cursor-pointer hover:-translate-y-1 transition-transform duration-300 shadow-[0_8px_0_#fbcfe8] hover:shadow-[0_12px_0_#fbcfe8] active:translate-y-2 active:shadow-[0_0px_0_#fbcfe8] disabled:opacity-70 disabled:cursor-not-allowed"
+        class="flex-1 group relative flex flex-col items-center justify-center md:gap-2 bg-white border-4 border-pink-300 rounded-none p-3 md:p-5 cursor-pointer hover:-translate-y-1 transition-transform duration-300 shadow-[0_8px_0_#fbcfe8] hover:shadow-[0_12px_0_#fbcfe8] active:translate-y-2 active:shadow-[0_0px_0_#fbcfe8] disabled:opacity-70 disabled:cursor-not-allowed"
         (click)="confirmPull(1)"
         [disabled]="isRolling()"
       >
-        <span class="text-xl font-black text-pink-400 group-hover:text-pink-500 transition-colors"
+        <span class="text-xl font-black font-pixel text-pink-400 group-hover:text-pink-500 transition-colors"
           >1x Roll</span
         >
         <span
-          class="text-sm font-bold text-pink-300 flex items-center gap-1"
+          class="text-sm font-bold font-pixel text-pink-300 flex items-center gap-1"
           [class.text-red-500]="currentUser()!.currency < 100"
           >💎 100</span
         >
       </button>
 
       <button
-        class="flex-1 group relative flex flex-col items-center justify-center md:gap-2 bg-pink-400 border-4 border-pink-500 cursor-pointer rounded-4xl p-3 md:p-5 hover:-translate-y-1 transition-transform duration-300 shadow-[0_8px_0_#f472b6] hover:shadow-[0_12px_0_#f472b6] active:translate-y-2 active:shadow-[0_0px_0_#f472b6] disabled:opacity-70 disabled:cursor-not-allowed"
+        class="flex-1 group relative flex flex-col items-center justify-center md:gap-2 bg-pink-400 border-4 border-pink-500 cursor-pointer rounded-none p-3 md:p-5 hover:-translate-y-1 transition-transform duration-300 shadow-[0_8px_0_#f472b6] hover:shadow-[0_12px_0_#f472b6] active:translate-y-2 active:shadow-[0_0px_0_#f472b6] disabled:opacity-70 disabled:cursor-not-allowed"
         (click)="confirmPull(10)"
         [disabled]="isRolling()"
       >
         <div
-          class="absolute animate-bounce -top-6 -right-6 md:-right-3 md:-top-3 bg-yellow-400 text-yellow-900 text-[0.6rem] md:text-xs font-black px-1 py-1 rounded-full border-2 border-yellow-500 shadow-sm rotate-12"
+          class="absolute animate-bounce -top-6 -right-6 md:-right-3 md:-top-3 bg-yellow-400 text-yellow-900 text-[0.6rem] md:text-xs font-black font-pixel px-1 py-1 rounded-none border-2 border-yellow-500 shadow-sm rotate-12"
         >
           SR or Higher GUARANTEED!
         </div>
-        <span class="text-xl font-black text-white group-hover:scale-110 transition-transform"
+        <span class="text-xl font-black font-pixel text-white group-hover:scale-110 transition-transform"
           >10x Roll</span
         >
         <span
-          class="text-sm font-bold text-pink-100 flex items-center gap-1"
+          class="text-sm font-bold font-pixel text-pink-100 flex items-center gap-1"
           [class.text-red-500]="currentUser()!.currency < 1000"
           >💎 1000</span
         >
@@ -106,44 +106,44 @@
       (click)="closeConfirmModal()"
     >
       <div
-        class="w-full max-w-80 md:max-w-md rounded-2xl bg-brand-white shadow-2xl border border-white/50 p-8"
+        class="w-full max-w-80 md:max-w-md rounded-none bg-brand-white shadow-2xl border border-white/50 p-8"
         (click)="$event.stopPropagation()"
       >
         @if (gemLeft() >= 0) {
           <div class="flex flex-col items-center gap-3">
-            <h2 class="text-2xl md:text-3xl font-black text-brand-pink">Confirm your pull</h2>
+            <h2 class="text-2xl md:text-3xl font-black font-pixel text-brand-pink">Confirm your pull</h2>
 
-            <p class="text-center text-sm md:text-base text-gray-500">Spend gems to perform this pull.</p>
+            <p class="text-center text-sm md:text-base font-pixel text-gray-500">Spend gems to perform this pull.</p>
           </div>
 
-          <div class="my-3 rounded-xl bg-pink-50 border border-pink-200 p-3 text-center">
-            <div class="text-sm font-semibold text-pink-700 uppercase tracking-wide">Cost</div>
+          <div class="my-3 rounded-none bg-pink-50 border border-pink-200 p-3 text-center">
+            <div class="text-sm font-semibold font-pixel text-pink-700 uppercase tracking-wide">Cost</div>
 
-            <div class="mt-2 text-xl md:text-4xl font-bold text-pink-950">💎 {{ pullAmount() | number}}</div>
+            <div class="mt-2 text-xl md:text-4xl font-bold font-pixel text-pink-950">💎 {{ pullAmount() | number}}</div>
             <div class="border-2 border-slate-200 w-full mt-2"></div>
             <div class="flex justify-center items-baseline">
-              <span class="text-sm mt-5 font-medium">💎{{ currentUser()?.currency | number }}</span>
+              <span class="text-sm mt-5 font-medium font-pixel">💎{{ currentUser()?.currency | number }}</span>
               <span class="ml-2">-></span>
-              <span class="text-sm mt-5 text-red-600 font-medium">💎{{ gemLeft() | number }}</span>
+              <span class="text-sm mt-5 text-red-600 font-medium font-pixel">💎{{ gemLeft() | number }}</span>
             </div>
           </div>
 
           <div
-            class="mb-4 rounded-lg bg-amber-50 border border-amber-200 p-3 text-sm text-amber-800"
+            class="mb-4 rounded-none bg-amber-50 border border-amber-200 p-3 text-sm font-pixel text-amber-800"
           >
             This action will consume your gems immediately.
           </div>
 
           <div class="flex gap-3">
             <button
-              class="flex-1 rounded-xl border border-gray-300 px-4 py-3 font-semibold text-gray-700 transition hover:bg-gray-100"
+              class="flex-1 rounded-none border border-gray-300 px-4 py-3 font-semibold font-pixel text-gray-700 transition hover:bg-gray-100"
               (click)="closeConfirmModal()"
             >
               Cancel
             </button>
 
             <button
-              class="flex-1 rounded-xl bg-brand-pink px-4 py-3 font-bold text-white shadow-lg shadow-pink-300 cursor-pointer transition hover:scale-105 hover:brightness-110 active:scale-95"
+              class="flex-1 rounded-none bg-brand-pink px-4 py-3 font-bold font-pixel text-white shadow-lg shadow-pink-300 cursor-pointer transition hover:scale-105 hover:brightness-110 active:scale-95"
               (click)="roll()"
             >
               Confirm
@@ -151,31 +151,31 @@
           </div>
         } @else {
           <div class="flex flex-col items-center">
-            <h2 class="mt-5 text-3xl font-black text-red-600">Not Enough Gems ;-;</h2>
+            <h2 class="mt-5 text-3xl font-black font-pixel text-red-600">Not Enough Gems ;-;</h2>
 
-            <p class="mt-3 text-center text-gray-600">
+            <p class="mt-3 text-center font-pixel text-gray-600">
               You don't have enough gems to perform this pull.
             </p>
-            <div class="mt-6 w-full rounded-xl border border-red-200 bg-red-50 p-5">
+            <div class="mt-6 w-full rounded-none border border-red-200 bg-red-50 p-5">
               <div class="flex justify-between text-sm">
-                <span class="font-medium text-gray-600">Current Gems</span>
-                <span class="font-bold">💎 {{ currentUser()?.currency }}</span>
+                <span class="font-medium font-pixel text-gray-600">Current Gems</span>
+                <span class="font-bold font-pixel">💎 {{ currentUser()?.currency }}</span>
               </div>
 
               <div class="my-3 border-t border-red-200"></div>
 
               <div class="flex justify-between text-sm">
-                <span class="font-medium text-gray-600">Required Gems</span>
-                <span class="font-bold text-red-600"> 💎 {{ pullAmount() }} </span>
+                <span class="font-medium font-pixel text-gray-600">Required Gems</span>
+                <span class="font-bold font-pixel text-red-600"> 💎 {{ pullAmount() }} </span>
               </div>
 
-              <div class="mt-4 text-center text-xs text-red-500 font-medium">
+              <div class="mt-4 text-center text-xs font-pixel text-red-500 font-medium">
                 Need {{ pullAmount()! - (currentUser()?.currency ?? 0) }} more gems
               </div>
             </div>
 
             <button
-              class="mt-8 w-full rounded-xl bg-gray-800 px-4 py-3 font-bold text-white transition hover:bg-gray-700"
+              class="mt-8 w-full rounded-none bg-gray-800 px-4 py-3 font-bold font-pixel text-white transition hover:bg-gray-700"
               (click)="closeConfirmModal()"
             >
               Close
@@ -189,7 +189,7 @@
   @if (isRolling()) {
     <div class="fixed inset-0 z-50 bg-pink-100/80 flex flex-col items-center justify-center gap-4">
       <app-icons [name]="'clock_loading'" [classAttribute]="'fill-pink-500 size-20 md:size-30 animate-bounce'"></app-icons>
-      <h2 class="text-3xl font-black text-pink-500 animate-pulse">Pulling...</h2>
+      <h2 class="text-3xl font-black font-pixel text-pink-500 animate-pulse">Pulling...</h2>
     </div>
   }
 
@@ -201,7 +201,7 @@
         class="w-full max-w-8xl flex-1 flex flex-col items-center justify-center relative min-h-max py-10"
       >
         <h2
-          class="text-4xl font-black text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] mb-12 animate-pulse"
+          class="text-4xl font-black font-pixel text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] mb-12 animate-pulse"
         >
           Pull Results
         </h2>
@@ -297,7 +297,7 @@
 
         <button
           (click)="closeResults()"
-          class="mt-8 px-8 md:px-12 py-3 md:py-4 bg-white hover:bg-pink-100 hover:scale-110 duration-200 cursor-pointer text-pink-500 font-black text-lg md:text-xl rounded-full border-4 border-pink-300 shadow-[0_6px_0_#fbcfe8] active:translate-y-2 active:shadow-[0_0px_0_#fbcfe8] transition-all"
+          class="mt-8 px-8 md:px-12 py-3 md:py-4 bg-white hover:bg-pink-100 hover:scale-110 duration-200 cursor-pointer text-pink-500 font-black font-pixel text-lg md:text-xl rounded-none border-4 border-pink-300 shadow-[0_6px_0_#fbcfe8] active:translate-y-2 active:shadow-[0_0px_0_#fbcfe8] transition-all"
         >
           Confirm
         </button>
@@ -309,7 +309,7 @@
     <app-item-view-component
       [selectedItem]="selectedItem()"
       (close)="closeItem()"
-      [classAttribute]="'relative w-full max-w-[90%] md:max-w-[70%] aspect-4/3 rounded-2xl overflow-hidden border-4 animate-smooth-appear cursor-default transition-all'"
+      [classAttribute]="'relative w-full max-w-[90%] md:max-w-[70%] aspect-4/3 rounded-none overflow-hidden border-4 animate-smooth-appear cursor-default transition-all'"
     ></app-item-view-component>
   }
 
@@ -320,36 +320,36 @@
       (click)="closeLogModal()"
     >
       <div
-        class="w-full max-w-2xl rounded-2xl bg-white shadow-2xl border-4 border-pink-300 p-6 max-h-[80vh] flex flex-col animate-smooth-appear"
+        class="w-full max-w-2xl rounded-none bg-white shadow-2xl border-4 border-pink-300 p-6 max-h-[80vh] flex flex-col animate-smooth-appear"
         (click)="$event.stopPropagation()"
       >
         <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-black text-pink-500">Gacha History</h2>
+          <h2 class="text-2xl font-black font-pixel text-pink-500">Gacha History</h2>
           <button
             (click)="closeLogModal()"
-            class="text-pink-300 hover:text-pink-600 transition-colors bg-pink-50 hover:bg-pink-100 rounded-full w-8 h-8 flex items-center justify-center font-black active:scale-95"
+            class="text-pink-300 hover:text-pink-600 transition-colors bg-pink-50 hover:bg-pink-100 rounded-none w-8 h-8 flex items-center justify-center font-black font-pixel active:scale-95"
           >
             ✕
           </button>
         </div>
 
-        <div class="overflow-y-auto flex-1 border-2 border-pink-100 rounded-xl">
+        <div class="overflow-y-auto flex-1 border-2 border-pink-100 rounded-none">
           <table class="w-full text-left border-collapse">
             <thead class="bg-pink-50 sticky top-0 border-b-2 border-pink-200">
               <tr>
-                <th class="py-3 px-4 font-bold text-pink-600">Item Name</th>
-                <th class="py-3 px-4 font-bold text-pink-600">Obtained Date</th>
+                <th class="py-3 px-4 font-bold font-pixel text-pink-600">Item Name</th>
+                <th class="py-3 px-4 font-bold font-pixel text-pink-600">Obtained Date</th>
               </tr>
             </thead>
             <tbody>
               @for (log of gachaLogs()?.data; track $index) {
                 <tr class="border-b border-pink-50 hover:bg-pink-50 transition-colors">
-                  <td class="py-3 px-4 font-medium text-pink-900">{{ log.name }}</td>
-                  <td class="py-3 px-4 text-pink-500 text-sm font-medium">{{ log.created_at }}</td>
+                  <td class="py-3 px-4 font-medium font-pixel text-pink-900">{{ log.name }}</td>
+                  <td class="py-3 px-4 text-pink-500 text-sm font-medium font-pixel">{{ log.created_at }}</td>
                 </tr>
               } @empty {
                 <tr>
-                  <td colspan="2" class="py-8 text-center text-pink-400 font-medium">
+                  <td colspan="2" class="py-8 text-center text-pink-400 font-medium font-pixel">
                     No gacha history yet. Let's pull some!
                   </td>
                 </tr>
@@ -361,17 +361,17 @@
         @if (gachaLogs() && gachaLogs()!.last_page > 1) {
           <div class="flex justify-between items-center mt-6">
             <button
-              class="px-2 md:px-5 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_0_#fbcfe8] active:translate-y-1 active:shadow-[0_0px_0_#fbcfe8]"
+              class="px-2 md:px-5 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold font-pixel rounded-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_0_#fbcfe8] active:translate-y-1 active:shadow-[0_0px_0_#fbcfe8]"
               (click)="changeLogPage(gachaLogs()!.current_page - 1)"
               [disabled]="gachaLogs()!.current_page === 1"
             >
               Previous
             </button>
-            <span class="text-pink-500 font-bold text-sm md:text-lg">
+            <span class="text-pink-500 font-bold font-pixel text-sm md:text-lg">
               Page {{ gachaLogs()!.current_page }} of {{ gachaLogs()!.last_page }}
             </span>
             <button
-              class="px-2 md:px-5 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_0_#fbcfe8] active:translate-y-1 active:shadow-[0_0px_0_#fbcfe8]"
+              class="px-2 md:px-5 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold font-pixel rounded-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_0_#fbcfe8] active:translate-y-1 active:shadow-[0_0px_0_#fbcfe8]"
               (click)="changeLogPage(gachaLogs()!.current_page + 1)"
               [disabled]="gachaLogs()!.current_page === gachaLogs()!.last_page"
             >

@@ -68,7 +68,7 @@ export class Dashboard {
     const userCurrencyRect = userCurrecny.getBoundingClientRect();
 
     const flyDiv = document.createElement('div');
-    flyDiv.className = 'fixed z-2000 w-4 h-4 bg-blue-500 rounded-full transition-all duration-1000';
+    flyDiv.className = 'fixed z-2000 w-4 h-4 bg-blue-500 rounded-none transition-all duration-1000';
     flyDiv.style.left = `${claimBtnRect.left + claimBtnRect.width / 2}px`;
     flyDiv.style.top = `${claimBtnRect.top}px`;
     flyDiv.style.transform = 'translate(0,0) scale(3)';
