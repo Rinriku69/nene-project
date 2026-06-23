@@ -14,10 +14,11 @@ import { switchMap } from 'rxjs';
 import { ResourceErrorResponse } from '../../../models/Resource';
 import { LoadingComponent } from '../../../components/loading-component/loading-component';
 import { LoadingService } from '../../../services/loading.service';
+import { Icons } from "../../../components/icons/icons";
 
 @Component({
   selector: 'app-login',
-  imports: [RouterLink, FormField, LoadingComponent],
+  imports: [RouterLink, FormField, LoadingComponent, Icons],
   templateUrl: './login.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './login.css',
