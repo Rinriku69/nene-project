@@ -174,14 +174,20 @@
               [class.active:translate-y-1]="true"
               [class.active:shadow-none]="true"
             >
-              <span
-                #userCurrency
-                class="flex font-mc text-xl select-none items-center gap-1"
-                [class.text-pink-400]="!isDarkTheme()"
-                [class.text-pink-300]="isDarkTheme()"
-              >
-                💎 {{ $safeNavigationMigration(currentUser()?.currency) | number }}
-              </span>
+              <div class="flex justify-center gap-2">
+                <app-icons
+                  [name]="'gem'"
+                  [classAttribute]="'size-5 text-blue-300 animate-pulse'"
+                ></app-icons>
+                <span
+                  #userCurrency
+                  class="flex font-mc text-xl select-none items-center gap-1"
+                  [class.text-pink-400]="!isDarkTheme()"
+                  [class.text-pink-300]="isDarkTheme()"
+                >
+                  {{ $safeNavigationMigration(currentUser()?.currency) | number }}
+                </span>
+              </div>
               <div
                 class="w-0.5 h-5 bg-pink-300 rounded-none"
                 [class.bg-pink-500]="isDarkTheme()"
@@ -294,13 +300,15 @@
                   class="flex flex-col m-1 border-b-2 border-slate-300 p-2 pb-10 gap-2 rounded-none bg-slate-200"
                 >
                   <div class="flex justify-between">
-                    <span class="text-slate-500 font-semibold font-pixel text-xl">{{ noti.title }}</span>
-                    <span class="text-sm font-mono  text-slate-400">{{
+                    <span class="text-slate-500 font-semibold font-pixel text-xl">{{
+                      noti.title
+                    }}</span>
+                    <span class="text-sm font-mono text-slate-400">{{
                       noti.notification_date
                     }}</span>
                   </div>
                   <div>
-                    <span class=" font-pixel text-slate-500 ml-2">{{ noti.message }}</span>
+                    <span class="font-pixel text-slate-500 ml-2">{{ noti.message }}</span>
                   </div>
                 </div>
               } @else {
@@ -325,11 +333,11 @@
         }
       </div>
 
-      <div class="flex items-center gap-3">
+      <div class="flex">
         @if (currentUser()) {
           <div
             #userCurrency
-            class="font-black font-mc flex items-center gap-1 text-sm md:text-lg px-3 py-1.5 rounded-none border-2 transition-all"
+            class="font-black font-mc flex  items-center gap-1 text-sm md:text-lg px-2 py-1 rounded-none border-2 transition-all"
             [class.text-pink-300]="isDarkTheme()"
             [class.bg-slate-700]="isDarkTheme()"
             [class.border-pink-500]="isDarkTheme()"
@@ -339,7 +347,13 @@
             [class.border-pink-300]="!isDarkTheme()"
             [class.shadow-[0_2px_0_#fbcfe8]]="!isDarkTheme()"
           >
-            💎 {{ $safeNavigationMigration(currentUser()?.currency) | number }}
+            <app-icons
+              [name]="'gem'"
+              [classAttribute]="'size-4 m-1 text-blue-400 '"
+            ></app-icons>
+            <span class="flex pt-1">
+              {{ $safeNavigationMigration(currentUser()?.currency) | number }}
+            </span>
           </div>
         }
       </div>
@@ -471,9 +485,12 @@
                   [class.text-pink-600]="!isDarkTheme()"
                   >{{ currentUser()?.username }}</span
                 >
-                <span class="text-sm font-mc text-pink-400"
-                  >💎 {{ $safeNavigationMigration(currentUser()?.currency) | number }}</span
-                >
+                <div class="flex gap-1 items-center">
+                  <app-icons [name]="'gem'" [classAttribute]="'size-4 text-blue-400 '"></app-icons>
+                  <span class="text-sm font-mc text-pink-400 pt-1"
+                    > {{ $safeNavigationMigration(currentUser()?.currency) | number }}</span
+                  >
+                </div>
               </div>
             </div>
             <button
