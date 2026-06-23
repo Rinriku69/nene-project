@@ -176,7 +176,7 @@
             >
               <span
                 #userCurrency
-                class="flex font-pixel text-xl select-none items-center gap-1"
+                class="flex font-mc text-xl select-none items-center gap-1"
                 [class.text-pink-400]="!isDarkTheme()"
                 [class.text-pink-300]="isDarkTheme()"
               >
@@ -329,7 +329,7 @@
         @if (currentUser()) {
           <div
             #userCurrency
-            class="font-black font-pixel flex items-center gap-1 text-sm md:text-lg px-3 py-1.5 rounded-none border-2 transition-all"
+            class="font-black font-mc flex items-center gap-1 text-sm md:text-lg px-3 py-1.5 rounded-none border-2 transition-all"
             [class.text-pink-300]="isDarkTheme()"
             [class.bg-slate-700]="isDarkTheme()"
             [class.border-pink-500]="isDarkTheme()"
@@ -471,7 +471,7 @@
                   [class.text-pink-600]="!isDarkTheme()"
                   >{{ currentUser()?.username }}</span
                 >
-                <span class="text-sm font-pixel text-pink-400"
+                <span class="text-sm font-mc text-pink-400"
                   >💎 {{ $safeNavigationMigration(currentUser()?.currency) | number }}</span
                 >
               </div>
