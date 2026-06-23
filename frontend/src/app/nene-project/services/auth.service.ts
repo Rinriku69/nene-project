@@ -10,53 +10,62 @@ import co from '@angular/common/locales/co';
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
-  private readonly baseApiUrl = "http://localhost:8000/api";
-  private readonly currentUser = signal<User|null>(null);
-  readonly currentUserState = linkedSignal(()=>this.currentUser());
-  readonly isLoggedIn = computed(()=> this.currentUser()!== null);
-  readonly notifications = signal<NotificationItem[]|null>(null);
+  private readonly baseApiUrl = 'http://localhost:8000/api';
+  private readonly currentUser = signal<User | null>(null);
+  readonly currentUserState = linkedSignal(() => this.currentUser());
+  readonly isLoggedIn = computed(() => this.currentUser() !== null);
+  readonly notifications = signal<NotificationItem[] | null>(null);
 
-  getCSRFToken():Observable<ResourceResponse>{
-    return this.http.get<ResourceResponse>("http://localhost:8000/sanctum/csrf-cookie");
+  getCSRFToken(): Observable<ResourceResponse> {
+    return this.http.get<ResourceResponse>('http://localhost:8000/sanctum/csrf-cookie');
   }
 
-  register(registerFormData: RegisterModel):Observable<ResourceResponse>{
-    return this.http.post<ResourceResponse>(`${this.baseApiUrl}/auth/register`,registerFormData);
+  register(registerFormData: RegisterModel): Observable<ResourceResponse> {
+    return this.http.post<ResourceResponse>(`${this.baseApiUrl}/auth/register`, registerFormData);
   }
 
-  login(credentials:LoginModel):Observable<ResourceResponse>{
-    return this.http.post<ResourceResponse>(`${this.baseApiUrl}/auth/login`,credentials);
+  login(credentials: LoginModel): Observable<ResourceResponse> {
+    return this.http.post<ResourceResponse>(`${this.baseApiUrl}/auth/login`, credentials);
   }
 
-  getUser():Observable<User>{
+  getUser(): Observable<User> {
     return this.http.get<User>(`${this.baseApiUrl}/getUser`).pipe(
-      tap((user)=>{ this.currentUser.set(user)})
-    )
+      tap((user) => {
+        this.currentUser.set(user);
+      }),
+    );
   }
 
-  getNotification():Observable<NotificationItem[]>{
+  getNotification(): Observable<NotificationItem[]> {
     return this.http.get<NotificationItem[]>(`${this.baseApiUrl}/getNoti`).pipe(
-      tap((noti)=>{this.notifications.set(noti)})
-    )
+      tap((noti) => {
+        this.notifications.set(noti);
+      }),
+    );
   }
 
-  markNotiAsReadAll(){
-    return this.http.post<ResourceResponse>(`${this.baseApiUrl}/markAsReadAll`,{})
+  markNotiAsReadAll() {
+    return this.http.post<ResourceResponse>(`${this.baseApiUrl}/markAsReadAll`, {});
   }
 
-  logout():Observable<ResourceResponse>{
-    return this.http.post<ResourceResponse>(`${this.baseApiUrl}/auth/logout`,{}).pipe(
-      tap(()=>this.currentUser.set(null))
-    )
+  logout(): Observable<ResourceResponse> {
+    return this.http
+      .post<ResourceResponse>(`${this.baseApiUrl}/auth/logout`, {})
+      .pipe(tap(() => this.currentUser.set(null)));
   }
 
-  hydrateAuthState(){
+  hydrateAuthState() {
     return this.getUser().pipe(
-      catchError(()=>{
+      switchMap((user) => {
+        if (user) {
+          return this.getNotification().pipe(catchError(() => of(null)));
+        }
+        return of(null);
+      }),
+      catchError(() => {
         this.currentUser.set(null);
         return of(null);
       }),
-      tap(this.getNotification()),
-    )
+    );
   }
 }
