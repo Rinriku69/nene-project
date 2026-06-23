@@ -51,7 +51,7 @@
       class="flex items-center bg-white px-6 py-3 rounded-none border-2 border-pink-200 shadow-sm"
     >
       <span class="text-pink-400 text-sm md:text-base font-bold font-pixel mr-1">Your Gems:</span>
-      <span class="text-pink-500 font-black font-pixel text-md flex items-center">
+      <span class="text-pink-500 font-black font-mc text-md flex items-center">
         💎{{ currentUser()?.currency || 0 | number }}
       </span>
       <button
@@ -119,12 +119,12 @@
           <div class="my-3 rounded-none bg-pink-50 border border-pink-200 p-3 text-center">
             <div class="text-sm font-semibold font-pixel text-pink-700 uppercase tracking-wide">Cost</div>
 
-            <div class="mt-2 text-xl md:text-4xl font-bold font-pixel text-pink-950">💎 {{ pullAmount() | number}}</div>
+            <div class="mt-2 text-xl md:text-4xl font-bold font-mc text-pink-950">💎 {{ pullAmount() | number}}</div>
             <div class="border-2 border-slate-200 w-full mt-2"></div>
             <div class="flex justify-center items-baseline">
-              <span class="text-sm mt-5 font-medium font-pixel">💎{{ currentUser()?.currency | number }}</span>
+              <span class="text-sm mt-5 font-medium font-mc">💎{{ currentUser()?.currency | number }}</span>
               <span class="ml-2">-></span>
-              <span class="text-sm mt-5 text-red-600 font-medium font-pixel">💎{{ gemLeft() | number }}</span>
+              <span class="text-sm mt-5 text-red-600 font-medium font-mc">💎{{ gemLeft() | number }}</span>
             </div>
           </div>
 
