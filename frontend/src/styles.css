@@ -3,6 +3,7 @@
 @import 'tailwindcss';
 
 @theme {
+  --font-pixel: "Pixelify Sans", sans-serif;
   --color-primary: #d6336c;
   --color-secondary: #ff4081;
   --color-brand-pink: #ffb6c1;
@@ -44,7 +45,7 @@
 }
 
 .main-btn {
-  @apply relative bg-pink-400 border-4 border-pink-500 rounded-full cursor-pointer transition-all duration-200 shadow-[0_8px_0_#db2777];
+  @apply relative bg-pink-400 border-4 border-pink-500 rounded-none cursor-pointer transition-all duration-200 shadow-[4px_8px_0_#db2777];
 }
 
 .main-btn:hover {
@@ -60,7 +61,7 @@ button:disabled {
 }
 
 .nav-list {
-  @apply relative inline-block cursor-pointer px-4 md:px-6 py-2 md:py-3 rounded-full text-base md:text-lg font-bold text-pink-400 transition-all duration-300;
+  @apply relative inline-block cursor-pointer px-4 md:px-6 py-2 md:py-3 rounded-none font-bold text-base md:text-xl font-pixel text-pink-400 transition-all duration-300;
 }
 
 .nav-list:hover {

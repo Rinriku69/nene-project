@@ -1,36 +1,35 @@
 <div class="min-h-screen p-4 sm:p-8 font-sans text-pink-900 flex flex-col items-center">
   <header class="mb-12 text-center mt-8">
-    <h1 class="text-4xl sm:text-5xl font-extrabold text-pink-500 drop-shadow-sm mb-3">
+    <h1 class="text-4xl sm:text-5xl font-pixel font-extrabold text-pink-500 drop-shadow-sm mb-3">
       Welcome, {{ currentUser()?.username || 'Friend' }}! 🌸
     </h1>
-    <p class="text-pink-400 font-medium text-lg">Ready for another cute day?</p>
   </header>
 
   <div class="max-w-4xl w-full grid grid-cols-1 sm:grid-cols-2 gap-8 px-4">
     <div
-      class="relative bg-white rounded-3xl p-8 border-4 border-pink-200 shadow-[0_12px_0_#fbcfe8] flex flex-col items-center justify-center text-center transition-transform hover:-translate-y-2 hover:scale-105 duration-300"
+      class="relative bg-white rounded-none p-8 border-4 border-pink-200 shadow-[0_12px_0_#fbcfe8] flex flex-col items-center justify-center text-center transition-transform hover:-translate-y-2 hover:scale-105 duration-300"
     >
       @if (canClaimDaily()) {
         <div class="absolute -top-3 -right-3">
           <span class="flex h-6 w-6 relative">
             <span
-              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
+              class="animate-ping absolute inline-flex h-full w-full rounded-none bg-red-400 opacity-75"
             ></span>
             <span
-              class="relative inline-flex rounded-full h-6 w-6 bg-red-500 border-2 border-white"
+              class="relative inline-flex rounded-none h-6 w-6 bg-red-500 border-2 border-white"
             ></span>
           </span>
         </div>
       }
 
       <div
-        class="w-24 h-24 bg-pink-100 rounded-full flex items-center justify-center mb-6 border-4 border-pink-300"
+        class="w-24 h-24 bg-pink-100 rounded-none flex items-center justify-center mb-6 border-4 border-pink-300"
       >
         <app-icons [name]="'gem'" [classAttribute]="'w-12 h-12 text-pink-500'"></app-icons>
       </div>
 
-      <h3 class="text-2xl font-extrabold text-pink-500 mb-2">Daily Login</h3>
-      <p class="text-pink-400 mb-8 font-medium">
+      <h3 class="text-2xl font-extrabold font-pixel text-pink-500 mb-2">Daily Login</h3>
+      <p class="text-pink-400 mb-8 font-pixel font-medium">
         @if (canClaimDaily()) {
           Claim <span class="font-bold">x450</span> Gems!
         } @else {
@@ -43,7 +42,7 @@
         (click)="claimDailyGems()"
         (click)="claimLoginAnimate(claimLoginBtn)"
         [disabled]="!canClaimDaily()"
-        class="w-full py-3 px-6 rounded-2xl font-bold text-lg transition-all duration-300 active:scale-95"
+        class="w-full py-3 px-6 rounded-none font-pixel font-bold text-lg transition-all duration-300 active:scale-95"
         [class]="
           canClaimDaily()
             ? 'bg-pink-400 text-white shadow-[0_6px_0_#f472b6] hover:bg-pink-500 hover:shadow-[0_4px_0_#db2777] hover:-translate-y-1'
@@ -59,15 +58,15 @@
     </div>
 
     <div
-      class="relative bg-white rounded-3xl p-8 border-4 border-pink-200 shadow-[0_12px_0_#fbcfe8] flex flex-col items-center justify-center text-center transition-transform hover:-translate-y-2 hover:scale-105 duration-300"
+      class="relative bg-white rounded-none p-8 border-4 border-pink-200 shadow-[0_12px_0_#fbcfe8] flex flex-col items-center justify-center text-center transition-transform hover:-translate-y-2 hover:scale-105 duration-300"
     >
       <div
-        class="w-24 h-24 bg-pink-100 rounded-full flex items-center justify-center mb-6 border-4 border-pink-300"
+        class="w-24 h-24 bg-pink-100 rounded-none flex items-center justify-center mb-6 border-4 border-pink-300"
       >
         <app-icons [name]="'profile'" [classAttribute]="'w-12 h-12 text-pink-500'"></app-icons>
       </div>
-      <h3 class="text-2xl font-extrabold text-pink-500 mb-2">Your Profile</h3>
-      <p class="text-pink-400 font-medium">Manage your cute settings</p>
+      <h3 class="text-2xl font-extrabold text-pink-500 mb-2 font-pixel">Your Profile</h3>
+      <p class="text-pink-400 font-medium font-pixel">Manage your cute settings</p>
     </div>
   </div>
 </div>

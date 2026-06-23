@@ -9,27 +9,28 @@
       src="https://res.cloudinary.com/dhvmcbbdi/image/upload/w_500/q_auto/f_auto/v1780463871/134215948191552419_1452_817_1780434209062-removebg-preview_wbjba8.png"
       alt="nene smile"
       fetchpriority="high"
+      class="[image-rendering:pixelated]"
     />
   </div>
-  <h1 class="absolute top-[15%] z-200 text-4xl md:text-5xl font-black text-pink-400">Nene Project</h1>
+  <h1 class="absolute top-[15%] z-200 font-pixel text-4xl md:text-5xl font-black text-pink-400">Nene Project</h1>
   <div
-    class="relative z-10 rounded-[3rem] px-10 py-16 md:px-20 md:py-20 flex flex-col items-center gap-10 bg-white border-4 border-pink-200 shadow-[0_12px_0_#fbcfe8] hover:-translate-y-2 hover:shadow-[0_20px_0_#fbcfe8] transition-all duration-300"
+    class="relative z-10 rounded-none px-10 py-16 md:px-20 md:py-20 flex flex-col items-center gap-10 bg-white border-2 border-pink-200 shadow-[8px_12px_0_#fbcfe8] hover:-translate-y-2 hover:shadow-[0_20px_0_#fbcfe8] transition-all duration-300"
   >
     <div class="text-center animate-bounce">
-      <h2 class="text-4xl md:text-7xl font-black text-pink-400 drop-shadow-sm tracking-tighter">
+      <h2 class="text-4xl md:text-7xl font-pixel text-pink-400 drop-shadow-sm tracking-tighter">
         Hi Cutie! <br />
         ૮ ˶ᵔ ᵕ ᵔ˶ ა
       </h2>
     </div>
 
     <div>
-      <button class="main-btn rounded-2xl! py-2 px-8 group  flex justify-end gap-2" (click)="boopClick()">
+      <button class="main-btn py-2 px-8 group flex justify-end gap-2" (click)="boopClick()">
         <app-icons
           [name]="'pointer'"
-          [classAttribute]="'size-8 md:size-15 fill-white group-hover:scale-110 transition-transform mr-3'"
+          [classAttribute]="'size-8 md:size-15 text-white group-hover:scale-110 transition-transform mr-3'"
         ></app-icons>
         <span
-          class="flex items-center text-lg md:text-3xl font-black text-white group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300"
+          class="flex items-center text-lg font-pixel md:text-3xl font-black text-white group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300"
         >
           Boop Me!
         </span>

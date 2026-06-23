@@ -1,5 +1,5 @@
 <div
-  class="relative  aspect-4/3 rounded-lg overflow-hidden border-2 md:border-4 ease-out will-change-transform hover:scale-110 transition-transform hover:-translate-y-2 hover:z-50 cursor-pointer {{classAttribute()}}"
+  class="relative  aspect-4/3 rounded-none overflow-hidden border-2 md:border-4 ease-out will-change-transform hover:scale-110 transition-transform hover:-translate-y-2 hover:z-50 cursor-pointer {{classAttribute()}}"
   (click)="viewItem(item())"
   [class.border-green-400]="item().rarity === 'N'"
   [class.shadow-[0_0_15px_#4ade80]]="item().rarity === 'N'"
@@ -25,7 +25,7 @@
     class="absolute bottom-0 inset-x-0 bg-linear-to-t from-black/80 via-black/40 to-transparent p-2 pt-6 z-30 text-center"
   >
     <span
-      class="hidden md:inline-block px-1.5 py-0.5 rounded text-[10px] font-black mb-0.5 text-white  shadow-sm"
+      class="hidden md:inline-block px-1.5 py-0.5 rounded-none text-[10px] font-black font-pixel mb-0.5 text-white  shadow-sm"
       [class.bg-green-500]="item().rarity === 'N'"
       [class.bg-blue-500]="item().rarity === 'R'"
       [class.bg-purple-500]="item().rarity === 'SR'"
@@ -34,7 +34,7 @@
       {{ item().rarity }}
     </span>
     <p
-      class="text-[0.5rem] md:text-base font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] truncate px-1"
+      class="text-[0.5rem] md:text-base font-black font-pixel text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] truncate px-1"
     >
       {{ item().name }}
     </p>

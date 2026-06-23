@@ -8,7 +8,7 @@
   ></div>
   <nav class="hidden lg:flex top-0 z-50 px-2 py-2 md:py-2 md:px-5 sm:px-2">
     <div
-      class="flex flex-wrap items-center justify-between gap-4 px-6 py-2 md:py-2 lg:py-3 rounded-3xl border-4 transition-all duration-500 w-full"
+      class="flex flex-wrap items-center justify-between gap-4 px-6 py-2 md:py-2 lg:py-3 rounded-none border-4 transition-all duration-500 w-full"
       [class.bg-slate-800]="isDarkTheme()"
       [class.bg-opacity-90]="isDarkTheme()"
       [class.border-pink-500]="isDarkTheme()"
@@ -19,11 +19,16 @@
       [class.shadow-[0_8px_0_#fbcfe8]]="!isDarkTheme()"
     >
       <div
-        class="size-19 lg:size-24 md:size-24 relative bg-pink-300 rounded-4xl hover:scale-110 hover:rotate-3 transition-transform cursor-pointer flex gap-2 items-center shrink-0"
+        class="size-19 lg:size-24 md:size-24 relative bg-pink-300 rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:scale-110 hover:rotate-3 transition-transform cursor-pointer flex gap-2 items-center shrink-0"
       >
-        <img src="icons/nene_flower.png" alt="Nene flower logo" routerLink="/app/dashboard" />
+        <img
+          src="icons/nene_flower.png"
+          alt="Nene flower logo"
+          routerLink="/app/dashboard"
+          class="[image-rendering:pixelated]"
+        />
         <span
-          class="absolute right-1 px-1 bottom-0 rounded-2xl font-black text-secondary bg-brand-pink"
+          class="absolute right-1 px-1 bottom-0 rounded-none font-black font-pixel text-secondary bg-brand-pink"
           [class.text-pink-900]="!isDarkTheme()"
           [class.bg-pink-300]="!isDarkTheme()"
           [class.text-slate-900]="isDarkTheme()"
@@ -77,58 +82,69 @@
             <div class="cursor-pointer" (click)="toggleNoti()">
               @if (notiIsOpen()) {
                 <app-icons
-                  [name]="'open-envelope'"
-                  [classAttribute]="isDarkTheme() ? 'size-8 text-pink-300' : 'size-8 text-pink-500'"
+                  [name]="'open_envelope'"
+                  [classAttribute]="
+                    isDarkTheme() ? 'size-10 text-pink-300' : 'size-10 text-pink-500'
+                  "
                 ></app-icons>
               } @else {
                 <app-icons
                   [name]="'envelope'"
-                  [classAttribute]="isDarkTheme() ? 'size-8 text-pink-300' : 'size-8 text-pink-500'"
+                  [classAttribute]="
+                    isDarkTheme() ? 'size-10 text-pink-300' : 'size-10 text-pink-500'
+                  "
                 ></app-icons>
               }
             </div>
             @if (notifications()) {
               @if (unreadCount() > 0) {
                 <span
-                  class="absolute select-none -top-1 -right-2 font-semibold bg-red-500 w-5 h-5 rounded-full flex items-center text-white justify-center animate-pulse"
+                  class="absolute select-none -top-1 -right-2 font-semibold font-pixel bg-red-500 w-5 h-5 rounded-none flex items-center text-white justify-center animate-pulse"
                   >{{ unreadCount() }}</span
                 >
               }
 
               <div
-                class="absolute top-10 rounded-2xl pointer-events-none md:-right-3 h-90 w-80 z-200 bg-white border border-slate-500 opacity-0 transition-all duration-200 overflow-y-auto flex flex-col p-1 gap-1"
+                class="absolute top-12 rounded-none pointer-events-none md:-right-3 h-90 w-80 z-200 bg-white border border-slate-500 opacity-0 transition-all duration-200 overflow-y-auto flex flex-col p-1 gap-1"
                 [class.opacity-100]="notiIsOpen()"
                 [class.!pointer-events-auto]="notiIsOpen()"
               >
                 @for (noti of notifications(); track noti.id) {
                   @if (noti.read_at) {
                     <div
-                      class="flex flex-col m-1 border-b-2 border-slate-300 p-2 pb-10 gap-2 rounded-2xl bg-slate-200"
+                      class="flex flex-col m-1 border-b-2 border-slate-300 p-2 pb-10 gap-2 rounded-none bg-slate-200"
                     >
                       <div class="flex justify-between">
-                        <span class="text-slate-500 font-semibold text-xl">{{ noti.title }}</span>
-                        <span class="text-sm font-medium text-slate-400">{{
+                        <span class="text-slate-500 font-semibold font-pixel select-none text-xl">{{
+                          noti.title
+                        }}</span>
+                        <span class="text-sm font-medium font-mono select-none text-slate-400">{{
                           noti.notification_date
                         }}</span>
                       </div>
                       <div>
-                        <span class="font-mono text-slate-500 ml-2">{{ noti.message }}</span>
+                        <span class="font-pixel select-none text-slate-500 ml-2">{{
+                          noti.message
+                        }}</span>
                       </div>
                     </div>
                   } @else {
                     <div
-                      class="flex flex-col m-2 border-b-2 border-slate-400 rounded-2xl p-2 pb-10 gap-2 hover:bg-slate-100 cursor-pointer"
+                      class="flex flex-col m-2 border-b-2 border-slate-400 rounded-none p-2 pb-10 gap-2 hover:bg-slate-100 cursor-pointer"
                     >
                       <div class="flex justify-between">
-                        <span class="text-slate-800 font-semibold text-xl animate-pulse">{{
-                          noti.title
-                        }}</span>
-                        <span class="text-sm font-medium text-slate-500">{{
+                        <span
+                          class="text-slate-800 font-semibold font-pixel select-none text-xl animate-pulse"
+                          >{{ noti.title }}</span
+                        >
+                        <span class="text-sm font-medium font-mono select-none text-slate-500">{{
                           noti.notification_date
                         }}</span>
                       </div>
                       <div>
-                        <span class="font-mono text-slate-600 ml-2">{{ noti.message }}</span>
+                        <span class="font-pixel select-none text-slate-600 ml-2">{{
+                          noti.message
+                        }}</span>
                       </div>
                     </div>
                   }
@@ -141,7 +157,7 @@
             (click)="toggleUserMenu()"
           >
             <div
-              class="font-black flex items-center gap-3 text-sm lg:text-xl px-6 py-3 rounded-full border-2 shadow-[0_4px_0_#fbcfe8] transition-all cursor-pointer"
+              class="font-black flex items-center gap-3 text-sm lg:text-xl px-6 py-3 rounded-none border-2 shadow-[0_4px_0_#fbcfe8] transition-all cursor-pointer"
               [class.text-pink-300]="isDarkTheme()"
               [class.bg-slate-700]="isDarkTheme()"
               [class.border-pink-500]="isDarkTheme()"
@@ -160,17 +176,17 @@
             >
               <span
                 #userCurrency
-                class="flex items-center gap-1"
+                class="flex font-pixel text-xl select-none items-center gap-1"
                 [class.text-pink-400]="!isDarkTheme()"
                 [class.text-pink-300]="isDarkTheme()"
               >
                 💎 {{ $safeNavigationMigration(currentUser()?.currency) | number }}
               </span>
               <div
-                class="w-0.5 h-5 bg-pink-300 rounded-full"
+                class="w-0.5 h-5 bg-pink-300 rounded-none"
                 [class.bg-pink-500]="isDarkTheme()"
               ></div>
-              <span>{{ currentUser()?.username }}</span>
+              <span class="font-pixel">{{ currentUser()?.username }}</span>
               <app-icons [name]="'downIcon'"></app-icons>
             </div>
 
@@ -181,17 +197,17 @@
               [class.opacity-0]="!userMenuShow()"
             >
               <div
-                class="bg-white rounded-3xl border-4 border-pink-200 shadow-[0_8px_0_#fbcfe8] overflow-hidden p-2 flex flex-col gap-1"
+                class="bg-white rounded-none border-4 border-pink-200 shadow-[0_8px_0_#fbcfe8] overflow-hidden p-2 flex flex-col gap-1"
               >
                 <a
-                  class="flex px-4 py-3 text-pink-500 font-black hover:bg-pink-100 hover:text-pink-600 hover:-translate-y-0.5 rounded-2xl transition-all cursor-pointer items-center gap-3"
+                  class="flex px-4 py-3 font-pixel text-lg text-pink-500 font-black hover:bg-pink-100 hover:text-pink-600 hover:-translate-y-0.5 rounded-none transition-all cursor-pointer items-center gap-3"
                 >
                   <app-icons [name]="'user'"></app-icons>
                   Profile
                 </a>
-                <div class="h-1 bg-pink-100/60 rounded-full my-1 mx-2"></div>
+                <div class="h-1 bg-pink-100/60 rounded-none my-1 mx-2"></div>
                 <a
-                  class="flex px-4 py-3 text-red-400 font-black hover:bg-red-50 hover:text-red-500 hover:-translate-y-0.5 rounded-2xl transition-all cursor-pointer items-center gap-3"
+                  class="flex px-4 py-3 font-pixel text-lg text-red-400 font-black hover:bg-red-50 hover:text-red-500 hover:-translate-y-0.5 rounded-none transition-all cursor-pointer items-center gap-3"
                   (click)="logout()"
                 >
                   <app-icons [name]="'logout'"></app-icons>
@@ -204,7 +220,7 @@
       } @else {
         <a
           routerLink="/auth/login"
-          class="font-black block text-lg md:text-xl text-pink-500 bg-pink-100 px-6 py-3 rounded-full border-2 border-pink-300 shadow-[0_4px_0_#fbcfe8] hover:-translate-y-1 hover:shadow-[0_6px_0_#fbcfe8] hover:bg-pink-200 active:translate-y-1 active:shadow-none transition-all cursor-pointer shrink-0"
+          class="font-black font-pixel block text-lg md:text-xl text-pink-500 bg-pink-100 px-6 py-3 rounded-none border-2 border-pink-300 shadow-[0_4px_0_#fbcfe8] hover:-translate-y-1 hover:shadow-[0_6px_0_#fbcfe8] hover:bg-pink-200 active:translate-y-1 active:shadow-none transition-all cursor-pointer shrink-0"
         >
           Please Login
         </a>
@@ -222,7 +238,7 @@
     <div class="flex items-center gap-3">
       <button
         (click)="toggleMobileMenu()"
-        class="p-2 rounded-xl border-2 transition-all active:translate-y-1 active:shadow-none"
+        class="p-2 rounded-none border-2 transition-all active:translate-y-1 active:shadow-none"
         [class.bg-slate-700]="isDarkTheme()"
         [class.text-pink-300]="isDarkTheme()"
         [class.border-pink-500]="isDarkTheme()"
@@ -235,7 +251,7 @@
         <app-icons [name]="'bars'" [classAttribute]="'w-6 h-6'"></app-icons>
       </button>
       <div
-        class="size-10 md:size-15 relative bg-pink-300 rounded-full flex gap-2 items-center shrink-0"
+        class="size-10 md:size-15 relative bg-pink-300 rounded-none flex gap-2 items-center shrink-0"
       >
         <img
           src="icons/nene_flower.png"
@@ -250,7 +266,7 @@
       <div class="relative cursor-pointer" (click)="toggleNoti()">
         @if (notiIsOpen()) {
           <app-icons
-            [name]="'open-envelope'"
+            [name]="'open_envelope'"
             [classAttribute]="isDarkTheme() ? 'size-8 text-pink-300' : 'size-8 text-pink-500'"
           ></app-icons>
         } @else {
@@ -262,45 +278,45 @@
         @if (notifications()) {
           @if (unreadCount() > 0) {
             <span
-              class="absolute select-none -top-1 -right-2 font-semibold bg-red-500 w-5 h-5 rounded-full flex items-center text-white justify-center animate-pulse"
+              class="absolute select-none -top-1 -right-2 font-semibold font-pixel bg-red-500 w-5 h-5 rounded-none flex items-center text-white justify-center animate-pulse"
               >{{ unreadCount() }}</span
             >
           }
 
           <div
-            class="absolute top-10 rounded-2xl pointer-events-none -right-20 md:-right-3 h-90 w-75 md:w-80 z-200 bg-white border border-slate-500 opacity-0 transition-all duration-200 overflow-y-auto flex flex-col p-1 gap-1"
+            class="absolute top-10 rounded-none pointer-events-none -right-20 md:-right-3 h-90 w-75 md:w-80 z-200 bg-white border border-slate-500 opacity-0 transition-all duration-200 overflow-y-auto flex flex-col p-1 gap-1"
             [class.opacity-100]="notiIsOpen()"
             [class.!pointer-events-auto]="notiIsOpen()"
           >
             @for (noti of notifications(); track noti.id) {
               @if (noti.read_at) {
                 <div
-                  class="flex flex-col m-1 border-b-2 border-slate-300 p-2 pb-10 gap-2 rounded-2xl bg-slate-200"
+                  class="flex flex-col m-1 border-b-2 border-slate-300 p-2 pb-10 gap-2 rounded-none bg-slate-200"
                 >
                   <div class="flex justify-between">
-                    <span class="text-slate-500 font-semibold text-xl">{{ noti.title }}</span>
-                    <span class="text-sm font-medium text-slate-400">{{
+                    <span class="text-slate-500 font-semibold font-pixel text-xl">{{ noti.title }}</span>
+                    <span class="text-sm font-mono  text-slate-400">{{
                       noti.notification_date
                     }}</span>
                   </div>
                   <div>
-                    <span class="font-mono text-slate-500 ml-2">{{ noti.message }}</span>
+                    <span class=" font-pixel text-slate-500 ml-2">{{ noti.message }}</span>
                   </div>
                 </div>
               } @else {
                 <div
-                  class="flex flex-col m-2 border-b-2 border-slate-400 rounded-2xl p-2 pb-10 gap-2 hover:bg-slate-100 cursor-pointer"
+                  class="flex flex-col m-2 border-b-2 border-slate-400 rounded-none p-2 pb-10 gap-2 hover:bg-slate-100 cursor-pointer"
                 >
                   <div class="flex justify-between">
-                    <span class="text-slate-800 font-semibold text-xl animate-pulse">{{
+                    <span class="text-slate-800 font-semibold font-pixel text-xl animate-pulse">{{
                       noti.title
                     }}</span>
-                    <span class="text-sm font-medium text-slate-500">{{
+                    <span class="text-sm font-medium font-mono text-slate-500">{{
                       noti.notification_date
                     }}</span>
                   </div>
                   <div>
-                    <span class="font-mono text-slate-600 ml-2">{{ noti.message }}</span>
+                    <span class="font-pixel text-slate-600 ml-2">{{ noti.message }}</span>
                   </div>
                 </div>
               }
@@ -313,7 +329,7 @@
         @if (currentUser()) {
           <div
             #userCurrency
-            class="font-black flex items-center gap-1 text-sm md:text-lg px-3 py-1.5 rounded-full border-2 transition-all"
+            class="font-black font-pixel flex items-center gap-1 text-sm md:text-lg px-3 py-1.5 rounded-none border-2 transition-all"
             [class.text-pink-300]="isDarkTheme()"
             [class.bg-slate-700]="isDarkTheme()"
             [class.border-pink-500]="isDarkTheme()"
@@ -346,7 +362,7 @@
           [class.border-pink-200]="!isDarkTheme()"
         >
           <span
-            class="font-black text-xl"
+            class="font-black font-pixel text-xl"
             [class.text-pink-300]="isDarkTheme()"
             [class.text-pink-500]="!isDarkTheme()"
             >Menu</span
@@ -366,7 +382,7 @@
           <a
             routerLink="/app/gacha"
             routerLinkActive="bg-pink-200 text-pink-600"
-            class="block px-4 py-3 rounded-2xl font-black transition-colors"
+            class="block px-4 py-3 rounded-none font-black font-pixel transition-colors"
             [class.text-pink-300]="isDarkTheme()"
             [class.hover:bg-slate-700]="isDarkTheme()"
             [class.text-pink-500]="!isDarkTheme()"
@@ -377,7 +393,7 @@
           <a
             routerLink="/app/inventory"
             routerLinkActive="bg-pink-200 text-pink-600"
-            class="block px-4 py-3 rounded-2xl font-black transition-colors"
+            class="block px-4 py-3 rounded-none font-black font-pixel transition-colors"
             [class.text-pink-300]="isDarkTheme()"
             [class.hover:bg-slate-700]="isDarkTheme()"
             [class.text-pink-500]="!isDarkTheme()"
@@ -388,7 +404,7 @@
           <a
             routerLink="/app/safezone"
             routerLinkActive="bg-pink-200 text-pink-600"
-            class="block px-4 py-3 rounded-2xl font-black transition-colors"
+            class="block px-4 py-3 rounded-none font-black font-pixel transition-colors"
             [class.text-pink-300]="isDarkTheme()"
             [class.hover:bg-slate-700]="isDarkTheme()"
             [class.text-pink-500]="!isDarkTheme()"
@@ -397,7 +413,7 @@
             >Safe Zone</a
           >
           <a
-            class="block px-4 py-3 rounded-2xl font-black transition-colors"
+            class="block px-4 py-3 rounded-none font-black font-pixel transition-colors"
             [class.text-pink-300]="isDarkTheme()"
             [class.hover:bg-slate-700]="isDarkTheme()"
             [class.text-pink-500]="!isDarkTheme()"
@@ -415,7 +431,7 @@
             <a
               routerLink="/admin/userManagement"
               routerLinkActive="bg-pink-200 text-pink-600"
-              class="block px-4 py-3 rounded-2xl font-black transition-colors"
+              class="block px-4 py-3 rounded-none font-black font-pixel transition-colors"
               [class.text-pink-300]="isDarkTheme()"
               [class.hover:bg-slate-700]="isDarkTheme()"
               [class.text-pink-500]="!isDarkTheme()"
@@ -426,7 +442,7 @@
             <a
               routerLink="/admin/gachaManagement"
               routerLinkActive="bg-pink-200 text-pink-600"
-              class="block px-4 py-3 rounded-2xl font-black transition-colors"
+              class="block px-4 py-3 rounded-none font-black font-pixel transition-colors"
               [class.text-pink-300]="isDarkTheme()"
               [class.hover:bg-slate-700]="isDarkTheme()"
               [class.text-pink-500]="!isDarkTheme()"
@@ -450,19 +466,19 @@
               ></app-icons>
               <div class="flex flex-col">
                 <span
-                  class="font-black"
+                  class="font-black font-pixel"
                   [class.text-pink-300]="isDarkTheme()"
                   [class.text-pink-600]="!isDarkTheme()"
                   >{{ currentUser()?.username }}</span
                 >
-                <span class="text-sm text-pink-400"
+                <span class="text-sm font-pixel text-pink-400"
                   >💎 {{ $safeNavigationMigration(currentUser()?.currency) | number }}</span
                 >
               </div>
             </div>
             <button
               (click)="logout(); toggleMobileMenu()"
-              class="w-full py-3 flex justify-center items-center gap-2 rounded-2xl font-black text-white bg-red-400 hover:bg-red-500 border-2 border-red-500 shadow-[0_4px_0_#ef4444] active:translate-y-1 active:shadow-none transition-all"
+              class="w-full py-3 flex justify-center items-center gap-2 rounded-none font-black font-pixel text-white bg-red-400 hover:bg-red-500 border-2 border-red-500 shadow-[0_4px_0_#ef4444] active:translate-y-1 active:shadow-none transition-all"
             >
               <app-icons [name]="'logout'"></app-icons>
               Logout
@@ -471,7 +487,7 @@
             <a
               routerLink="/auth/login"
               (click)="toggleMobileMenu()"
-              class="w-full block text-center py-3 rounded-2xl font-black text-pink-500 bg-pink-100 border-2 border-pink-300 shadow-[0_4px_0_#fbcfe8] hover:bg-pink-200 active:translate-y-1 active:shadow-none transition-all"
+              class="w-full block text-center py-3 rounded-none font-black font-pixel text-pink-500 bg-pink-100 border-2 border-pink-300 shadow-[0_4px_0_#fbcfe8] hover:bg-pink-200 active:translate-y-1 active:shadow-none transition-all"
             >
               Please Login
             </a>

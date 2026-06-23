@@ -7,7 +7,7 @@
     class="relative md:pb-10 lg:pb-0 max-w-6xl mx-auto flex flex-col items-center gap-8"
   >
     <h1
-      class="text-4xl md:text-5xl font-black text-pink-500 drop-shadow-[0_4px_4px_#fbcfe8] text-center"
+      class="text-4xl md:text-5xl font-black font-pixel text-pink-500 drop-shadow-[0_4px_4px_#fbcfe8] text-center"
     >
       My Inventory
     </h1>
@@ -15,8 +15,8 @@
     @if (isLoading()) {
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full animate-smooth-appear">
         @for(i of Array(6); track $index){
-          <div class="relative aspect-4/3 rounded-3xl overflow-hidden  bg-pink-300 animate-pulse  ease-out w-80 group flex items-end p-5">
-              <div class="w-full bg-brand-white h-5 animate-pulse rounded-full"></div>
+          <div class="relative aspect-4/3 rounded-none overflow-hidden  bg-pink-300 animate-pulse  ease-out w-80 group flex items-end p-5">
+              <div class="w-full bg-brand-white h-5 animate-pulse rounded-none"></div>
           </div>
         }
       </div>
@@ -25,7 +25,7 @@
         @for (item of inventoryData()!.data; track $index) {
           <div
             (click)="viewImage(item)"
-            class="relative aspect-4/3 rounded-3xl overflow-hidden border-4 bg-white ease-out transition-transform hover:-translate-y-2 hover:shadow-xl shadow-[0_8px_0_#fbcfe8] group"
+            class="relative aspect-4/3 rounded-none overflow-hidden border-4 bg-white ease-out transition-transform hover:-translate-y-2 hover:shadow-xl shadow-[0_8px_0_#fbcfe8] group"
             [class.border-green-400]="item.rarity === 'N'"
             [class.border-blue-400]="item.rarity === 'R'"
             [class.border-purple-500]="item.rarity === 'SR'"
@@ -43,7 +43,7 @@
               <div class="flex justify-between items-end">
                 <div>
                   <span
-                    class="inline-block px-2 py-0.5 rounded text-xs font-black mb-1 text-white shadow-sm"
+                    class="inline-block px-2 py-0.5 rounded-none text-xs font-black font-pixel mb-1 text-white shadow-sm"
                     [class.bg-green-500]="item.rarity === 'N'"
                     [class.bg-blue-500]="item.rarity === 'R'"
                     [class.bg-purple-500]="item.rarity === 'SR'"
@@ -52,14 +52,14 @@
                     {{ item.rarity }}
                   </span>
                   <p
-                    class="text-xl font-black text-white drop-shadow-md truncate max-w-45"
+                    class="text-xl font-black font-pixel text-white drop-shadow-md truncate max-w-45"
                     [title]="item.name"
                   >
                     {{ item.name }}
                   </p>
                 </div>
                 <div
-                  class="bg-pink-500 text-white font-black px-3 py-1 rounded-full border-2 border-pink-300 shadow-sm shrink-0"
+                  class="bg-pink-500 text-white font-black font-pixel px-3 py-1 rounded-none border-2 border-pink-300 shadow-sm shrink-0"
                 >
                   x{{ item.quantity }}
                 </div>
@@ -73,26 +73,26 @@
         <app-item-view-component
           [selectedItem]="selectedItem()"
           (close)="closeItem()"
-          [classAttribute]="'relative w-full max-w-[95%] md:max-w-[50%] lg:max-w-[80%] aspect-4/3 rounded-2xl overflow-hidden border-4 animate-smooth-appear cursor-default transition-all'"
+          [classAttribute]="'relative w-full max-w-[95%] md:max-w-[50%] lg:max-w-[80%] aspect-4/3 rounded-none overflow-hidden border-4 animate-smooth-appear cursor-default transition-all'"
         ></app-item-view-component>
       }
 
       @if (inventoryData()!.last_page > 1) {
         <div
-          class="flex justify-between items-center w-full max-w-md mt-8 bg-white/80  px-6 py-4 rounded-3xl border-4 border-pink-200 shadow-[0_6px_0_#fbcfe8]"
+          class="flex justify-between items-center w-full max-w-md mt-8 bg-white/80  px-6 py-4 rounded-none border-4 border-pink-200 shadow-[0_6px_0_#fbcfe8]"
         >
           <button
-            class="px-2 md:px-5 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_0_#fbcfe8] active:translate-y-1 active:shadow-[0_0px_0_#fbcfe8]"
+            class="px-2 md:px-5 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold font-pixel rounded-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_0_#fbcfe8] active:translate-y-1 active:shadow-[0_0px_0_#fbcfe8]"
             (click)="changePage(inventoryData()!.current_page - 1)"
             [disabled]="inventoryData()!.current_page === 1"
           >
             Previous
           </button>
-          <span class="text-pink-500 font-black text-sm lg:text-lg">
+          <span class="text-pink-500 font-black font-pixel text-sm lg:text-lg">
             Page {{ inventoryData()!.current_page }} of {{ inventoryData()!.last_page }}
           </span>
           <button
-            class="px-2 md:px-5 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_0_#fbcfe8] active:translate-y-1 active:shadow-[0_0px_0_#fbcfe8]"
+            class="px-2 md:px-5 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold font-pixel rounded-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_0_#fbcfe8] active:translate-y-1 active:shadow-[0_0px_0_#fbcfe8]"
             (click)="changePage(inventoryData()!.current_page + 1)"
             [disabled]="inventoryData()!.current_page === inventoryData()!.last_page"
           >
@@ -102,10 +102,10 @@
       }
     } @else {
       <div class="flex flex-col items-center justify-center py-20 gap-4">
-        <p class="text-2xl font-bold text-pink-400">Your inventory is empty!</p>
+        <p class="text-2xl font-bold font-pixel text-pink-400">Your inventory is empty!</p>
         <a
           routerLink="/app/gacha"
-          class="px-8 py-4 bg-pink-400 hover:bg-pink-500 text-white font-black text-xl rounded-full border-4 border-pink-500 shadow-[0_6px_0_#f472b6] active:translate-y-2 active:shadow-none transition-all mt-4"
+          class="px-8 py-4 bg-pink-400 hover:bg-pink-500 text-white font-black font-pixel text-xl rounded-none border-4 border-pink-500 shadow-[0_6px_0_#f472b6] active:translate-y-2 active:shadow-none transition-all mt-4"
         >
           Go pull some items!
         </a>

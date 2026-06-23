@@ -9,7 +9,7 @@
     (click)="placeTanzaku($event)"
   >
     <button
-      class="absolute top-2 left-1 border-4 border-pink-500 bg-slate-800/80 p-3 rounded-3xl text-sm lg:text-xl font-black text-pink-300 shadow-[0_6px_0_#db2777] hover:-translate-y-1 hover:shadow-[0_8px_0_#db2777] active:translate-y-1 active:shadow-none transition-all cursor-pointer"
+      class="absolute top-2 left-1 border-4 border-pink-500 bg-slate-800/80 p-3 rounded-none text-sm lg:text-xl font-black font-pixel text-pink-300 shadow-[0_6px_0_#db2777] hover:-translate-y-1 hover:shadow-[0_8px_0_#db2777] active:translate-y-1 active:shadow-none transition-all cursor-pointer"
       (click)="openModal()"
       [disabled]="isPlacementMode()"
     >
@@ -28,20 +28,20 @@
           }}"
         >
           <span
-            class="text-[10px] w-full px-1 overflow-hidden text-ellipsis whitespace-nowrap text-center absolute top-2"
+            class="text-[10px] font-pixel w-full px-1 overflow-hidden text-ellipsis whitespace-nowrap text-center absolute top-2"
             >{{ currentUser()?.username }}</span
           >
           <div class="absolute h-5 w-2 bg-amber-800 bottom-full"></div>
           @if (isConfirm()) {
             <div class="absolute -top-14 w-30 h-10 flex justify-center gap-3">
               <button
-                class="w-10 h-10 flex pointer-events-auto items-center justify-center rounded-full bg-slate-800 border-2 border-slate-600 shadow-[0_4px_0_#475569] hover:-translate-y-1 hover:shadow-[0_6px_0_#475569] active:translate-y-1 active:shadow-none font-black text-slate-300 cursor-pointer transition-all"
+                class="w-10 h-10 flex pointer-events-auto items-center justify-center rounded-none bg-slate-800 border-2 border-slate-600 shadow-[0_4px_0_#475569] hover:-translate-y-1 hover:shadow-[0_6px_0_#475569] active:translate-y-1 active:shadow-none font-black font-pixel text-slate-300 cursor-pointer transition-all"
                 (click)="cancelPlacement(); $event.stopPropagation()"
               >
                 ✕
               </button>
               <button
-                class="w-10 h-10 flex pointer-events-auto items-center justify-center rounded-full bg-pink-500 border-2 border-pink-400 shadow-[0_4px_0_#db2777] hover:-translate-y-1 hover:shadow-[0_6px_0_#db2777] active:translate-y-1 active:shadow-none font-black text-white cursor-pointer transition-all"
+                class="w-10 h-10 flex pointer-events-auto items-center justify-center rounded-none bg-pink-500 border-2 border-pink-400 shadow-[0_4px_0_#db2777] hover:-translate-y-1 hover:shadow-[0_6px_0_#db2777] active:translate-y-1 active:shadow-none font-black font-pixel text-white cursor-pointer transition-all"
                 (click)="confirmPlacement(); $event.stopPropagation()"
               >
                 ✓
@@ -66,7 +66,7 @@
             }}"
           >
             <span
-              class="text-[10px] w-full px-1 overflow-hidden text-ellipsis whitespace-nowrap text-center absolute top-2"
+              class="text-[10px] font-pixel w-full px-1 overflow-hidden text-ellipsis whitespace-nowrap text-center absolute top-2"
             >
               {{ tanzaku.username }}
             </span>
@@ -86,34 +86,34 @@
       (click)="closeModal()"
     >
       <div
-        class="relative w-full max-w-md bg-slate-800 rounded-3xl p-8 border-4 border-pink-500 shadow-[0_12px_0_#db2777]"
+        class="relative w-full max-w-md bg-slate-800 rounded-none p-8 border-4 border-pink-500 shadow-[0_12px_0_#db2777]"
         (click)="$event.stopPropagation()"
       >
         <div class="text-center mb-6">
-          <h2 class="text-3xl font-black text-pink-300 drop-shadow-sm tracking-tight">
+          <h2 class="text-3xl font-black font-pixel text-pink-300 drop-shadow-sm tracking-tight">
             New Tanzaku
           </h2>
           @if (messageForm().invalid() && messageForm().touched()) {
-            <span class="text-sm font-semibold text-red-500">Please write down your wish</span>
+            <span class="text-sm font-semibold font-pixel text-red-500">Please write down your wish</span>
           }
         </div>
 
         <form class="flex flex-col gap-4">
           <div class="flex flex-col gap-1">
-            <label class="text-pink-400 font-bold ml-4">Your Message</label>
+            <label class="text-pink-400 font-bold font-pixel ml-4">Your Message</label>
             <textarea
               [formField]="messageForm.message"
-              class="w-full bg-slate-900 border-2 border-slate-600 rounded-2xl p-4 text-pink-100 focus:outline-none focus:border-pink-500 transition-colors h-32 resize-none shadow-inner"
+              class="w-full bg-slate-900 border-2 border-slate-600 rounded-none p-4 text-pink-100 font-pixel focus:outline-none focus:border-pink-500 transition-colors h-32 resize-none shadow-inner"
               placeholder="Write your wish..."
             ></textarea>
           </div>
 
           <div class="flex flex-col gap-1">
-            <label class="text-pink-400 font-bold ml-4">Color Theme</label>
+            <label class="text-pink-400 font-bold font-pixel ml-4">Color Theme</label>
             <div class="relative group">
               <select
                 [formField]="messageForm.theme_color"
-                class="w-full appearance-none bg-slate-900 border-2 border-slate-600 rounded-2xl p-3 pl-4 pr-10 text-pink-100 font-bold focus:outline-none focus:border-pink-500 transition-colors shadow-inner cursor-pointer"
+                class="w-full appearance-none bg-slate-900 border-2 border-slate-600 rounded-none p-3 pl-4 pr-10 text-pink-100 font-bold font-pixel focus:outline-none focus:border-pink-500 transition-colors shadow-inner cursor-pointer"
               >
                 <option value="pink">Pink (Default)</option>
                 <option value="yellow">Yellow</option>
@@ -138,18 +138,18 @@
               [checked]="isSecret()"
               (change)="isSecret.set(!isSecret())"
             />
-            <label for="secretCheckbox" class="text-pink-300 font-bold cursor-pointer select-none"
+            <label for="secretCheckbox" class="text-pink-300 font-bold font-pixel cursor-pointer select-none"
               >Make this a Secret Message?</label
             >
           </div>
 
           @if (isSecret()) {
             <div class="flex flex-col gap-1 animate-in fade-in slide-in-from-top-2 duration-300">
-              <label class="text-pink-400 font-bold ml-4">Unlock Date</label>
+              <label class="text-pink-400 font-bold font-pixel ml-4">Unlock Date</label>
               <input
                 type="date"
                 [formField]="messageForm.unlocked_at"
-                class="w-full bg-slate-900 border-2 border-slate-600 rounded-2xl p-3 text-pink-100 focus:outline-none focus:border-pink-500 transition-colors shadow-inner scheme-dark"
+                class="w-full bg-slate-900 border-2 border-slate-600 rounded-none p-3 text-pink-100 font-pixel focus:outline-none focus:border-pink-500 transition-colors shadow-inner scheme-dark"
               />
             </div>
           }
@@ -157,14 +157,14 @@
           <div class="flex justify-end gap-3 mt-6">
             <button
               type="button"
-              class="px-6 py-3 rounded-full font-black text-slate-300 hover:bg-slate-700 transition-colors"
+              class="px-6 py-3 rounded-none font-black font-pixel text-slate-300 hover:bg-slate-700 transition-colors"
               (click)="closeModal()"
             >
               Cancel
             </button>
             <button
               type="button"
-              class="px-6 py-3 rounded-full font-black text-pink-900 bg-pink-400 border-b-4 border-pink-600 hover:-translate-y-1 hover:bg-pink-300 active:translate-y-1 active:border-b-0 transition-all"
+              class="px-6 py-3 rounded-none font-black font-pixel text-pink-900 bg-pink-400 border-b-4 border-pink-600 hover:-translate-y-1 hover:bg-pink-300 active:translate-y-1 active:border-b-0 transition-all"
               (click)="addWishClick()"
               [disabled]="messageForm().invalid()"
             >
@@ -182,42 +182,42 @@
       (click)="closeViewModal()"
     >
       <div
-        class="relative w-full max-w-md bg-slate-800 rounded-3xl p-8 border-4 border-pink-500 shadow-[0_12px_0_#db2777] flex flex-col gap-4"
+        class="relative w-full max-w-md bg-slate-800 rounded-none p-8 border-4 border-pink-500 shadow-[0_12px_0_#db2777] flex flex-col gap-4"
         (click)="$event.stopPropagation()"
       >
         <button
           (click)="closeViewModal()"
-          class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-slate-700 hover:bg-slate-600 text-pink-400 rounded-full font-black transition-colors cursor-pointer"
+          class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-slate-700 hover:bg-slate-600 text-pink-400 rounded-none font-black font-pixel transition-colors cursor-pointer"
         >
           ✕
         </button>
 
         <div class="flex items-center gap-3 border-b-2 border-slate-700 pb-4">
           <div
-            class="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center text-xl font-bold border-2 border-pink-400 text-pink-800"
+            class="w-12 h-12 rounded-none bg-pink-100 flex items-center justify-center text-xl font-bold font-pixel border-2 border-pink-400 text-pink-800"
           >
             {{ $safeNavigationMigration(selectedTanzaku()?.username?.charAt(0)) | uppercase }}
           </div>
           <div class="flex flex-col">
-            <span class="text-xl font-black text-pink-300">{{ selectedTanzaku()?.username }}</span>
-            <span class="text-xs text-slate-400 font-semibold"
+            <span class="text-xl font-black font-pixel text-pink-300">{{ selectedTanzaku()?.username }}</span>
+            <span class="text-xs text-slate-400 font-semibold font-pixel"
               >Tanzaku Wish {{ selectedTanzaku()?.created_at }}</span
             >
           </div>
         </div>
 
         <div
-          class="bg-slate-900 rounded-2xl p-6 border-2 border-slate-700 min-h-32 flex flex-col justify-center items-center relative overflow-hidden shadow-inner"
+          class="bg-slate-900 rounded-none p-6 border-2 border-slate-700 min-h-32 flex flex-col justify-center items-center relative overflow-hidden shadow-inner"
         >
           @if (selectedTanzaku()?.is_locked) {
             <span class="text-6xl mb-2">🔒</span>
-            <p class="text-pink-400 font-bold text-center">This secret message is locked!</p>
-            <p class="text-slate-500 text-sm mt-2">
+            <p class="text-pink-400 font-bold font-pixel text-center">This secret message is locked!</p>
+            <p class="text-slate-500 text-sm font-pixel mt-2">
               Unlocks at: {{ selectedTanzaku()?.unlocked_at }}
             </p>
           } @else {
             <p
-              class="text-pink-100 text-lg font-medium text-center whitespace-pre-wrap warp-break-words w-full"
+              class="text-pink-100 text-lg font-medium font-pixel text-center whitespace-pre-wrap warp-break-words w-full"
             >
               {{ selectedTanzaku()?.message }}
             </p>
