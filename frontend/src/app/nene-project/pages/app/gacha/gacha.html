@@ -3,10 +3,14 @@
 >
   <div class="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center gap-8">
     <div class="text-center mt-4">
-      <h1 class="text-2xl md:text-5xl font-black font-pixel text-pink-500 drop-shadow-md tracking-tight">
+      <h1
+        class="text-2xl md:text-5xl font-black font-pixel text-pink-500 drop-shadow-md tracking-tight"
+      >
         Nene and The GANG
       </h1>
-      <p class="text-pink-400 font-medium font-pixel mt-2 text-lg">Unlock your precious memories!</p>
+      <p class="text-pink-400 font-medium font-pixel mt-2 text-lg">
+        Unlock your precious memories!
+      </p>
     </div>
 
     <div
@@ -14,7 +18,6 @@
     >
       @if (featuredItems.hasValue()) {
         @for (item of featuredItems.value(); track $index) {
-          
           <div
             class="absolute inset-0 transition-opacity duration-1000 ease-in-out"
             [class.opacity-100]="$index === currentSlide()"
@@ -51,9 +54,12 @@
       class="flex items-center bg-white px-6 py-3 rounded-none border-2 border-pink-200 shadow-sm"
     >
       <span class="text-pink-400 text-sm md:text-base font-bold font-pixel mr-1">Your Gems:</span>
-      <span class="text-pink-500 font-black font-mc text-md flex items-center">
-        💎{{ currentUser()?.currency || 0 | number }}
-      </span>
+      <div class="flex gap-1 items-center">
+        <app-icons [name]="'gem'" [classAttribute]="'size-4 text-blue-400 '"></app-icons>
+        <span class="text-pink-500 pt-1 font-black font-mc text-md flex items-center">
+          {{ currentUser()?.currency || 0 | number }}
+        </span>
+      </div>
       <button
         (click)="openLogModal()"
         class="ml-2 px-3 md:px-4 py-1.5 bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold font-pixel rounded-none text-sm transition-colors border-2 border-pink-300 active:scale-95"
@@ -68,14 +74,19 @@
         (click)="confirmPull(1)"
         [disabled]="isRolling()"
       >
-        <span class="text-xl font-black font-pixel text-pink-400 group-hover:text-pink-500 transition-colors"
+        <span
+          class="text-xl font-black font-pixel text-pink-400 group-hover:text-pink-500 transition-colors"
           >1x Roll</span
         >
-        <span
-          class="text-sm font-bold font-pixel text-pink-300 flex items-center gap-1"
-          [class.text-red-500]="currentUser()!.currency < 100"
-          >💎 100</span
-        >
+        <div class="flex gap-2 items-center">
+          <app-icons [name]="'gem'" [classAttribute]="'size-4 text-blue-400 '"></app-icons>
+          <span
+            class="text-md font-bold font-pixel text-pink-300 flex items-center gap-1"
+            [class.text-red-500]="currentUser()!.currency < 100"
+          >
+            100</span
+          >
+        </div>
       </button>
 
       <button
@@ -88,14 +99,19 @@
         >
           SR or Higher GUARANTEED!
         </div>
-        <span class="text-xl font-black font-pixel text-white group-hover:scale-110 transition-transform"
+        <span
+          class="text-xl font-black font-pixel text-white group-hover:scale-110 transition-transform"
           >10x Roll</span
         >
-        <span
-          class="text-sm font-bold font-pixel text-pink-100 flex items-center gap-1"
-          [class.text-red-500]="currentUser()!.currency < 1000"
-          >💎 1000</span
-        >
+        <div class="flex items-center gap-2">
+          <app-icons [name]="'gem'" [classAttribute]="'size-4 text-blue-200 '"></app-icons>
+          <span
+            class="text-md font-bold font-pixel text-pink-100 flex items-center gap-1"
+            [class.text-red-500]="currentUser()!.currency < 1000"
+          >
+            1000</span
+          >
+        </div>
       </button>
     </div>
   </div>
@@ -111,20 +127,45 @@
       >
         @if (gemLeft() >= 0) {
           <div class="flex flex-col items-center gap-3">
-            <h2 class="text-2xl md:text-3xl font-black font-pixel text-brand-pink">Confirm your pull</h2>
+            <h2 class="text-2xl md:text-3xl font-black font-pixel text-brand-pink">
+              Confirm your pull
+            </h2>
 
-            <p class="text-center text-sm md:text-base font-pixel text-gray-500">Spend gems to perform this pull.</p>
+            <p class="text-center text-sm md:text-base font-pixel text-gray-500">
+              Spend gems to perform this pull.
+            </p>
           </div>
 
           <div class="my-3 rounded-none bg-pink-50 border border-pink-200 p-3 text-center">
-            <div class="text-sm font-semibold font-pixel text-pink-700 uppercase tracking-wide">Cost</div>
-
-            <div class="mt-2 text-xl md:text-4xl font-bold font-mc text-pink-950">💎 {{ pullAmount() | number}}</div>
+            <div class="text-sm font-semibold font-pixel text-pink-700 uppercase tracking-wide">
+              Cost
+            </div>
+            <div class="flex items-end justify-center gap-2">
+              <app-icons [name]="'gem'" [classAttribute]="'mb-2 size-5 text-blue-400 '"></app-icons>
+              <div class="mt-2 text-xl md:text-4xl font-bold font-mc text-pink-950">
+                {{ pullAmount() | number }}
+              </div>
+            </div>
             <div class="border-2 border-slate-200 w-full mt-2"></div>
             <div class="flex justify-center items-baseline">
-              <span class="text-sm mt-5 font-medium font-mc">💎{{ currentUser()?.currency | number }}</span>
-              <span class="ml-2">-></span>
-              <span class="text-sm mt-5 text-red-600 font-medium font-mc">💎{{ gemLeft() | number }}</span>
+              <div class="flex items-end gap-1">
+                <app-icons
+                  [name]="'gem'"
+                  [classAttribute]="'mb-1 size-4 text-blue-400 '"
+                ></app-icons>
+
+                <span class="text-sm mt-5 font-medium font-mc">{{
+                  currentUser()?.currency | number
+                }}</span>
+                <span class="ml-2">-></span>
+                <app-icons
+                  [name]="'gem'"
+                  [classAttribute]="'mb-1 size-4 text-blue-400 '"
+                ></app-icons>
+                <span class="text-sm mt-5 text-red-600 font-medium font-mc">{{
+                  gemLeft() | number
+                }}</span>
+              </div>
             </div>
           </div>
 
@@ -159,14 +200,20 @@
             <div class="mt-6 w-full rounded-none border border-red-200 bg-red-50 p-5">
               <div class="flex justify-between text-sm">
                 <span class="font-medium font-pixel text-gray-600">Current Gems</span>
-                <span class="font-bold font-pixel">💎 {{ currentUser()?.currency }}</span>
+                <div class="flex gap-1">
+                  <app-icons [name]="'gem'" [classAttribute]="'size-4 text-blue-400 '"></app-icons>
+                  <span class="font-bold font-pixel"> {{ currentUser()?.currency }}</span>
+                </div>
               </div>
 
               <div class="my-3 border-t border-red-200"></div>
 
               <div class="flex justify-between text-sm">
                 <span class="font-medium font-pixel text-gray-600">Required Gems</span>
-                <span class="font-bold font-pixel text-red-600"> 💎 {{ pullAmount() }} </span>
+                <div class="flex gap-1">
+                  <app-icons [name]="'gem'" [classAttribute]="'size-4 text-blue-400 '"></app-icons>
+                  <span class="font-bold font-pixel text-red-600"> {{ pullAmount() }} </span>
+                </div>
               </div>
 
               <div class="mt-4 text-center text-xs font-pixel text-red-500 font-medium">
@@ -188,7 +235,10 @@
 
   @if (isRolling()) {
     <div class="fixed inset-0 z-50 bg-pink-100/80 flex flex-col items-center justify-center gap-4">
-      <app-icons [name]="'clock_loading'" [classAttribute]="'fill-pink-500 size-20 md:size-30 animate-bounce'"></app-icons>
+      <app-icons
+        [name]="'clock_loading'"
+        [classAttribute]="'fill-pink-500 size-20 md:size-30 animate-bounce'"
+      ></app-icons>
       <h2 class="text-3xl font-black font-pixel text-pink-500 animate-pulse">Pulling...</h2>
     </div>
   }
@@ -257,7 +307,6 @@
                 }
               </div>
             </div>
-
           </div>
           <!-- mobile result -->
           <div class="hidden md:flex">
@@ -345,7 +394,9 @@
               @for (log of gachaLogs()?.data; track $index) {
                 <tr class="border-b border-pink-50 hover:bg-pink-50 transition-colors">
                   <td class="py-3 px-4 font-medium font-pixel text-pink-900">{{ log.name }}</td>
-                  <td class="py-3 px-4 text-pink-500 text-sm font-medium font-pixel">{{ log.created_at }}</td>
+                  <td class="py-3 px-4 text-pink-500 text-sm font-medium font-pixel">
+                    {{ log.created_at }}
+                  </td>
                 </tr>
               } @empty {
                 <tr>
