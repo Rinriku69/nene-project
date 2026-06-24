@@ -14,10 +14,12 @@ export class Profile {
   private readonly profileService = inject(ProfileService);
   private readonly authService = inject(AuthService);
 
+  protected readonly isUploading = signal<boolean>(false);
   readonly user = this.authService.currentUserState;
   selectedFile = signal<File | null>(null);
   previewUrl = signal<string | null>(null);
   uploadSuccess = signal(false);
+  uploadFail = signal(false);
 
   readonly displayImageUrl = computed(() => {
     return this.previewUrl() ?? this.user()?.image_url ?? null;
@@ -44,7 +46,7 @@ export class Profile {
   onSubmit() {
     const file = this.selectedFile();
     if (!file) return;
-
+    this.isUploading.set(true)
     const formData = new FormData();
     formData.append('avatar', file, file.name);
 
@@ -53,9 +55,12 @@ export class Profile {
         console.log(res.message);
         this.uploadSuccess.set(true);
         this.selectedFile.set(null);
+        this.isUploading.set(false);
         this.authService.getUser().subscribe();
       },
       error: (er: ResourceErrorResponse) => {
+        this.isUploading.set(false);
+        this.uploadFail.set(true);
         console.error(er.message);
       },
     });
