@@ -14,10 +14,11 @@ import { CurrencyService } from '../../../services/currency.service';
 import { ResourceErrorResponse } from '../../../models/Resource';
 import { Icons } from '../../../components/icons/icons';
 import { LayoutService } from '../../../services/layout.service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Icons],
+  imports: [Icons, RouterLink],
   templateUrl: './dashboard.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dashboard.css',
