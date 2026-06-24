@@ -6,9 +6,9 @@
     [class.bg-pink-50]="!isDarkTheme()"
     [class.bg-[radial-gradient(#fbcfe8_6px,transparent_3px)]]="!isDarkTheme()"
   ></div>
-  <nav class="hidden lg:flex top-0 z-50 px-2 py-2 md:py-2 md:px-5 sm:px-2 ">
+  <nav class="hidden lg:flex top-0 z-50 px-2 py-2 md:py-2 md:px-5 sm:px-2">
     <div
-      class="flex flex-wrap items-center justify-between gap-4 px-6 py-2 md:py-2 lg:py-3 rounded-none border-4 transition-all duration-500 w-full "
+      class="flex flex-wrap items-center justify-between gap-4 px-6 py-2 md:py-2 lg:py-3 rounded-none border-4 transition-all duration-500 w-full"
       [class.bg-slate-800]="isDarkTheme()"
       [class.bg-opacity-90]="isDarkTheme()"
       [class.border-pink-500]="isDarkTheme()"
@@ -39,22 +39,37 @@
 
       <ul class="flex flex-wrap justify-center items-center gap-1 md:gap-5 lg:gap-2 flex-1">
         <li>
-          <a class="nav-list block" routerLink="/app/gacha" routerLinkActive="nav-list-active"
-            >Gacha</a
+          <a
+            class="nav-list flex items-center gap-1"
+            routerLink="/app/gacha"
+            routerLinkActive="nav-list-active"
+          >
+            <app-icons name="arcade" classAttribute="size-6"></app-icons>
+            <span>Gacha</span></a
           >
         </li>
         <li>
-          <a class="nav-list block" routerLink="/app/inventory" routerLinkActive="nav-list-active"
-            >Inventory</a
+          <a
+            class="nav-list flex items-center gap-1"
+            routerLink="/app/inventory"
+            routerLinkActive="nav-list-active"
+          >
+            <app-icons name="inventory" classAttribute="size-6"></app-icons>
+            <span>Inventory</span></a
           >
         </li>
         <li>
-          <a class="nav-list block" routerLink="/app/safezone" routerLinkActive="nav-list-active"
-            >Safe Zone</a
+          <a
+            class="nav-list flex items-center gap-1"
+            routerLink="/app/safezone"
+            routerLinkActive="nav-list-active"
           >
+            <app-icons name="heart_mail" classAttribute="size-6"></app-icons>
+            <span> Safe Zone </span>
+          </a>
         </li>
         <li>
-          <a class="nav-list block">Co-op Mission</a>
+          <a class="nav-list select-none flex bg-slate-200 hover:scale-0! hover:translate-x-80 hover:translate-y-50" aria-disabled="true">Co-op Mission(WIP)</a>
         </li>
         @if (currentUser() && currentUser()?.role === 'admin') {
           <li>
@@ -175,10 +190,7 @@
               [class.active:shadow-none]="true"
             >
               <div class="flex justify-center gap-2">
-                <app-icons
-                  [name]="'gem'"
-                  [classAttribute]="'size-5 text-blue-300 '"
-                ></app-icons>
+                <app-icons [name]="'gem'" [classAttribute]="'size-5 text-blue-300 '"></app-icons>
                 <span
                   #userCurrency
                   class="flex font-mc text-xl select-none items-center gap-1"
@@ -258,7 +270,11 @@
         <app-icons [name]="'bars'" [classAttribute]="'w-6 h-6'"></app-icons>
       </button>
       <div
-        class="size-10 md:size-15 relative bg-pink-300 rounded-none flex gap-2 items-center shrink-0"
+        class="size-10 md:size-15 relative rounded-none flex gap-2 items-center shrink-0"
+        [class.bg-pink-300]="!isDarkTheme()"
+        [class.shadow-[3px_4px_0_#fbcfe8]]="!isDarkTheme()"
+        [class.bg-pink-400]="isDarkTheme()"
+        [class.shadow-[4px_4px_0_#db2777]]="isDarkTheme()"
       >
         <img
           src="icons/nene_flower.png"

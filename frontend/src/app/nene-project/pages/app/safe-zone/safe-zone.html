@@ -72,7 +72,7 @@
             </span>
             <div class="absolute h-5 w-2 bg-amber-800 bottom-full"></div>
             @if (tanzaku.is_locked) {
-              <span class="text-xl mt-4 drop-shadow-md">🔒</span>
+              <app-icons name="heart_locked" classAttribute="size-7 md:size-10 mt-4 drop-shadow-md text-pink-400"></app-icons>
             }
           </div>
         </div>
@@ -224,7 +224,7 @@
           class="bg-slate-900 rounded-none p-6 border-2 border-slate-700 min-h-32 flex flex-col justify-center items-center relative overflow-hidden shadow-inner"
         >
           @if (selectedTanzaku()?.is_locked) {
-            <span class="text-6xl mb-2">🔒</span>
+            <app-icons name="heart_locked" classAttribute="size-15 md-2 text-pink-200"></app-icons>
             <p class="text-pink-400 font-bold font-pixel text-center">
               This secret message is locked!
             </p>

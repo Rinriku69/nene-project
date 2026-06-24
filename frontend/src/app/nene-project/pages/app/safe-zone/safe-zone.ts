@@ -16,10 +16,11 @@ import { AuthService } from '../../../services/auth.service';
 import { SafeZoneService } from '../../../services/safe-zone.service';
 import { ResourceErrorResponse, SafeZoneResponse } from '../../../models/Resource';
 import { DatePipe, UpperCasePipe } from '@angular/common';
+import { Icons } from "../../../components/icons/icons";
 
 @Component({
   selector: 'app-safe-zone',
-  imports: [SakuraComponent, FormField, UpperCasePipe],
+  imports: [SakuraComponent, FormField, UpperCasePipe, Icons],
   templateUrl: './safe-zone.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './safe-zone.css',
