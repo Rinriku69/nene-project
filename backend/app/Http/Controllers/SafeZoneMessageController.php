@@ -40,7 +40,7 @@ class SafeZoneMessageController extends Controller
     function getMessages():JsonResponse{
         $now = now();
         $activeMessages = SafeZoneMessage::where('expired_at','>',$now)
-        ->with('user:id,username')
+        ->with('user:id,username,image_url')
         ->get();
         
         $transformMessages = $activeMessages->map(function ($msg) use ($now){
@@ -48,6 +48,7 @@ class SafeZoneMessageController extends Controller
 
             return [
                 'username' => $msg->user->username,
+                'image_url' => $msg->user->image_url,
                 'pos_x' => $msg->pos_x,
                 'pos_y' => $msg->pos_y,
                 'message' => $isLocked ? 'This message will unlock in the future' : $msg->message,
