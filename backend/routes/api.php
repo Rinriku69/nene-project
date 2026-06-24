@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\GachaController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SafeZoneMessageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -27,8 +28,8 @@ Route::middleware((['auth']))
                 Route::get('/getUser', 'getUser')->name('getUser');
                 Route::post('/getDailyLogin', 'dailyLogin')->name('dailyLogin');
                 Route::get('/getInventory', 'getInventory')->name('getInventory');
-                Route::get('/getNoti','getNoti')->name('getNoti');
-                Route::post('/markAsReadAll','markAsReadAll')->name('markAsReadAll');
+                Route::get('/getNoti', 'getNoti')->name('getNoti');
+                Route::post('/markAsReadAll', 'markAsReadAll')->name('markAsReadAll');
             });
 
         Route::controller(GachaController::class)
@@ -37,7 +38,7 @@ Route::middleware((['auth']))
             ->group(static function (): void {
                 Route::post('/pull', 'pull')->name('pull');
                 Route::get('/logs', 'getGachaLogs')->name('logs');
-                Route::get('/getFeatureBanner','getFeatureBanner')->name('getFeatureBanner');
+                Route::get('/getFeatureBanner', 'getFeatureBanner')->name('getFeatureBanner');
             });
 
         Route::controller(AdminController::class)
@@ -46,11 +47,11 @@ Route::middleware((['auth']))
             ->group(static function (): void {
                 Route::get('/getUserList', 'getUserList')->name('getUserList');
                 Route::post('/updateUser/{id}', 'updateUser')->name('updateUser');
-                Route::post('/sendUserNoti','sendUserNoti')->name('sendUserNoti'); 
-                Route::get('/getAllItems','getAllItems')->name('getAllItems');
-                Route::post('/updateItem','updateItem')->name('updateItem');
-                Route::post('/addItem','addItem')->name('addItem');
-                Route::post('/gemGiveaway','gemGiveaway')->name('gemGiveaway');
+                Route::post('/sendUserNoti', 'sendUserNoti')->name('sendUserNoti');
+                Route::get('/getAllItems', 'getAllItems')->name('getAllItems');
+                Route::post('/updateItem', 'updateItem')->name('updateItem');
+                Route::post('/addItem', 'addItem')->name('addItem');
+                Route::post('/gemGiveaway', 'gemGiveaway')->name('gemGiveaway');
             });
 
         Route::controller(GachaController::class)
@@ -59,12 +60,19 @@ Route::middleware((['auth']))
             ->group(static function (): void {
                 Route::post('/pull', 'pull')->name('pull');
             });
-        
+
         Route::controller(SafeZoneMessageController::class)
-        ->prefix('/safezone')
-        ->name('safezone')
-        ->group(static function():void{
-            Route::post('/addTanzaku','addTanzaku')->name('addTanzaku');
-            Route::get('/getMessages','getMessages')->name('getMessages');
-        });
+            ->prefix('/safezone')
+            ->name('safezone')
+            ->group(static function (): void {
+                Route::post('/addTanzaku', 'addTanzaku')->name('addTanzaku');
+                Route::get('/getMessages', 'getMessages')->name('getMessages');
+            });
+
+        Route::controller(ProfileController::class)
+            ->prefix('/profile')
+            ->name('profile')
+            ->group(static function (): void {
+                Route::post('/uploadProfile', 'uploadProfile')->name('uploadProfile');
+            });
     });

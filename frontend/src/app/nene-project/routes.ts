@@ -53,6 +53,10 @@ export default [
           },
         ],
       },
+      {
+        path:'profile',loadComponent:()=>import('./pages/profile/profile').then((m)=>m.Profile),
+        canMatch:[authGuard]
+      }
     ],
   },
 ] as Routes;
