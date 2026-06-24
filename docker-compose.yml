@@ -19,8 +19,8 @@ services:
       context: ./backend
     volumes:
       #- ./backend:/var/www/html
+      #- /var/www/html/vendor
       - backend_code:/var/www/html
-      - /var/www/html/vendor
     env_file:
       - ./backend/.env
     networks:
