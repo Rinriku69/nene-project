@@ -109,6 +109,7 @@ export interface FeatureBanner {
 
 export interface SafeZoneResponse {
   username: string;
+  image_url:string | null;
   pos_x: string;
   pos_y: string;
   message: string;

@@ -1,5 +1,5 @@
 <div
-  class="relative h-180 md:h-250 lg:h-225  lg:p-2 md:p-2 font-sans flex flex-col items-center gap-2"
+  class="relative h-180 md:h-250 lg:h-225 lg:p-2 md:p-2 font-sans flex flex-col items-center gap-2"
 >
   <app-sakura-component></app-sakura-component>
   <div
@@ -94,7 +94,9 @@
             New Tanzaku
           </h2>
           @if (messageForm().invalid() && messageForm().touched()) {
-            <span class="text-sm font-semibold font-pixel text-red-500">Please write down your wish</span>
+            <span class="text-sm font-semibold font-pixel text-red-500"
+              >Please write down your wish</span
+            >
           }
         </div>
 
@@ -138,7 +140,9 @@
               [checked]="isSecret()"
               (change)="isSecret.set(!isSecret())"
             />
-            <label for="secretCheckbox" class="text-pink-300 font-bold font-pixel cursor-pointer select-none"
+            <label
+              for="secretCheckbox"
+              class="text-pink-300 font-bold font-pixel cursor-pointer select-none"
               >Make this a Secret Message?</label
             >
           </div>
@@ -193,13 +197,23 @@
         </button>
 
         <div class="flex items-center gap-3 border-b-2 border-slate-700 pb-4">
-          <div
-            class="w-12 h-12 rounded-none bg-pink-100 flex items-center justify-center text-xl font-bold font-pixel border-2 border-pink-400 text-pink-800"
-          >
-            {{ $safeNavigationMigration(selectedTanzaku()?.username?.charAt(0)) | uppercase }}
-          </div>
+          @if (selectedTanzaku()?.image_url; as img) {
+            <div
+              class="w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold font-pixel border-2 border-pink-400 text-pink-800 bg-cover bg-center"
+              [style.background-image] ="'url('+img+')'"
+              >
+            </div>
+          } @else {
+            <div
+              class="w-12 h-12 rounded-none bg-pink-100 flex items-center justify-center text-xl font-bold font-pixel border-2 border-pink-400 text-pink-800"
+            >
+              {{ $safeNavigationMigration(selectedTanzaku()?.username?.charAt(0)) | uppercase }}
+            </div>
+          }
           <div class="flex flex-col">
-            <span class="text-xl font-black font-pixel text-pink-300">{{ selectedTanzaku()?.username }}</span>
+            <span class="text-xl font-black font-pixel text-pink-300">{{
+              selectedTanzaku()?.username
+            }}</span>
             <span class="text-xs text-slate-400 font-semibold font-pixel"
               >Tanzaku Wish {{ selectedTanzaku()?.created_at }}</span
             >
@@ -211,7 +225,9 @@
         >
           @if (selectedTanzaku()?.is_locked) {
             <span class="text-6xl mb-2">🔒</span>
-            <p class="text-pink-400 font-bold font-pixel text-center">This secret message is locked!</p>
+            <p class="text-pink-400 font-bold font-pixel text-center">
+              This secret message is locked!
+            </p>
             <p class="text-slate-500 text-sm font-pixel mt-2">
               Unlocks at: {{ selectedTanzaku()?.unlocked_at }}
             </p>
