@@ -17,6 +17,7 @@ import {
 import {
   RouterOutlet,
   RouterLinkWithHref,
+  RouterLink,
   Router,
   RouterLinkActive,
   NavigationEnd,

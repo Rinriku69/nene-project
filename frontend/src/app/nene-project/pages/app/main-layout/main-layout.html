@@ -207,6 +207,7 @@
               >
                 <a
                   class="flex px-4 py-3 font-pixel text-lg text-pink-500 font-black hover:bg-pink-100 hover:text-pink-600 hover:-translate-y-0.5 rounded-none transition-all cursor-pointer items-center gap-3"
+                  routerLink="/profile"
                 >
                   <app-icons [name]="'user'"></app-icons>
                   Profile
@@ -337,7 +338,7 @@
         @if (currentUser()) {
           <div
             #userCurrency
-            class="font-black font-mc flex  items-center gap-1 text-sm md:text-lg px-2 py-1 rounded-none border-2 transition-all"
+            class="font-black font-mc flex items-center gap-1 text-sm md:text-lg px-2 py-1 rounded-none border-2 transition-all"
             [class.text-pink-300]="isDarkTheme()"
             [class.bg-slate-700]="isDarkTheme()"
             [class.border-pink-500]="isDarkTheme()"
@@ -347,10 +348,7 @@
             [class.border-pink-300]="!isDarkTheme()"
             [class.shadow-[0_2px_0_#fbcfe8]]="!isDarkTheme()"
           >
-            <app-icons
-              [name]="'gem'"
-              [classAttribute]="'size-4 m-1 text-blue-400 '"
-            ></app-icons>
+            <app-icons [name]="'gem'" [classAttribute]="'size-4 m-1 text-blue-400 '"></app-icons>
             <span class="flex pt-1">
               {{ $safeNavigationMigration(currentUser()?.currency) | number }}
             </span>
@@ -474,10 +472,9 @@
         >
           @if (currentUser()) {
             <div class="flex items-center gap-3 mb-4">
-              <app-icons
-                [name]="'user'"
-                [classAttribute]="'w-10 h-10 text-pink-400'"
-              ></app-icons>
+              <div routerLink="/profile">
+                <app-icons [name]="'user'" [classAttribute]="'w-10 h-10 text-pink-400'"></app-icons>
+              </div>
               <div class="flex flex-col">
                 <span
                   class="font-black font-pixel"
@@ -487,8 +484,8 @@
                 >
                 <div class="flex gap-1 items-center">
                   <app-icons [name]="'gem'" [classAttribute]="'size-4 text-blue-400 '"></app-icons>
-                  <span class="text-sm font-mc text-pink-400 pt-1"
-                    > {{ $safeNavigationMigration(currentUser()?.currency) | number }}</span
+                  <span class="text-sm font-mc text-pink-400 pt-1">
+                    {{ $safeNavigationMigration(currentUser()?.currency) | number }}</span
                   >
                 </div>
               </div>
