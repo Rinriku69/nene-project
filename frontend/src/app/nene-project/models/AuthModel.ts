@@ -15,5 +15,6 @@ export interface User{
     email:string;
     currency:number;
     role:string;
+    image_url:string|null;
     last_login_at:string | null;
 }

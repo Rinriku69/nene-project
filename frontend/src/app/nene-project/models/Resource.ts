@@ -118,3 +118,7 @@ export interface SafeZoneResponse {
   expired_at: string;
   is_locked: boolean;
 }
+
+export interface ProfileImage{
+  avatar : string
+}

@@ -41,7 +41,7 @@ class ProfileController extends Controller
             ]);
         } catch (Exception $e) {
             return response()->json([
-                'message' => 'Upload Fail'
+                'message' => 'Upload Fail'. $e
             ], 400);
         }
     }
