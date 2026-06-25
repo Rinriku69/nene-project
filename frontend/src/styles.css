@@ -84,7 +84,7 @@
   background-position-y: calc(var(--index-y) * var(--frame-h) * -1);
 }
 
-@utility cat-animate {
+@utility pet-animate {
   animation: sprite-animate var(--seconds) steps(var(--index-x-count)) infinite;
 }
 
