@@ -1,0 +1,9 @@
+<div
+  class="pet-animate sprite-engine scale-200 md:scale-300 lg:scale-350"
+  [style.--index-y] = "currentAnimation()?.index_y"
+  [style.--index-x-count] = "currentAnimation()?.index_x_count"
+  [style.--seconds] = "currentAnimation()?.seconds" 
+  [style.--frame-w] = "currentAnimation()?.frame_w"
+  [style.--frame-h] = "currentAnimation()?.frame_h"
+  [style.background-image]="'url(' + pet().url + ')'"
+></div>

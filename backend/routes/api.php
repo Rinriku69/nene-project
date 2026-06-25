@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\GachaController;
+use App\Http\Controllers\PetController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SafeZoneMessageController;
 use App\Http\Controllers\UserController;
@@ -34,7 +35,7 @@ Route::middleware((['auth']))
 
         Route::controller(GachaController::class)
             ->prefix('/gacha')
-            ->name('gacha')
+            ->name('gacha.')
             ->group(static function (): void {
                 Route::post('/pull', 'pull')->name('pull');
                 Route::get('/logs', 'getGachaLogs')->name('logs');
@@ -56,14 +57,14 @@ Route::middleware((['auth']))
 
         Route::controller(GachaController::class)
             ->prefix('/gacha')
-            ->name('gacha')
+            ->name('gacha.')
             ->group(static function (): void {
                 Route::post('/pull', 'pull')->name('pull');
             });
 
         Route::controller(SafeZoneMessageController::class)
             ->prefix('/safezone')
-            ->name('safezone')
+            ->name('safezone.')
             ->group(static function (): void {
                 Route::post('/addTanzaku', 'addTanzaku')->name('addTanzaku');
                 Route::get('/getMessages', 'getMessages')->name('getMessages');
@@ -71,8 +72,15 @@ Route::middleware((['auth']))
 
         Route::controller(ProfileController::class)
             ->prefix('/profile')
-            ->name('profile')
+            ->name('profile.')
             ->group(static function (): void {
                 Route::post('/uploadProfile', 'uploadProfile')->name('uploadProfile');
+            });
+        
+        Route::controller(PetController::class)
+            ->prefix('/pet')
+            ->name('pet.')
+            ->group(static function():void{
+                Route::get('/getUserPet/{id}','getUserPet')->name('getUserPet');
             });
     });

@@ -69,7 +69,7 @@
           </a>
         </li>
         <li>
-          <a class="nav-list select-none flex bg-slate-200 hover:scale-0! hover:translate-x-80 hover:translate-y-50" aria-disabled="true">Co-op Mission(WIP)</a>
+          <a class="relative px-4 md:px-6 py-2 md:py-3 rounded-none font-bold text-base md:text-xl font-pixel cursor-not-allowed  text-slate-500 select-none flex bg-slate-300 opacity-60" aria-disabled="true">Co-op Mission(WIP)</a>
         </li>
         @if (currentUser() && currentUser()?.role === 'admin') {
           <li>
@@ -528,3 +528,8 @@
   }
   <router-outlet></router-outlet>
 </div>
+@if(currentUserPet().hasValue()){
+  <div class="fixed bottom-10 right-0 md:right-10 md:bottom-15 z-2000 w-20 h-30 md:w-30 flex items-center justify-center">
+    <app-pet-component [pet]="currentUserPet().value()!" [animationName]="currentUserPetAnimation()"></app-pet-component>
+  </div>
+}
