@@ -137,4 +137,5 @@ export interface PetAnimation{
   seconds:string;
   frame_w:string;
   frame_h:string;
+  is_idle:boolean;
 }
