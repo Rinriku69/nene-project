@@ -144,7 +144,7 @@ export class MainLayout implements OnInit {
    
 
     setInterval(() => {
-      randomAnimationIndex.set(getRandomInt(0, idleAnimations().length));
+      randomAnimationIndex.set(getRandomInt(0, idleAnimations().length-1));
       const animation = idleAnimations().find((_,i)=> i=== randomAnimationIndex());
       this.currentUserPetAnimation.set(animation!);
       randomAnimationTime.set(getRandomInt(13, 20));
