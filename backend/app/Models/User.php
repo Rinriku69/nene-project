@@ -42,4 +42,9 @@ class User extends Authenticatable
     function safeZoneMessages(): HasMany{
         return $this->hasMany(SafeZoneMessage::class);
     }
+
+    function userPets(): HasMany{
+        return $this->hasMany(UserPet::class);
+    }
+
 }
