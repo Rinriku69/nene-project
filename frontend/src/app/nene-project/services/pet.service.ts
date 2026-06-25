@@ -6,7 +6,7 @@ import { httpResource, HttpResourceRef } from '@angular/common/http';
 export class PetService {
     readonly petId = signal<number|null>(null);
     private readonly petResource = httpResource<UserPet>(()=>({
-        url:`http://localhost:8000/api/pet/getUserPet/${this.petId()}`,
+        url:`/api/pet/getUserPet/${this.petId()}`,
         method: 'GET' 
         })
     )
