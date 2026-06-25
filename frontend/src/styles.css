@@ -79,7 +79,7 @@
   width: var(--frame-w);
   height: var(--frame-h);
 
-  background-repeat: repeat;
+  background-repeat: no-repeat;
   image-rendering: pixelated;
   background-position-y: calc(var(--index-y) * var(--frame-h) * -1);
 }
