@@ -1,5 +1,5 @@
-import { Component, input } from '@angular/core';
-import { PetAnimation } from '../../models/Resource';
+import { Component, computed, input } from '@angular/core';
+import { PetAnimation, UserPet } from '../../models/Resource';
 
 @Component({
   selector: 'app-pet-component',
@@ -8,6 +8,12 @@ import { PetAnimation } from '../../models/Resource';
   styleUrl: './pet-component.css',
 })
 export class PetComponent {
-  readonly petUrl = input.required<string>();
-  readonly petAnimateVar = input.required<PetAnimation>();
+  readonly pet = input.required<UserPet>();
+  readonly animationName = input<string>('idle');
+  protected readonly currentAnimation = computed<PetAnimation | null>(() => {
+    const animationName = this.animationName();
+    const pet = this.pet();
+    const animation = pet.pet_animations.find((v,i)=> v.name === animationName)
+    return animation ? animation : null
+  });
 }

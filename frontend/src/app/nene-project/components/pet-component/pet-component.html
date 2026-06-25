@@ -1,9 +1,9 @@
 <div
   class="pet-animate sprite-engine scale-200"
-  [style.--index-y] = "petAnimateVar().index_y"
-  [style.--index-x-count] = "petAnimateVar().index_x_count"
-  [style.--seconds] = "petAnimateVar().seconds" 
-  [style.--frame-w] = "petAnimateVar().frame_w"
-  [style.--frame-h] = "petAnimateVar().frame_h"
-  [style.background-image]="'url(' + petUrl() + ')'"
+  [style.--index-y] = "currentAnimation()?.index_y"
+  [style.--index-x-count] = "currentAnimation()?.index_x_count"
+  [style.--seconds] = "currentAnimation()?.seconds" 
+  [style.--frame-w] = "currentAnimation()?.frame_w"
+  [style.--frame-h] = "currentAnimation()?.frame_h"
+  [style.background-image]="'url(' + pet().url + ')'"
 ></div>
