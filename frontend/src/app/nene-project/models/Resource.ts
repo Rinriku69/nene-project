@@ -123,3 +123,11 @@ export interface SafeZoneResponse {
 export interface ProfileImage{
   avatar : string
 }
+
+export interface CatSpriteAnimate{
+  index_y:number;
+  index_x_count:number;
+  seconds:string;
+  frame_w:string;
+  frame_h:string;
+}

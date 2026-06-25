@@ -1,4 +1,9 @@
 <div
-  class="{{ classAttribute() }} sprite-engine scale-200"
+  class="cat-animate sprite-engine scale-200"
+  [style.--index-y] = "catAnimateVar().index_y"
+  [style.--index-x-count] = "catAnimateVar().index_x_count"
+  [style.--seconds] = "catAnimateVar().seconds" 
+  [style.--frame-w] = "catAnimateVar().frame_w"
+  [style.--frame-h] = "catAnimateVar().frame_h"
   [style.background-image]="'url(' + catUrl() + ')'"
 ></div>

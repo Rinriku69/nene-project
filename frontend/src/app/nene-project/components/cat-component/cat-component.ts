@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { CatSpriteAnimate } from '../../models/Resource';
 
 @Component({
   selector: 'app-cat-component',
@@ -8,5 +9,6 @@ import { Component, input } from '@angular/core';
 })
 export class CatComponent {
   readonly catUrl = input.required<string>();
-  readonly classAttribute = input<string>();
+  readonly catAnimateVar = input.required<CatSpriteAnimate>();
+
 }
