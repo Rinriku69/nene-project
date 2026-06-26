@@ -147,7 +147,7 @@
         </div>
       }
     } @else {
-      @if (!userPets().isLoading()) {
+      @if (userPets().isLoading()) {
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-3xl animate-smooth-appear">
           @for (i of Array(4); track $index) {
             <div
