@@ -9,7 +9,7 @@ import { PetAnimation, UserPet } from '../../models/Resource';
 })
 export class PetComponent {
   readonly pet = input.required<UserPet>();
-  readonly animationName = input<string>('idle');
+  readonly animationName = input<string>('idle1');
   protected readonly currentAnimation = computed<PetAnimation | null>(() => {
     const animationName = this.animationName();
     const pet = this.pet();

@@ -83,5 +83,6 @@ Route::middleware((['auth']))
             ->group(static function():void{
                 Route::get('/getUserPet/{id}','getUserPet')->name('getUserPet');
                 Route::get('/getPetShop','getPetShop')->name('getPetShop');
+                Route::post('/buyPet/{id}','buyPet')->name('buyPet');
             });
     });

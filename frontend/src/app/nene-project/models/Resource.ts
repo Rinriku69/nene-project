@@ -140,7 +140,7 @@ export interface PetAnimation{
   is_idle:boolean;
 }
 
-export interface PetShop extends UserPet{
+export interface PetShopResource extends UserPet{
   id:number;
   is_owned:boolean;
   price:number;
