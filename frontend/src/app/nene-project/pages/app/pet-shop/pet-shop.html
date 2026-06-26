@@ -1,0 +1,84 @@
+<div
+  class="relative w-full min-h-[calc(100svh-4rem)] flex flex-col items-center py-8 px-4 overflow-hidden"
+>
+  <div class="w-full max-w-3xl">
+    <div
+      class="bg-pink-400 border-4 border-pink-500 rounded-none px-4 py-2 flex items-center gap-2 shadow-[4px_4px_0_#db2777]"
+    >
+      <div class="w-3 h-3 bg-pink-200 rounded-none border-2 border-pink-300"></div>
+      <div class="w-3 h-3 bg-pink-200 rounded-none border-2 border-pink-300"></div>
+      <div class="w-3 h-3 bg-pink-200 rounded-none border-2 border-pink-300"></div>
+      <span class="ml-2 font-pixel text-white text-sm tracking-wider">PET SHOP</span>
+    </div>
+
+    <div
+      class="bg-white border-4 border-t-0 border-pink-500 rounded-none p-4 md:p-6 shadow-[4px_8px_0_#db2777]"
+    >
+    @if(message()){
+      <span class="text-sm text-red-400 font-pixel">{{message()}}</span>
+    }
+      @if (currentPetShop().hasValue()) {
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          @for (pet of currentPetShop().value(); track $index) {
+            <div
+              class="bg-pink-50/80 border-3 border-pink-300 rounded-none p-3 flex flex-col items-center gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_0_#fbcfe8] hover:border-pink-400 group"
+            >
+              <div
+                class="w-full aspect-square bg-pink-100/60 border-2 border-dashed border-pink-200 rounded-none flex items-center justify-center overflow-hidden"
+                (mouseenter)="hoveredPetId.set(pet.id)"
+                (mouseleave)="hoveredPetId.set(null)"
+                >
+                <app-pet-component
+                  [pet]="pet"
+                  [animationName]="hoveredPetId() === pet.id ? 'dance' : 'idle1'"
+                  class="transition-transform duration-300 group-hover:scale-110 group-hover:"
+                ></app-pet-component>
+              </div>
+
+              <span class="font-pixel font-extrabold text-base md:text-lg text-pink-600 text-center truncate w-full">
+                {{ pet.name }}
+              </span>
+
+              @if (!pet.is_owned) {
+                <button
+                  type="button"
+                  class="main-btn w-full px-3 py-1.5 font-mc text-md text-white tracking-wider flex items-center justify-center gap-1"
+                  (click)="onBuy(pet)"
+                  >
+                 $ {{ pet.price > 0 ? pet.price : 'Free !' }}
+                </button>
+              } @else {
+                <div
+                  class="w-full px-3 py-1.5 bg-pink-200/60 border-3 border-pink-300 rounded-none text-center"
+                >
+                  <span class="font-pixel text-xs text-pink-400 tracking-wider">OWNED</span>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }@else if (currentPetShop().isLoading()) {
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+           <div
+              class="bg-pink-200 border-3 border-pink-300 rounded-none p-3 flex flex-col items-center gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_0_#fbcfe8] hover:border-pink-400 group h-30 md:h-50 animate-pulse"
+            >
+          </div>
+           <div
+              class="bg-pink-200 border-3 border-pink-300 rounded-none p-3 flex flex-col items-center gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_0_#fbcfe8] hover:border-pink-400 group animate-pulse"
+            >
+          </div>
+           <div
+              class="bg-pink-200 border-3 border-pink-300 rounded-none p-3 flex flex-col items-center gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_0_#fbcfe8] hover:border-pink-400 group h-30 md:h-50 animate-pulse"
+            >
+          </div>
+        </div>
+      }
+    </div>
+
+    <div
+      class="h-2 bg-pink-300 border-x-4 border-b-4 border-pink-500 rounded-none shadow-[4px_4px_0_#db2777]"
+    ></div>
+  </div>
+</div>
+
+
