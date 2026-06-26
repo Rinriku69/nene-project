@@ -33,8 +33,6 @@ import { PetComponent } from '../../../components/pet-component/pet-component';
 import { getPetIdLocalStorage, getRandomInt, setPetIdLocalStorage } from '../../../helpers';
 import { PetAnimation } from '../../../models/Resource';
 
-const KEY_PREFIX = 'nene-project';
-const PET_ID_KEY = 'petId';
 
 @Component({
   selector: 'app-main-layout',
@@ -115,11 +113,7 @@ export class MainLayout implements OnInit {
     }
   }
 
-  async getPetId() {
-    const petId = await getPetIdLocalStorage(`${KEY_PREFIX}-${PET_ID_KEY}`);
-    this.petService.petId.set(petId);
-    // console.log(petId)
-  }
+
 
   constructor() {
     afterNextRender(() => {
@@ -130,8 +124,8 @@ export class MainLayout implements OnInit {
 
   }
 
-  ngOnInit() {
-    this.getPetId();
+  async ngOnInit() {
+    await this.petService.getCurrentPetId();
     const randomAnimationTime = signal<number>(getRandomInt(13, 20));
     const idleAnimations = computed<string[]>(() => {
       const userPets = this.currentUserPet();
@@ -142,12 +136,13 @@ export class MainLayout implements OnInit {
     });
     const randomAnimationIndex = linkedSignal<number>(()=>getRandomInt(0, idleAnimations.length-1));
    
-
-    setInterval(() => {
-      randomAnimationIndex.set(getRandomInt(0, idleAnimations().length-1));
-      const animation = idleAnimations().find((_,i)=> i=== randomAnimationIndex());
-      this.currentUserPetAnimation.set(animation!);
-      randomAnimationTime.set(getRandomInt(13, 20));
-    },randomAnimationTime() * 1_000);
+    if(this.currentUserPet()){
+      setInterval(() => {
+        randomAnimationIndex.set(getRandomInt(0, idleAnimations().length-1));
+        const animation = idleAnimations().find((_,i)=> i=== randomAnimationIndex());
+        this.currentUserPetAnimation.set(animation!);
+        randomAnimationTime.set(getRandomInt(10, 20));
+      },randomAnimationTime() * 1_000);
+    }
   }
 }

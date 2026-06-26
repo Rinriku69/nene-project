@@ -81,4 +81,15 @@ class PetController extends Controller
             ]);
         }
     }
+
+    function getAllUserPets(){
+        $user = Auth::user();
+        $ownedPets = Pet::whereHas('userPets',function ($query) use ($user){
+            $query->where('user_id',$user->id);
+        })->with(['petAnimations' => function ($query) {
+            $query->where('name','idle1');
+        }])->get();
+
+        return response()->json(PetResource::collection($ownedPets),200);
+    }
 }

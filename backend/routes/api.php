@@ -84,5 +84,6 @@ Route::middleware((['auth']))
                 Route::get('/getUserPet/{id}','getUserPet')->name('getUserPet');
                 Route::get('/getPetShop','getPetShop')->name('getPetShop');
                 Route::post('/buyPet/{id}','buyPet')->name('buyPet');
+                Route::get('/getAllUserPets','getAllUserPets')->name('getAllUserPets');
             });
     });

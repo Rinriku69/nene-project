@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Fillable(['user_id','pet_id'])]
 class UserPet extends Model
 {
-    function pets(): BelongsTo{
+    function pet(): BelongsTo{
         return $this->belongsTo(Pet::class);
     }
 
-    function users(): BelongsTo{
+    function user(): BelongsTo{
         return $this->belongsTo(User::class);
     }
 }
