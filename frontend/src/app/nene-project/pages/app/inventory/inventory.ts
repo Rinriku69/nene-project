@@ -4,10 +4,11 @@ import { PetService } from '../../../services/pet.service';
 import { GachaItem, InventoryItem, PaginationResponse } from '../../../models/Resource';
 import { ItemViewComponent } from '../../../components/item-view-component/item-view-component';
 import { PetComponent } from '../../../components/pet-component/pet-component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-inventory',
-  imports: [ItemViewComponent, PetComponent],
+  imports: [ItemViewComponent, PetComponent,RouterLink],
   templateUrl: './inventory.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './inventory.css',
