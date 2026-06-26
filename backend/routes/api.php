@@ -82,5 +82,6 @@ Route::middleware((['auth']))
             ->name('pet.')
             ->group(static function():void{
                 Route::get('/getUserPet/{id}','getUserPet')->name('getUserPet');
+                Route::get('/getPetShop','getPetShop')->name('getPetShop');
             });
     });

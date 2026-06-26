@@ -139,3 +139,9 @@ export interface PetAnimation{
   frame_h:string;
   is_idle:boolean;
 }
+
+export interface PetShop extends UserPet{
+  id:number;
+  is_owned:boolean;
+  price:number;
+}

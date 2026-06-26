@@ -69,6 +69,16 @@
           </a>
         </li>
         <li>
+          <a
+            class="nav-list flex items-center gap-1"
+            routerLink="/app/petshop"
+            routerLinkActive="nav-list-active"
+          >
+            <app-icons name="frog" classAttribute="size-6"></app-icons>
+            <span> Pet Shop </span>
+          </a>
+        </li>
+        <li>
           <a class="relative px-4 md:px-6 py-2 md:py-3 rounded-none font-bold text-base md:text-xl font-pixel cursor-not-allowed  text-slate-500 select-none flex bg-slate-300 opacity-60" aria-disabled="true">Co-op Mission(WIP)</a>
         </li>
         @if (currentUser() && currentUser()?.role === 'admin') {

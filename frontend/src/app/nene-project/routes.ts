@@ -31,6 +31,11 @@ export default [
             path:'safezone',
             loadComponent:() => import('./pages/app/safe-zone/safe-zone').then((m)=>m.SafeZone),
             canMatch: [authGuard]
+          },
+          {
+            path:'petshop',
+            loadComponent:() => import('./pages/app/pet-shop/pet-shop').then((m)=>m.PetShop),
+            canMatch: [authGuard]
           }
         ],
       },
