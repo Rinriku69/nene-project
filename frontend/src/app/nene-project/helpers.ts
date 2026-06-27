@@ -11,3 +11,7 @@ export function setPetIdLocalStorage(key:string, value: object | string | number
     return localStorage.setItem(`${key}`, JSON.stringify(value));
 }
 
+export function clearPetIdLocalStorage(key:string){
+    return localStorage.removeItem(key);
+}
+

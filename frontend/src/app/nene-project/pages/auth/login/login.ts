@@ -10,15 +10,16 @@ import { form, FormField, min, minLength, required } from '@angular/forms/signal
 import { Router, RouterLink } from '@angular/router';
 import { LoginModel } from '../../../models/AuthModel';
 import { AuthService } from '../../../services/auth.service';
-import { switchMap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
 import { ResourceErrorResponse } from '../../../models/Resource';
 import { LoadingComponent } from '../../../components/loading-component/loading-component';
 import { LoadingService } from '../../../services/loading.service';
 import { Icons } from "../../../components/icons/icons";
+import { PetService } from '../../../services/pet.service';
 
 @Component({
   selector: 'app-login',
-  imports: [RouterLink, FormField, LoadingComponent, Icons],
+  imports: [RouterLink, FormField, LoadingComponent],
   templateUrl: './login.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './login.css',
@@ -27,6 +28,7 @@ export class Login {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly loadingService = inject(LoadingService);
+  private readonly petService = inject(PetService);
 
   protected readonly isLoading = computed(() => this.loadingService.isLoading());
   private readonly loginModel: WritableSignal<LoginModel> = signal({
@@ -40,12 +42,14 @@ export class Login {
     minLength(path.password, 8, { message: 'Password must have atleast 8 characters' });
   });
 
-  submit() {
+   submit() {
     return this.authService
       .getCSRFToken()
       .pipe(
         switchMap(() => this.authService.login(this.loginForm().value())),
-        switchMap(() => this.authService.getUser()),
+        switchMap(() => this.authService.getUser().pipe(
+          tap(()=> this.petService.currentUserPet().reload())
+        )),
         switchMap(() => this.authService.getNotification()),
       )
       .subscribe({
