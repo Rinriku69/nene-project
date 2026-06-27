@@ -2,7 +2,7 @@ import { computed, inject, Service, signal } from '@angular/core';
 import { PetAnimation, PetShopResource, ResourceResponse, UserPet } from '../models/Resource';
 import { HttpClient, httpResource, HttpResourceRef } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { getPetIdLocalStorage, setPetIdLocalStorage } from '../helpers';
+import { clearPetIdLocalStorage, getPetIdLocalStorage, setPetIdLocalStorage } from '../helpers';
 const KEY_PREFIX = 'nene-project';
 const PET_ID_KEY = 'petId';
 @Service()
@@ -38,6 +38,11 @@ export class PetService {
 
     equipPet(id: number){
         setPetIdLocalStorage(`${KEY_PREFIX}-${PET_ID_KEY}`,id);
+    }
+
+    clearPetId(){
+        clearPetIdLocalStorage(`${KEY_PREFIX}-${PET_ID_KEY}`);
+        this.getCurrentPetId();
     }
 
 }

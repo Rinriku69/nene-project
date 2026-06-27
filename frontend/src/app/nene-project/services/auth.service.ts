@@ -4,6 +4,9 @@ import { catchError, Observable, of, switchMap, tap } from 'rxjs';
 import { LoginModel, RegisterModel, User } from '../models/AuthModel';
 import { NotificationItem, Notifications, ResourceResponse } from '../models/Resource';
 import co from '@angular/common/locales/co';
+import { clearPetIdLocalStorage } from '../helpers';
+import { PetService } from './pet.service';
+
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +14,7 @@ import co from '@angular/common/locales/co';
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly baseApiUrl = "/api";
+  private readonly petService = inject(PetService);
   private readonly currentUser = signal<User|null>(null);
   readonly currentUserState = linkedSignal(()=>this.currentUser());
   readonly isLoggedIn = computed(()=> this.currentUser()!== null);
@@ -49,6 +53,7 @@ export class AuthService {
   }
 
   logout(): Observable<ResourceResponse> {
+    this.petService.clearPetId();
     return this.http
       .post<ResourceResponse>(`${this.baseApiUrl}/auth/logout`, {})
       .pipe(tap(() => this.currentUser.set(null)));
