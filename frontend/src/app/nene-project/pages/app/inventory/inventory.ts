@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-inventory',
-  imports: [ItemViewComponent, PetComponent,RouterLink],
+  imports: [ItemViewComponent, PetComponent, RouterLink],
   templateUrl: './inventory.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './inventory.css',
@@ -24,7 +24,7 @@ export class Inventory {
   isLoading = signal<boolean>(false);
 
   protected readonly userPets = computed(() => this.petService.currentAllUserPets());
-  protected readonly currentUserPetId = computed(()=>this.petService.currentPetId());
+  protected readonly currentUserPetId = computed(() => this.petService.currentPetId());
 
   switchTab(tab: 'cards' | 'pets') {
     this.activeTab.set(tab);
@@ -68,8 +68,13 @@ export class Inventory {
     }
   }
 
-  equipPet(id:number){
-    this.petService.equipPet(id);
-    this.petService.getCurrentPetId();
+  equipPet(id: number) {
+    if (id === this.petService.currentPetId()) {
+      this.petService.clearPetId();
+      this.petService.getCurrentPetId();
+    } else {
+      this.petService.equipPet(id);
+      this.petService.getCurrentPetId();
+    }
   }
 }
