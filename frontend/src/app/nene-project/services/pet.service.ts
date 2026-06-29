@@ -11,7 +11,7 @@ export class PetService {
     private readonly petId = signal<number|null>(null);
     readonly currentPetId = computed(()=>this.petId());
     readonly trigger = signal<number>(0);
-    private readonly petResource = httpResource<UserPet>(()=>({
+    private readonly currentUserPetResource = httpResource<UserPet>(()=>({
         url:`http://localhost:8000/api/pet/getUserPet/${this.petId()}`,
         method: 'GET' 
         })
@@ -24,7 +24,7 @@ export class PetService {
      url:'http://localhost:8000/api/pet/getAllUserPets',
     }))
 
-    readonly currentUserPet = computed(()=>this.petResource)
+    readonly currentUserPet = computed(()=>this.currentUserPetResource)
     readonly currentPetShop = computed(()=>this.petShop);
     readonly currentAllUserPets = computed(()=>this.allUserPet);
 
@@ -37,6 +37,7 @@ export class PetService {
     }
 
     equipPet(id: number){
+        
         setPetIdLocalStorage(`${KEY_PREFIX}-${PET_ID_KEY}`,id);
     }
 
