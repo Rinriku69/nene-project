@@ -25,14 +25,14 @@ import {
 } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
-import { AuthService } from '../../../services/auth.service';
-import { Icons } from '../../../components/icons/icons';
+import { AuthService } from '../../services/auth.service';
+import { Icons } from '../../components/icons/icons';
 import { DecimalPipe } from '@angular/common';
-import { LayoutService } from '../../../services/layout.service';
-import { PetService } from '../../../services/pet.service';
-import { PetComponent } from '../../../components/pet-component/pet-component';
-import { getPetIdLocalStorage, getRandomInt, setPetIdLocalStorage } from '../../../helpers';
-import { PetAnimation, UserPet } from '../../../models/Resource';
+import { LayoutService } from '../../services/layout.service';
+import { PetService } from '../../services/pet.service';
+import { PetComponent } from '../../components/pet-component/pet-component';
+import { getPetIdLocalStorage, getRandomInt, setPetIdLocalStorage } from '../../helpers';
+import { PetAnimation, UserPet } from '../../models/Resource';
 
 @Component({
   selector: 'app-main-layout',
@@ -68,7 +68,7 @@ export class MainLayout implements OnInit {
     return ['idle1'];
   });
   private animationTimout?: ReturnType<typeof setTimeout> ; 
-  protected readonly currentUserPetAnimation = linkedSignal<string>(() => 'idle1');
+  protected readonly currentUserPetAnimation = signal<string>('idle1');
   private readonly isIdleRotationEnabled = signal<boolean>(true);
 
   protected readonly userMenuShow = signal<boolean>(false);
