@@ -549,8 +549,8 @@
   }
   <router-outlet></router-outlet>
 </div>
-@if(currentUserPet().hasValue()){
+@if(currentUserPet()){
   <div class="fixed bottom-10 right-0 md:right-10 md:bottom-15 z-2000 w-20 h-30 md:w-30 flex items-center justify-center">
-    <app-pet-component [pet]="currentUserPet().value()!" [animationName]="currentUserPetAnimation()"></app-pet-component>
+    <app-pet-component [pet]="currentUserPet()!" [animationName]="currentUserPetAnimation()"></app-pet-component>
   </div>
 }
