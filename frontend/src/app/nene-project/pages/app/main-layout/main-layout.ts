@@ -13,6 +13,7 @@ import {
   viewChild,
   viewChildren,
   ChangeDetectionStrategy,
+  DestroyRef,
 } from '@angular/core';
 import {
   RouterOutlet,
@@ -31,8 +32,7 @@ import { LayoutService } from '../../../services/layout.service';
 import { PetService } from '../../../services/pet.service';
 import { PetComponent } from '../../../components/pet-component/pet-component';
 import { getPetIdLocalStorage, getRandomInt, setPetIdLocalStorage } from '../../../helpers';
-import { PetAnimation } from '../../../models/Resource';
-
+import { PetAnimation, UserPet } from '../../../models/Resource';
 
 @Component({
   selector: 'app-main-layout',
@@ -46,11 +46,31 @@ export class MainLayout implements OnInit {
   private readonly router = inject(Router);
   private readonly layoutService = inject(LayoutService);
   private readonly petService = inject(PetService);
+  private readonly destroyRef = inject(DestroyRef);
 
   protected readonly currentUser = computed(() => this.authService.currentUserState());
-  protected readonly currentUserPet = computed(() => this.petService.currentUserPet());
+  protected readonly currentUserPet = computed(() => {
+    const currentPet = this.petService.currentUserPet()
+    if(currentPet.hasValue() && currentPet.value()){
+      return currentPet.value() 
+    }
+    clearTimeout(this.animationTimout);
+    return null;
+  });
 
+  private readonly isIdleAnimation = computed<string[]>(() => {
+    const currentPet = this.currentUserPet();
+    if (currentPet) {
+      return currentPet
+        .pet_animations.filter((v) => v.is_idle)
+        .map((v) => v.name);
+    }
+    return ['idle1'];
+  });
+  private animationTimout?: ReturnType<typeof setTimeout> ; 
   protected readonly currentUserPetAnimation = linkedSignal<string>(() => 'idle1');
+  private readonly isIdleRotationEnabled = signal<boolean>(true);
+
   protected readonly userMenuShow = signal<boolean>(false);
   protected readonly mobileMenuOpen = signal<boolean>(false);
   protected readonly notifications = computed(() => this.authService.notifications());
@@ -113,7 +133,17 @@ export class MainLayout implements OnInit {
     }
   }
 
+  getRandomAnimation(): string {
+    const randomAnimationIndex = getRandomInt(0, this.isIdleAnimation().length - 1);
+    return this.isIdleAnimation()[randomAnimationIndex];
+  }
 
+  randomPetAnimation(): void {
+    const animationDelay = getRandomInt(10, 15);
+    const petAnimation = this.getRandomAnimation();
+    this.currentUserPetAnimation.set(petAnimation);
+    this.animationTimout = setTimeout(() => this.randomPetAnimation() , animationDelay * 1_000);
+  }
 
   constructor() {
     afterNextRender(() => {
@@ -122,27 +152,20 @@ export class MainLayout implements OnInit {
       window.addEventListener('resize', () => this.updateActiveCurrencyPosition());
     });
 
+    this.destroyRef.onDestroy(()=>{
+      if(this.animationTimout){
+        clearTimeout(this.animationTimout);
+      }
+    })
+
   }
 
   async ngOnInit() {
     await this.petService.getCurrentPetId();
-    const randomAnimationTime = signal<number>(getRandomInt(13, 20));
-    const idleAnimations = computed<string[]>(() => {
-      const userPets = this.currentUserPet();
-      if (userPets.hasValue()) {
-        return userPets.value().pet_animations.filter((v) => v.is_idle).map(v=>v.name);
-      }
-      return ['idle1'];
-    });
-    const randomAnimationIndex = linkedSignal<number>(()=>getRandomInt(0, idleAnimations.length-1));
-   
-    if(this.currentUserPet()){
-      setInterval(() => {
-        randomAnimationIndex.set(getRandomInt(0, idleAnimations().length-1));
-        const animation = idleAnimations().find((_,i)=> i=== randomAnimationIndex());
-        this.currentUserPetAnimation.set(animation!);
-        randomAnimationTime.set(getRandomInt(10, 20));
-      },randomAnimationTime() * 1_000);
+
+    if (this.currentUserPet() && this.isIdleRotationEnabled()) {
+      this.randomPetAnimation();
     }
+    this.randomPetAnimation();
   }
 }
