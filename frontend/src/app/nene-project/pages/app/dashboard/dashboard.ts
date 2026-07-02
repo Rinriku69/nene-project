@@ -54,9 +54,9 @@ export class Dashboard {
         this.authService.getUser().subscribe();
       },
       error: (err: ResourceErrorResponse) => {
-        alert('Error occurred');
+        alert('Error occurred, Try again later');
         this.authService.getUser().subscribe();
-        console.log(err.error.message);
+
       },
     });
   }
