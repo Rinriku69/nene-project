@@ -3,7 +3,7 @@ import { PetAnimation, PetShopResource, ResourceResponse, UserPet } from '../mod
 import { HttpClient, httpResource, HttpResourceRef } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { clearPetIdLocalStorage, getPetIdLocalStorage, setPetIdLocalStorage } from '../helpers';
-import { AuthService } from './auth.service';
+
 const KEY_PREFIX = 'nene-project';
 const PET_ID_KEY = 'petId';
 @Service()
