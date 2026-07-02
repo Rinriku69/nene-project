@@ -40,6 +40,9 @@ export class PetShop implements OnInit {
     })
   }
   ngOnInit() {
-    this.currentPetShop().reload();
+    this.petService.loadPetShop.set(true);
+    if(!this.currentPetShop().value()){
+      this.currentPetShop().reload();
+    }
   }
 }

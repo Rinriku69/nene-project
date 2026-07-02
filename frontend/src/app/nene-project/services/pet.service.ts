@@ -3,47 +3,54 @@ import { PetAnimation, PetShopResource, ResourceResponse, UserPet } from '../mod
 import { HttpClient, httpResource, HttpResourceRef } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { clearPetIdLocalStorage, getPetIdLocalStorage, setPetIdLocalStorage } from '../helpers';
+import { AuthService } from './auth.service';
 const KEY_PREFIX = 'nene-project';
 const PET_ID_KEY = 'petId';
 @Service()
 export class PetService {
-    private readonly http = inject(HttpClient);
-    private readonly petId = signal<number|null>(null);
-    readonly currentPetId = computed(()=>this.petId());
-    readonly trigger = signal<number>(0);
-    private readonly currentUserPetResource = httpResource<UserPet>(()=>({
-        url:`http://localhost:8000/api/pet/getUserPet/${this.petId()}`,
-        method: 'GET' 
-        })
-    )
-    private readonly petShop = httpResource<PetShopResource[]>(()=>({
-     url:'http://localhost:8000/api/pet/getPetShop',
-    }))
-    
-    private readonly allUserPet = httpResource<PetShopResource[]>(()=>({
-     url:'http://localhost:8000/api/pet/getAllUserPets',
-    }))
+  private readonly http = inject(HttpClient);
+  private readonly petId = signal<number | null>(null);
+  readonly loadPetShop = signal<boolean>(false);
+  readonly loadUserPet = signal<boolean>(false);
+  readonly loadAllUserPet = signal<boolean>(false);
+  readonly currentPetId = computed(() => this.petId());
+  readonly trigger = signal<number>(0);
+  private readonly currentUserPetResource = httpResource<UserPet>(() => {
+    if (!this.loadUserPet() || this.petId() === null) return undefined;
+    return { url: `http://localhost:8000/api/pet/getUserPet/${this.petId()}`, method: 'GET' };
+  });
+  private readonly petShop = httpResource<PetShopResource[]>(() => {
+    if (!this.loadPetShop()) return undefined;
+    return {
+      url: 'http://localhost:8000/api/pet/getPetShop',
+    };
+  });
 
-    readonly currentUserPet = computed(()=>this.currentUserPetResource)
-    readonly currentPetShop = computed(()=>this.petShop);
-    readonly currentAllUserPets = computed(()=>this.allUserPet);
+  private readonly allUserPet = httpResource<PetShopResource[]>(() => {
+    if (!this.loadAllUserPet()) return undefined;
+    return {
+      url: 'http://localhost:8000/api/pet/getAllUserPets',
+    };
+  });
 
-    buyPet(id:number): Observable<ResourceResponse>{
-        return this.http.post<ResourceResponse>(`http://localhost:8000/api/pet/buyPet/${id}`,{})
-    }
+  readonly currentUserPet = computed(() => this.currentUserPetResource);
+  readonly currentPetShop = computed(() => this.petShop);
+  readonly currentAllUserPets = computed(() => this.allUserPet);
 
-    async getCurrentPetId(){
-        this.petId.set(await getPetIdLocalStorage(`${KEY_PREFIX}-${PET_ID_KEY}`))
-    }
+  buyPet(id: number): Observable<ResourceResponse> {
+    return this.http.post<ResourceResponse>(`http://localhost:8000/api/pet/buyPet/${id}`, {});
+  }
 
-    equipPet(id: number){
-        
-        setPetIdLocalStorage(`${KEY_PREFIX}-${PET_ID_KEY}`,id);
-    }
+  async getCurrentPetId() {
+    this.petId.set(await getPetIdLocalStorage(`${KEY_PREFIX}-${PET_ID_KEY}`));
+  }
 
-    clearPetId(){
-        clearPetIdLocalStorage(`${KEY_PREFIX}-${PET_ID_KEY}`);
-        this.getCurrentPetId();
-    }
+  equipPet(id: number) {
+    setPetIdLocalStorage(`${KEY_PREFIX}-${PET_ID_KEY}`, id);
+  }
 
+  clearPetId() {
+    clearPetIdLocalStorage(`${KEY_PREFIX}-${PET_ID_KEY}`);
+    this.getCurrentPetId();
+  }
 }

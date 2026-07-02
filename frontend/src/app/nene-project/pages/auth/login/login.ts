@@ -48,7 +48,7 @@ export class Login {
       .pipe(
         switchMap(() => this.authService.login(this.loginForm().value())),
         switchMap(() => this.authService.getUser().pipe(
-          tap(()=> this.petService.currentUserPet().reload())
+          tap(()=> this.petService.loadUserPet.set(true))
         )),
         switchMap(() => this.authService.getNotification()),
       )

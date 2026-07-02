@@ -50,9 +50,9 @@ export class MainLayout implements OnInit {
 
   protected readonly currentUser = computed(() => this.authService.currentUserState());
   protected readonly currentUserPet = computed(() => {
-    const currentPet = this.petService.currentUserPet()
-    if(currentPet.hasValue() && currentPet.value()){
-      return currentPet.value() 
+    const currentPet = this.petService.currentUserPet();
+    if (currentPet.hasValue() && currentPet.value()) {
+      return currentPet.value();
     }
     clearTimeout(this.animationTimout);
     return null;
@@ -61,13 +61,11 @@ export class MainLayout implements OnInit {
   private readonly isIdleAnimation = computed<string[]>(() => {
     const currentPet = this.currentUserPet();
     if (currentPet) {
-      return currentPet
-        .pet_animations.filter((v) => v.is_idle)
-        .map((v) => v.name);
+      return currentPet.pet_animations.filter((v) => v.is_idle).map((v) => v.name);
     }
     return ['idle1'];
   });
-  private animationTimout?: ReturnType<typeof setTimeout> ; 
+  private animationTimout?: ReturnType<typeof setTimeout>;
   protected readonly currentUserPetAnimation = signal<string>('idle1');
   private readonly isIdleRotationEnabled = signal<boolean>(true);
 
@@ -142,7 +140,7 @@ export class MainLayout implements OnInit {
     const animationDelay = getRandomInt(10, 15);
     const petAnimation = this.getRandomAnimation();
     this.currentUserPetAnimation.set(petAnimation);
-    this.animationTimout = setTimeout(() => this.randomPetAnimation() , animationDelay * 1_000);
+    this.animationTimout = setTimeout(() => this.randomPetAnimation(), animationDelay * 1_000);
   }
 
   constructor() {
@@ -152,20 +150,21 @@ export class MainLayout implements OnInit {
       window.addEventListener('resize', () => this.updateActiveCurrencyPosition());
     });
 
-    this.destroyRef.onDestroy(()=>{
-      if(this.animationTimout){
+    effect(() => {
+      if (this.currentUserPet() && this.isIdleRotationEnabled()) {
+        this.randomPetAnimation();
+      }
+    });
+
+    this.destroyRef.onDestroy(() => {
+      if (this.animationTimout) {
         clearTimeout(this.animationTimout);
       }
-    })
-
+    });
   }
 
   async ngOnInit() {
     await this.petService.getCurrentPetId();
-
-    if (this.currentUserPet() && this.isIdleRotationEnabled()) {
-      this.randomPetAnimation();
-    }
-    this.randomPetAnimation();
+    this.petService.loadUserPet.set(true);
   }
 }

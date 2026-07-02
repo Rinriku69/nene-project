@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, computed, inject, signal, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { InventoryService } from '../../../services/inventory.service';
 import { PetService } from '../../../services/pet.service';
 import { GachaItem, InventoryItem, PaginationResponse } from '../../../models/Resource';
@@ -13,7 +13,7 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './inventory.css',
 })
-export class Inventory {
+export class Inventory implements OnInit{
   private readonly inventoryService = inject(InventoryService);
   private readonly petService = inject(PetService);
   protected readonly Array = Array;
@@ -28,9 +28,6 @@ export class Inventory {
 
   switchTab(tab: 'cards' | 'pets') {
     this.activeTab.set(tab);
-    if (tab === 'pets') {
-      this.userPets().reload();
-    }
   }
 
   viewImage(item: GachaItem): void {
@@ -41,10 +38,7 @@ export class Inventory {
     this.selectedItem.set(null);
   }
 
-  ngOnInit() {
-    this.fetchInventory(1);
-  }
-
+  
   fetchInventory(page: number) {
     this.isLoading.set(true);
     this.inventoryService.getInventory(page).subscribe({
@@ -58,7 +52,7 @@ export class Inventory {
       },
     });
   }
-
+  
   changePage(page: number) {
     if (this.inventoryData()) {
       const maxPage = this.inventoryData()!.last_page;
@@ -67,7 +61,7 @@ export class Inventory {
       }
     }
   }
-
+  
   equipPet(id: number) {
     if (id === this.petService.currentPetId()) {
       this.petService.clearPetId();
@@ -77,4 +71,12 @@ export class Inventory {
       this.petService.getCurrentPetId();
     }
   }
+  
+  ngOnInit() {
+    this.fetchInventory(1);
+    this.petService.loadAllUserPet.set(true)
+    this.userPets().reload();
+    
+  }
+  
 }
