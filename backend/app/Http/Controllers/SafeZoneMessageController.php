@@ -7,10 +7,13 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class SafeZoneMessageController extends Controller
 {
     function addTanzaku(Request $request):JsonResponse{
+        $user = Auth::user();   
+        Gate::authorize('isFriend',$user);
         $validated = $request->validate([
             'message'=>['required','string'],
             'theme_color'=>['required','string'],
@@ -18,7 +21,6 @@ class SafeZoneMessageController extends Controller
             'pos_y'=>['required','numeric'],
             'unlocked_at'=>['nullable','date_format:Y-m-d']
         ]);
-        $user = Auth::user();   
         $unlocked_at = $validated['unlocked_at'];
         // dd($unlocked_at);
         $expired_at = isset($validated['unlocked_at']) ? Carbon::parse($unlocked_at)->addDay() : now()->addDay();
@@ -38,6 +40,7 @@ class SafeZoneMessageController extends Controller
     }
 
     function getMessages():JsonResponse{
+        Gate::authorize('isFriend',Auth::user());
         $now = now();
         $activeMessages = SafeZoneMessage::where('expired_at','>',$now)
         ->with('user:id,username,image_url')
