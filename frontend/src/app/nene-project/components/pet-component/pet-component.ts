@@ -14,6 +14,9 @@ export class PetComponent {
     const animationName = this.animationName();
     const pet = this.pet();
     const animation = pet.pet_animations.find((v,i)=> v.name === animationName)
+    console.log(animation)
+    console.log(pet)
+    console.log(animationName)
     return animation ? animation : null
   });
 }

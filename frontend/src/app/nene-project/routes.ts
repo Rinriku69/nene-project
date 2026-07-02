@@ -56,6 +56,14 @@ export default [
               ),
             canMatch: [roleGuard(['admin'])],
           },
+          {
+            path: 'petAnimate',
+            loadComponent: () =>
+              import('./pages/admin/pet-animate/pet-animate').then(
+                (m) => m.PetAnimate,
+              ),
+            canMatch: [roleGuard(['admin'])],
+          },
         ],
       },
       {

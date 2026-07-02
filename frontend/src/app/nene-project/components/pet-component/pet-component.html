@@ -1,5 +1,14 @@
-<div
+<!-- <div
   class="pet-animate sprite-engine scale-200 md:scale-300 lg:scale-350"
+  [style.--index-y] = "currentAnimation()?.index_y"
+  [style.--index-x-count] = "currentAnimation()?.index_x_count"
+  [style.--seconds] = "'1s'" 
+  [style.--frame-w] = "'64px'"
+  [style.--frame-h] = "'64px'"
+  [style.background-image]="'url(' + pet().url + ')'"
+></div> -->
+<div
+  class="pet-animate sprite-engine scale-{{currentAnimation()?.scale ? currentAnimation()?.scale : 200}}"
   [style.--index-y] = "currentAnimation()?.index_y"
   [style.--index-x-count] = "currentAnimation()?.index_x_count"
   [style.--seconds] = "currentAnimation()?.seconds" 
