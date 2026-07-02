@@ -61,16 +61,17 @@ export class AuthService {
 
   hydrateAuthState() {
     return this.getUser().pipe(
+      catchError(() => {
+        this.currentUser.set(null);
+        return of(null);
+      }),
       switchMap((user) => {
         if (user) {
           return this.getNotification().pipe(catchError(() => of(null)));
         }
         return of(null);
       }),
-      catchError(() => {
-        this.currentUser.set(null);
-        return of(null);
-      }),
+      
     );
   }
 }
