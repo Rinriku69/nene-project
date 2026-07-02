@@ -123,7 +123,7 @@ export class SafeZone implements OnInit {
         console.log(res.message);
       },
       error: (err: ResourceErrorResponse) => {
-        console.log(err.message);
+        alert("Error occured, Try again later");
       },
     });
   }
@@ -170,7 +170,7 @@ export class SafeZone implements OnInit {
         this.safeZoneMessages.set(res);
       },
       error: (err: ResourceErrorResponse) => {
-        console.log(err.error.message);
+        alert("Error try getting message")
       },
     });
   }
