@@ -17,4 +17,8 @@ class UserPolicy
     function isAdmin(User $user){
         return $user->role === 'admin';
     }
+
+    function isFriend(User $user){
+         return $user->role === 'friend' || $user->role === 'admin';
+    }
 }
