@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { Dashboard } from './pages/app/dashboard/dashboard';
-import { MainLayout } from './pages/app/main-layout/main-layout';
+import { MainLayout } from './pages/main-layout/main-layout';
 import { authGuard, roleGuard } from '../guards/auth.guard';
 
 export default [
