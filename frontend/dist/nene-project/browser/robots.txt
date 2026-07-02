@@ -4,4 +4,4 @@ Disallow: /userManagement/
 Disallow: /gachaManagement/
 Disallow: /profile/
 
-Sitemap: https://nene-project.com/sitemap.xml
+
