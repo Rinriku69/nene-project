@@ -58,6 +58,7 @@
             <span>Inventory</span></a
           >
         </li>
+          @if(currentUser() && currentUser()?.role !== 'user'){
         <li>
           <a
             class="nav-list flex items-center gap-1"
@@ -68,6 +69,7 @@
             <span> Safe Zone </span>
           </a>
         </li>
+      }
         <li>
           <a
             class="nav-list flex items-center gap-1"
@@ -439,17 +441,19 @@
             (click)="toggleMobileMenu()"
             >Inventory</a
           >
-          <a
-            routerLink="/app/safezone"
-            routerLinkActive="bg-pink-200 text-pink-600"
-            class="block px-4 py-3 rounded-none font-black font-pixel transition-colors"
-            [class.text-pink-300]="isDarkTheme()"
-            [class.hover:bg-slate-700]="isDarkTheme()"
-            [class.text-pink-500]="!isDarkTheme()"
-            [class.hover:bg-pink-100]="!isDarkTheme()"
-            (click)="toggleMobileMenu()"
-            >Safe Zone</a
-          >
+          @if(currentUser() && currentUser()?.role !== 'user'){
+            <a
+              routerLink="/app/safezone"
+              routerLinkActive="bg-pink-200 text-pink-600"
+              class="block px-4 py-3 rounded-none font-black font-pixel transition-colors"
+              [class.text-pink-300]="isDarkTheme()"
+              [class.hover:bg-slate-700]="isDarkTheme()"
+              [class.text-pink-500]="!isDarkTheme()"
+              [class.hover:bg-pink-100]="!isDarkTheme()"
+              (click)="toggleMobileMenu()"
+              >Safe Zone</a
+            >
+          }
           <a
             routerLink="/app/petshop"
             routerLinkActive="bg-pink-200 text-pink-600"
