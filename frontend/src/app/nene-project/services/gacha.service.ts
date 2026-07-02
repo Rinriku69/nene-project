@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class GachaService {
   private readonly http = inject(HttpClient);
-  private readonly baseApiUrl = '/api/gacha';
+  private readonly baseApiUrl = 'http://localhost:8000/api/gacha';
 
   featureBanner = httpResource<FeatureBanner[]>(() => ({ url: `${this.baseApiUrl}/getFeatureBanner` }));
   gachaRoll(pulls: number): Observable<GachaResponse> {
