@@ -30,7 +30,7 @@
                 >
                 <app-pet-component
                   [pet]="pet"
-                  [animationName]="hoveredPetId() === pet.id ? 'dance' : 'idle1'"
+                  [animationName]="hoveredPetId() === pet.id ? (pet.id === 4 ? 'standing' : 'dance') : 'idle1'"
                   class="transition-transform duration-300 group-hover:scale-110 group-hover:"
                 ></app-pet-component>
               </div>
