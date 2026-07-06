@@ -8,7 +8,7 @@
   [style.background-image]="'url(' + pet().url + ')'"
 ></div> -->
 <div
-  class="pet-animate sprite-engine scale-{{currentAnimation()?.scale ? currentAnimation()?.scale : 300}} "
+  class="pet-animate sprite-engine scale-200 md:scale-{{currentAnimation()?.scale ? currentAnimation()?.scale : 300}} "
   [style.--index-y] = "currentAnimation()?.index_y"
   [style.--index-x-count] = "currentAnimation()?.index_x_count"
   [style.--seconds] = "currentAnimation()?.seconds" 
