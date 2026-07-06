@@ -37,7 +37,8 @@ class PetController extends Controller
         $user = Auth::user();
         $pets = Pet::with(['petAnimations' => function ($query){
             $query->where('name','idle1')
-            ->orWhere('name','dance');
+            ->orWhere('name','dance')
+            ->orWhere('name','standing');
         }])->get();
      
         $petReosurce = PetResource::collection($pets)->resolve();
