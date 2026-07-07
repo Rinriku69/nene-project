@@ -22,7 +22,8 @@ class PetAnimationResource extends JsonResource
             'frame_w' => $this->frame_w,
             'frame_h' => $this->frame_h,
             'is_idle' => $this->is_idle,
-            'scale' => $this->scale,
+            'scale_box' => $this->scale_box,
+            'scale_pet' => $this->scale_pet,
         ];
     }
 }
