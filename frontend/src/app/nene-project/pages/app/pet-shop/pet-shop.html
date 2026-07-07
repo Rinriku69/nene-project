@@ -14,9 +14,9 @@
     <div
       class="bg-white border-4 border-t-0 border-pink-500 rounded-none p-4 md:p-6 shadow-[4px_8px_0_#db2777]"
     >
-    @if(message()){
-      <span class="text-sm text-red-400 font-pixel">{{message()}}</span>
-    }
+      @if (message()) {
+        <span class="text-sm text-red-400 font-pixel">{{ message() }}</span>
+      }
       @if (currentPetShop().hasValue()) {
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
           @for (pet of currentPetShop().value(); track $index) {
@@ -27,16 +27,20 @@
                 class="w-full aspect-square bg-pink-100/60 border-2 border-dashed border-pink-200 rounded-none flex items-center justify-center overflow-hidden"
                 (mouseenter)="hoveredPetId.set(pet.id)"
                 (mouseleave)="hoveredPetId.set(null)"
-                >
+              >
                 <app-pet-component
                   [pet]="pet"
-                  [animationName]="hoveredPetId() === pet.id ? (pet.id === 4 ? 'standing' : 'dance') : 'idle1'"
+                  [animationName]="
+                    hoveredPetId() === pet.id ? (pet.id === 4 ? 'standing' : 'dance') : 'idle1'
+                  "
                   type="scale_box"
                   class="transition-transform duration-300 group-hover:scale-110 group-hover:"
                 ></app-pet-component>
               </div>
 
-              <span class="font-pixel font-extrabold text-base md:text-lg text-pink-600 text-center truncate w-full">
+              <span
+                class="font-pixel font-extrabold text-base md:text-lg text-pink-600 text-center truncate w-full"
+              >
                 {{ pet.name }}
               </span>
 
@@ -45,8 +49,8 @@
                   type="button"
                   class="main-btn w-full px-3 py-1.5 font-mc text-md text-white tracking-wider flex items-center justify-center gap-1"
                   (click)="onBuy(pet)"
-                  >
-                 $ {{ pet.price > 0 ? pet.price : 'Free !' }}
+                >
+                  $ {{ pet.price > 0 ? pet.price : 'Free !' }}
                 </button>
               } @else {
                 <div
@@ -58,20 +62,26 @@
             </div>
           }
         </div>
-      }@else if (currentPetShop().isLoading()) {
+      } @else if (currentPetShop().isLoading()) {
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-           <div
-              class="bg-pink-200 border-3 border-pink-300 rounded-none p-3 flex flex-col items-center gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_0_#fbcfe8] hover:border-pink-400 group h-30 md:h-50 animate-pulse"
-            >
-          </div>
-           <div
-              class="bg-pink-200 border-3 border-pink-300 rounded-none p-3 flex flex-col items-center gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_0_#fbcfe8] hover:border-pink-400 group animate-pulse"
-            >
-          </div>
-           <div
-              class="bg-pink-200 border-3 border-pink-300 rounded-none p-3 flex flex-col items-center gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_0_#fbcfe8] hover:border-pink-400 group h-30 md:h-50 animate-pulse"
-            >
-          </div>
+          <div
+            class="bg-pink-200 border-3 border-pink-300 rounded-none p-3 flex flex-col items-center gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_0_#fbcfe8] hover:border-pink-400 group h-30 md:h-50 animate-pulse"
+          ></div>
+          <div
+            class="bg-pink-200 border-3 border-pink-300 rounded-none p-3 flex flex-col items-center gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_0_#fbcfe8] hover:border-pink-400 group animate-pulse"
+          ></div>
+          <div
+            class="bg-pink-200 border-3 border-pink-300 rounded-none p-3 flex flex-col items-center gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_0_#fbcfe8] hover:border-pink-400 group h-30 md:h-50 animate-pulse"
+          ></div>
+          <div
+            class="bg-pink-200 border-3 border-pink-300 rounded-none p-3 flex flex-col items-center gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_0_#fbcfe8] hover:border-pink-400 group h-30 md:h-50 animate-pulse"
+          ></div>
+          <div
+            class="bg-pink-200 border-3 border-pink-300 rounded-none p-3 flex flex-col items-center gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_0_#fbcfe8] hover:border-pink-400 group h-30 md:h-50 animate-pulse"
+          ></div>
+          <div
+            class="bg-pink-200 border-3 border-pink-300 rounded-none p-3 flex flex-col items-center gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_0_#fbcfe8] hover:border-pink-400 group h-30 md:h-50 animate-pulse"
+          ></div>
         </div>
       }
     </div>
@@ -81,5 +91,3 @@
     ></div>
   </div>
 </div>
-
-
