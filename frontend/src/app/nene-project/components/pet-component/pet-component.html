@@ -1,9 +1,28 @@
-<div
-  class="pet-animate sprite-engine scale-200 md:scale-{{currentAnimation()?.scale ? currentAnimation()?.scale : 300}}"
-  [style.--index-y] = "currentAnimation()?.index_y"
-  [style.--index-x-count] = "currentAnimation()?.index_x_count"
-  [style.--seconds] = "currentAnimation()?.seconds" 
-  [style.--frame-w] = "currentAnimation()?.frame_w"
-  [style.--frame-h] = "currentAnimation()?.frame_h"
-  [style.background-image]="'url(' + pet().url + ')'"
-></div>
+@if(type() === 'scale_box'){
+
+  <div
+    class="pet-animate sprite-engine scale-100 [image-rendering:pixelated]"
+    [style.--index-y] = "currentAnimation()?.index_y"
+    [style.--index-x-count] = "currentAnimation()?.index_x_count"
+    [style.--seconds] = "currentAnimation()?.seconds" 
+    [style.--frame-w] = "currentAnimation()?.frame_w"
+    [style.--frame-h] = "currentAnimation()?.frame_h"
+    [style.background-image]="'url(' + pet().url + ')'"
+    [style.--tw-scale-x] = "currentAnimation()?.scale_box ? currentAnimation()?.scale_box : defaultScale()"
+    [style.--tw-scale-y] = "currentAnimation()?.scale_box ? currentAnimation()?.scale_box : defaultScale()"
+    [style.--tw-scale-z] = "currentAnimation()?.scale_box ? currentAnimation()?.scale_box : defaultScale()"
+  ></div>
+}@else if(type() === 'scale_pet'){
+    <div
+    class="pet-animate sprite-engine scale-100 [image-rendering:pixelated]"
+    [style.--index-y] = "currentAnimation()?.index_y"
+    [style.--index-x-count] = "currentAnimation()?.index_x_count"
+    [style.--seconds] = "currentAnimation()?.seconds" 
+    [style.--frame-w] = "currentAnimation()?.frame_w"
+    [style.--frame-h] = "currentAnimation()?.frame_h"
+    [style.background-image]="'url(' + pet().url + ')'"
+    [style.--tw-scale-x] = "currentAnimation()?.scale_pet ? currentAnimation()?.scale_pet : defaultScale()"
+    [style.--tw-scale-y] = "currentAnimation()?.scale_pet ? currentAnimation()?.scale_pet : defaultScale()"
+    [style.--tw-scale-z] = "currentAnimation()?.scale_pet ? currentAnimation()?.scale_pet : defaultScale()"
+  ></div>
+}

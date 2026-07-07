@@ -138,7 +138,8 @@ export interface PetAnimation{
   frame_w:string;
   frame_h:string;
   is_idle:boolean;
-  scale?:number;
+  scale_box:number|string;
+  scale_pet:number|string;
 }
 
 export interface PetShopResource extends UserPet{
