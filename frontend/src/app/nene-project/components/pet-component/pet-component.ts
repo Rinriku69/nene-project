@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { PetAnimation, UserPet } from '../../models/Resource';
 
 @Component({
@@ -13,7 +13,8 @@ export class PetComponent {
   protected readonly currentAnimation = computed<PetAnimation | null>(() => {
     const animationName = this.animationName();
     const pet = this.pet();
-    const animation = pet.pet_animations.find((v,i)=> v.name === animationName)
+    const animation = pet.pet_animations.map(({scale,...rest})=>({...rest, scale:scale ? `${scale}%` : null})).find((v,i)=> v.name === animationName)
     return animation ? animation : null
   });
+  defaultScale = signal<string>('200%');
 }
