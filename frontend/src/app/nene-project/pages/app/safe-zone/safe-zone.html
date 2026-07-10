@@ -235,7 +235,19 @@
             <p
               class="text-pink-100 text-lg font-medium font-pixel text-center whitespace-pre-wrap warp-break-words w-full"
             >
-              {{ selectedTanzaku()?.message }}
+              @for (segment of messageSegments(); track $index) {
+                @if (segment.isLink) {
+                  <a
+                    [href]="segment.text"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-pink-300 underline hover:text-pink-200 transition-colors"
+                    >{{ segment.text }}</a
+                  >
+                } @else {
+                  {{ segment.text }}
+                }
+              }
             </p>
           }
         </div>
