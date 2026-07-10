@@ -8,13 +8,16 @@ import {
   viewChild,
   ɵAcxViewEncapsulation,
   ChangeDetectionStrategy,
+  DestroyRef,
+  OnInit,
+  signal,
 } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { CurrencyService } from '../../../services/currency.service';
 import { ResourceErrorResponse } from '../../../models/Resource';
 import { Icons } from '../../../components/icons/icons';
 import { LayoutService } from '../../../services/layout.service';
-import { RouterLink } from "@angular/router";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,9 +30,10 @@ export class Dashboard {
   private readonly authService = inject(AuthService);
   private readonly currencyService = inject(CurrencyService);
   private readonly layoutService = inject(LayoutService);
-  currentUser = computed(() => this.authService.currentUserState());
-  userCurrency = computed(() => this.layoutService.userCurrencyElement());
-  canClaimDaily = linkedSignal(() => {
+  private readonly destroyRef = inject(DestroyRef);
+  readonly currentUser = computed(() => this.authService.currentUserState());
+  readonly userCurrency = computed(() => this.layoutService.userCurrencyElement());
+  readonly canClaimDaily = linkedSignal(() => {
     const lastClaimedStr = this.currentUser()?.last_login_at;
     if (!lastClaimedStr) {
       return true;
@@ -39,6 +43,13 @@ export class Dashboard {
     const todayDate = new Date().toLocaleDateString('en-US');
 
     return lastClaimedDate !== todayDate;
+  });
+
+  protected readonly countDownTime = signal({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
   });
 
   claimDailyGems() {
@@ -56,7 +67,6 @@ export class Dashboard {
       error: (err: ResourceErrorResponse) => {
         alert('Error occurred, Try again later');
         this.authService.getUser().subscribe();
-
       },
     });
   }
@@ -93,5 +103,34 @@ export class Dashboard {
     setTimeout(() => {
       userCurrency?.classList.remove('animate-pulse');
     }, 4000);
+  }
+
+  getMonthlyTarget(date: number) {
+    const now = new Date();
+    let target = new Date(now.getFullYear(), now.getMonth(), date, 0, 0, 0);
+
+    if (now > target) {
+      target.setMonth(target.getMonth() + 1);
+    }
+
+    return target;
+  }
+
+  constructor() {
+    
+    const countDown = setInterval(() => {
+      const nextAnn = this.getMonthlyTarget(11);
+      const now = new Date();
+      const diff = nextAnn.getTime() - now.getTime();
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
+      this.countDownTime.update((_) => ({ days: d, hours: h, minutes: m, seconds: s }));
+    }, 1_000);
+
+    this.destroyRef.onDestroy(() => {
+      clearInterval(countDown);
+    });
   }
 }
