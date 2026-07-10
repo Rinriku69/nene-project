@@ -17,6 +17,7 @@ import { SafeZoneService } from '../../../services/safe-zone.service';
 import { ResourceErrorResponse, SafeZoneResponse } from '../../../models/Resource';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { Icons } from "../../../components/icons/icons";
+import { linkifyMessage } from '../../../helpers';
 
 @Component({
   selector: 'app-safe-zone',
@@ -36,6 +37,9 @@ export class SafeZone implements OnInit {
   readonly modalIsOpen = signal<boolean>(false);
   readonly viewModalIsOpen = signal<boolean>(false);
   readonly selectedTanzaku = signal<SafeZoneResponse | null>(null);
+  protected readonly messageSegments = computed(() =>
+    linkifyMessage(this.selectedTanzaku()?.message ?? ''),
+  );
 
   readonly isPlacementMode = signal<boolean>(false);
   readonly isShownTanzaku = signal<boolean>(false);
