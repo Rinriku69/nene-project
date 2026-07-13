@@ -20,7 +20,7 @@ export interface MessageSegment {
     isLink: boolean;
 }
 
-const URL_REGEX = /(https?:\/\/[^\s]+)/g;
+/* const URL_REGEX = /(https?:\/\/[^\s]+)/g;
 
 export function linkifyMessage(message: string): MessageSegment[] {
     const segments: MessageSegment[] = [];
@@ -42,5 +42,29 @@ export function linkifyMessage(message: string): MessageSegment[] {
     }
 
     return segments;
-}
+} */
 
+const URL_REGEX = /(https?:\/\/[^\s]+)/g
+
+export function linkifyMessage(message:string): MessageSegment[]{
+    const segments: MessageSegment[] = [];
+    let lastIndex = 0;
+
+    for(const match of message.matchAll(URL_REGEX)){
+        const url = match[0];
+        const start = match.index ?? 0; // .index = start position of found match
+
+        if(start > lastIndex){
+            segments.push({text: message.slice(lastIndex, start), isLink: false})
+        }
+        segments.push({text: url, isLink: true});
+        lastIndex = start + url.length;
+
+    }
+
+    if(lastIndex < message.length){
+        segments.push({text: message.slice(lastIndex), isLink:false });
+    }
+
+    return segments;
+}
