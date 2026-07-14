@@ -42,6 +42,11 @@
           @if(copied()){ Copied! } @else { Copy }
         </span>
       </button>
+      @if(copyFailed()){
+      <p class="text-sm font-pixel text-red-500">
+        Couldn't reach your clipboard — tap the token and copy it yourself!
+      </p>
+      }
     </div>
     } @else {
     <div class="text-center">

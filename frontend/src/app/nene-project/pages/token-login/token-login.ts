@@ -39,6 +39,7 @@ export class TokenLogin {
   protected readonly accessToken = signal<string | null>(null);
   protected readonly redirecting = signal(false);
   protected readonly copied = signal(false);
+  protected readonly copyFailed = signal(false);
   protected readonly tokenForm = form(this.loginModel, (path) => {
     required(path.username, { message: 'Hey your Username!!' });
     required(path.password, { message: 'Password is required' });
@@ -85,9 +86,13 @@ export class TokenLogin {
   copyToken() {
     const token = this.accessToken();
     if (!token) return;
-    navigator.clipboard.writeText(token).then(() => {
-      this.copied.set(true);
-      setTimeout(() => this.copied.set(false), 2000);
-    });
+    navigator.clipboard.writeText(token).then(
+      () => {
+        this.copyFailed.set(false);
+        this.copied.set(true);
+        setTimeout(() => this.copied.set(false), 2000);
+      },
+      () => this.copyFailed.set(true),
+    );
   }
 }
