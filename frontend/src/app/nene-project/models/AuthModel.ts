@@ -10,6 +10,10 @@ export interface LoginModel {
     password:string;
 }
 
+export interface JwtLoginResponse {
+    access_token:string;
+}
+
 export interface User{
     username:string;
     email:string;
