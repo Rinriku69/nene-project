@@ -10,7 +10,8 @@ export const routes: Routes = [
     {path:'home',component:Home},
     {path:'auth',children:[
         {path:'login',component:Login, canActivate:[redirectAuth]},
-        {path:'register',component:Register, canActivate:[redirectAuth]}
+        {path:'register',component:Register, canActivate:[redirectAuth]},
+        {path:'token-login',loadComponent:()=>import('./nene-project/pages/token-login/token-login').then((m)=>m.TokenLogin)}
     ]},
     {path:'', loadChildren:()=> import('./nene-project/routes')}
 ];

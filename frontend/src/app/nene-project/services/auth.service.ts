@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, linkedSignal, Resource, signal } from '@angular/core';
 import { catchError, Observable, of, switchMap, tap } from 'rxjs';
-import { LoginModel, RegisterModel, User } from '../models/AuthModel';
+import { JwtLoginResponse, LoginModel, RegisterModel, User } from '../models/AuthModel';
 import { NotificationItem, Notifications, ResourceResponse } from '../models/Resource';
 import co from '@angular/common/locales/co';
 import { clearPetIdLocalStorage } from '../helpers';
@@ -30,6 +30,11 @@ export class AuthService {
 
   login(credentials: LoginModel): Observable<ResourceResponse> {
     return this.http.post<ResourceResponse>(`${this.baseApiUrl}/auth/login`, credentials);
+  }
+
+
+  jwtLogin(credentials: LoginModel): Observable<JwtLoginResponse> {
+    return this.http.post<JwtLoginResponse>(`${this.baseApiUrl}/auth/jwt/login`, credentials);
   }
 
   getUser(): Observable<User> {
