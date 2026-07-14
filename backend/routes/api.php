@@ -104,5 +104,6 @@ Route::middleware(['auth:api', 'throttle:10,1'])
         ->name('auth.jwt.')
         ->group(static function():void{
             Route::post('/logout','logout')->name('logout');
+            Route::get('/me','me')->name('me');
         });
     });

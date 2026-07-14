@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Dotenv\Repository\RepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,21 @@ class JWTAuthController extends Controller
     }
 
     function logout(): JsonResponse{
-        Auth::guard('api')->logout();
-        return response()->json(['message'=>'Logged out successfully'],200);
+        try{
+            Auth::guard('api')->logout();
+            return response()->json(['message'=>'Logged out successfully'],200);
+
+        }catch(JWTException $e){
+            return response()->json(['message'=>'an error occurred']);
+        }
+    }
+
+    function me(): JsonResponse{
+        $user = Auth::guard('api')->user();
+        return response()->json([
+            'username' => $user->username,
+            'email' => $user->email,
+            'role' => $user->role
+        ],200);
     }
 }
