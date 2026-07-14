@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
-#[Fillable(['username', 'email', 'password','image_url'])]
+#[Fillable(['username', 'email', 'password', 'image_url'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -31,20 +32,33 @@ class User extends Authenticatable
         ];
     }
 
-    function inventory(): HasMany{
+    function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+    
+    function getJWTCustomClaims(): array
+    {
+        return [];
+    }
+
+    function inventory(): HasMany
+    {
         return $this->hasMany(Inventory::class);
     }
 
-    function gachaLogs(): HasMany{
+    function gachaLogs(): HasMany
+    {
         return $this->hasMany(GachaLog::class);
     }
 
-    function safeZoneMessages(): HasMany{
+    function safeZoneMessages(): HasMany
+    {
         return $this->hasMany(SafeZoneMessage::class);
     }
 
-    function userPets(): HasMany{
+    function userPets(): HasMany
+    {
         return $this->hasMany(UserPet::class);
     }
-
 }
