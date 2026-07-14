@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\JWTAuthController;
 use App\Http\Controllers\GachaController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SafeZoneMessageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use PHPOpenSourceSaver\JWTAuth\JWTAuth;
 
 //Authentication
 
@@ -16,7 +18,14 @@ Route::controller(AuthController::class)
     ->name('auth.')
     ->group(static function (): void {
         Route::post('/register', 'register')->name('register');
-        Route::post('/login', 'login')->name('login');
+        Route::post('/login', 'login')->name('login')->middleware('throttle:6,1');
+    });
+
+Route::controller(JWTAuthController::class)
+    ->prefix('/auth/jwt')
+    ->name('auth.jwt.')
+    ->group(static function():void{
+        Route::post('/login','login')->name('login')->middleware('throttle:6,1');
     });
 
 Route::middleware((['auth']))
@@ -86,4 +95,15 @@ Route::middleware((['auth']))
                 Route::post('/buyPet/{id}','buyPet')->name('buyPet');
                 Route::get('/getAllUserPets','getAllUserPets')->name('getAllUserPets');
             });
+    });
+
+Route::middleware(['auth:api', 'throttle:10,1'])
+    ->group(static function():void{
+        Route::controller(JWTAuthController::class)
+        ->prefix('/auth/jwt')
+        ->name('auth.jwt.')
+        ->group(static function():void{
+            Route::post('/logout','logout')->name('logout');
+            Route::get('/me','me')->name('me');
+        });
     });
