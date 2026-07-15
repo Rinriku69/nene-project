@@ -26,6 +26,7 @@ Route::controller(JWTAuthController::class)
     ->name('auth.jwt.')
     ->group(static function():void{
         Route::post('/login','login')->name('login')->middleware('throttle:6,1');
+        Route::post('/refresh','refresh')->name('refresh')->middleware('throttle:6,1');
     });
 
 Route::middleware((['auth']))
