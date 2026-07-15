@@ -25,7 +25,7 @@ class JWTAuthController extends Controller
             }
             return response()->json(['access_token' => $token], 200);
         } catch (JWTException $e) {
-            return response()->json('error ' . $e->getMessage());
+            return response()->json(['error'=>'error ' . $e->getMessage()],401);
         }
     }
 
@@ -35,7 +35,7 @@ class JWTAuthController extends Controller
             return response()->json(['message'=>'Logged out successfully'],200);
 
         }catch(JWTException $e){
-            return response()->json(['message'=>'an error occurred']);
+            return response()->json(['message'=>'an error occurred'],401);
         }
     }
 
