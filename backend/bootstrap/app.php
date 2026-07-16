@@ -24,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->statefulApi();
         $middleware->preventRequestForgery(except: [
             'api/auth/jwt/*',
+            'api/stardew/*'
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
