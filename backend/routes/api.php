@@ -7,6 +7,7 @@ use App\Http\Controllers\GachaController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SafeZoneMessageController;
+use App\Http\Controllers\Stardew\StardewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use PHPOpenSourceSaver\JWTAuth\JWTAuth;
@@ -107,4 +108,12 @@ Route::middleware(['auth:api', 'throttle:10,1'])
             Route::post('/logout','logout')->name('logout');
             Route::get('/me','me')->name('me');
         });
+
+        Route::controller(StardewController::class)
+        ->prefix('/stardew')
+        ->name('stardew.')
+        ->group(static function():void{
+            Route::post('/save','save')->name('save');
+        });
     });
+

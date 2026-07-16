@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
+class StardewPlayer extends Model
+{
+    function stardewSave(): BelongsTo{
+        return $this->belongsTo(StardewSave::class);
+    }
+
+    function skill():HasOne{
+        return $this->hasOne(StardewPlayerSkill::class);
+    }
+
+    function stat():HasOne{
+        return $this->hasOne(StardewPlayerstat::class);
+    }
+}
