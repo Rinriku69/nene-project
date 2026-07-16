@@ -113,7 +113,7 @@ Route::middleware(['auth:api', 'throttle:10,1'])
         ->prefix('/stardew')
         ->name('stardew.')
         ->group(static function():void{
-            Route::post('/saves','saves')->name('saves');
+            Route::post('/saves','save')->name('saves');
         });
     });
 
