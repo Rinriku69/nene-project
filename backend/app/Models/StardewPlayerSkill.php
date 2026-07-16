@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class StardewPlayerSkill extends Model
 {
+    protected $guarded = [];
     function player(): BelongsTo{
         return $this->belongsTo(StardewPlayer::class);
     }
