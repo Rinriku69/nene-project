@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class StardewPlayer extends Model
 {
+    protected $guarded = []; 
     function stardewSave(): BelongsTo{
         return $this->belongsTo(StardewSave::class);
     }
