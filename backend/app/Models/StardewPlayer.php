@@ -14,10 +14,10 @@ class StardewPlayer extends Model
     }
 
     function skill():HasOne{
-        return $this->hasOne(StardewPlayerSkill::class);
+        return $this->hasOne(StardewPlayerSkill::class,'player_id','id');
     }
 
     function stat():HasOne{
-        return $this->hasOne(StardewPlayerstat::class);
+        return $this->hasOne(StardewPlayerstat::class,'player_id','id');
     }
 }
