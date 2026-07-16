@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class StardewPlayerStat extends Model
 {
+    protected $table = 'stardew_player_stat';
     protected $guarded = [];
     function player(): BelongsTo{
-        return $this->belongsTo(StardewPlayer::class);
+        return $this->belongsTo(StardewPlayer::class,'player_id','id');
     }
 }
