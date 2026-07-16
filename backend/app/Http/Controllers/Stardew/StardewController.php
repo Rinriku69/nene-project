@@ -26,7 +26,7 @@ class StardewController extends Controller
             $stats = $request->stats;
             DB::transaction(function () use ($user, $skills, $stats, $request) {
 
-                StardewSave::query()->updateOrCreate(['save_id' => $request->saveId], [
+                $save = StardewSave::query()->updateOrCreate(['save_id' => $request->saveId], [
                     'save_id' => $request->saveId,
                     'farm_name' => $request->farmName,
                     'game_version' => $request->gameVersion,
@@ -39,7 +39,7 @@ class StardewController extends Controller
                 ]);
 
                 $player = StardewPlayer::query()->updateOrCreate(['user_id' => $user->id], [
-                    'save_id' => $request->saveId,
+                    'save_id' => $save->id,
                     'player_id' => (string)$request->uniqueMultiplayerID,
                     'user_id' => $user->id,
                     'is_host' => $request->isHost,
@@ -50,19 +50,19 @@ class StardewController extends Controller
 
                 $player->skill()->updateOrCreate([], [
                     'player_id' => $player->id,
-                    'farming' => $skills->farming,
-                    'mining' => $skills->mining,
-                    'foraging' => $skills->foraging,
-                    'fishing' => $skills->fishing,
-                    'combat' => $skills->combat
+                    'farming' => $skills["farming"],
+                    'mining' => $skills["mining"],
+                    'foraging' => $skills["foraging"],
+                    'fishing' => $skills["fishing"],
+                    'combat' => $skills["combat"]
                 ]);
 
                 $player->stat()->updateOrCreate([], [
                     'player_id' => $player->id,
-                    'items_craft' => $stats->itemsCrafted,
-                    'items_cooked' => $stats->itemsCooked,
-                    'fish_caught' => $stats->fishCaught,
-                    'monsters_killed' => $stats->monstersKilled,
+                    'items_crafted' => $stats["itemsCrafted"],
+                    'items_cooked' => $stats["itemsCooked"],
+                    'fish_caught' => $stats["fishCaught"],
+                    'monsters_killed' => $stats["monstersKilled"],
                 ]);
             });
             return response()->json([
