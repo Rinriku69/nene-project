@@ -18,6 +18,6 @@ class StardewPlayer extends Model
     }
 
     function stat():HasOne{
-        return $this->hasOne(StardewPlayerstat::class,'player_id','id');
+        return $this->hasOne(StardewPlayerStat::class,'player_id','id');
     }
 }
