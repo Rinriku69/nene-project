@@ -12,6 +12,7 @@ export interface StardewSaveResource {
 }
 
 export interface StardewPlayerResource {
+  player_id: number;
   farmer_name: string;
   is_host: boolean;
   sent_at: string;

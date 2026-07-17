@@ -43,7 +43,18 @@ export default [
               { path: '', redirectTo: 'save', pathMatch: 'full' },
               {
                 path: 'save',
-                loadComponent: () => import('./pages/app/stardew/stardew-save/stardew-save').then((m) => m.StardewSave),
+                loadComponent: () =>
+                  import('./pages/app/stardew/stardew-save/stardew-save').then(
+                    (m) => m.StardewSave,
+                  ),
+                canMatch: [authGuard],
+              },
+              {
+                path: ':id',
+                loadComponent: () =>
+                  import('./pages/app/stardew/stardew-player-list/stardew-player-list').then(
+                    (m) => m.StardewPlayerList,
+                  ),
                 canMatch: [authGuard],
               },
             ],

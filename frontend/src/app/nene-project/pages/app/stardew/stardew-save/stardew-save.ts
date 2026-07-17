@@ -1,10 +1,11 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { StardewService } from '../../../../services/stardew.service';
 import { DecimalPipe } from '@angular/common';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-stardew',
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, RouterLink],
   templateUrl: './stardew-save.html',
   styleUrl: './stardew-save.css',
 })

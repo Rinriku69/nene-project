@@ -1,0 +1,111 @@
+<div class="relative p-2 flex flex-col gap-5 bg-pink-100/50 min-h-svh">
+  <div class="relative flex items-center justify-center mt-3">
+    <a
+      routerLink="../save"
+      class="absolute left-1 font-pixel text-sm md:text-base font-bold text-primary border-3 border-primary/50 bg-brand-white px-3 py-1 shadow-[3px_5px_0] shadow-secondary/80 select-none cursor-pointer hover:scale-95 active:scale-90"
+      >&lt; Back</a
+    >
+    <h3 class="font-pixel text-2xl md:text-4xl font-bold text-primary">Farm Players</h3>
+  </div>
+
+  <div class="flex-1 p-2 md:p-5 flex flex-col gap-5 border-5 border-pink-200 bg-brand-white">
+    @if (players().length !== 0) {
+      @for (player of players(); track player.player_id) {
+        <div
+          class="flex flex-col md:flex-row gap-4 border-3 border-primary/50 shadow-[5px_10px_0] shadow-secondary/80 p-3 bg-pink-100"
+        >
+          <div
+            class="shrink-0 self-center md:self-auto w-28 md:w-32 min-h-36 border-3 border-dashed border-primary/40 bg-pink-50 flex flex-col items-center justify-center gap-1"
+          >
+            <span class="font-pixel text-xs text-primary/40 text-center select-none"
+              >character<br />coming soon</span
+            >
+          </div>
+
+          <div class="flex-1 min-w-0 flex flex-col gap-3">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-pixel text-2xl font-bold text-primary select-none">{{
+                player.farmer_name
+              }}</span>
+              @if (player.is_host) {
+                <span
+                  class="font-pixel text-xs font-bold bg-primary text-white px-2 py-1 select-none"
+                  >HOST</span
+                >
+              }
+              <div class="ml-auto flex flex-col items-end">
+                <span class="font-mc text-sm font-semibold text-slate-600"
+                  >Play time: {{ formatPlayTime(player.play_time) }}</span
+                >
+                <span class="font-mc text-xs text-slate-400"
+                  >Synced {{ player.sent_at | date: 'MMM d, y HH:mm' }}</span
+                >
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <span class="font-pixel text-sm font-bold text-secondary select-none">Skills</span>
+              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
+                <div class="border-2 border-secondary/50 bg-brand-white p-2 flex flex-col items-center">
+                  <span class="font-pixel text-xs text-slate-500 select-none">Farming</span>
+                  <span class="font-mc text-lg font-bold text-primary">{{ player.skill.farming }}</span>
+                </div>
+                <div class="border-2 border-secondary/50 bg-brand-white p-2 flex flex-col items-center">
+                  <span class="font-pixel text-xs text-slate-500 select-none">Mining</span>
+                  <span class="font-mc text-lg font-bold text-primary">{{ player.skill.mining }}</span>
+                </div>
+                <div class="border-2 border-secondary/50 bg-brand-white p-2 flex flex-col items-center">
+                  <span class="font-pixel text-xs text-slate-500 select-none">Foraging</span>
+                  <span class="font-mc text-lg font-bold text-primary">{{ player.skill.foraging }}</span>
+                </div>
+                <div class="border-2 border-secondary/50 bg-brand-white p-2 flex flex-col items-center">
+                  <span class="font-pixel text-xs text-slate-500 select-none">Fishing</span>
+                  <span class="font-mc text-lg font-bold text-primary">{{ player.skill.fishing }}</span>
+                </div>
+                <div class="border-2 border-secondary/50 bg-brand-white p-2 flex flex-col items-center">
+                  <span class="font-pixel text-xs text-slate-500 select-none">Combat</span>
+                  <span class="font-mc text-lg font-bold text-primary">{{ player.skill.combat }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <span class="font-pixel text-sm font-bold text-secondary select-none">Stats</span>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                <div class="border-2 border-secondary/50 bg-brand-white p-2 flex flex-col items-center">
+                  <span class="font-pixel text-xs text-slate-500 select-none">Items Crafted</span>
+                  <span class="font-mc text-lg font-bold text-primary">{{ player.stat.items_crafted }}</span>
+                </div>
+                <div class="border-2 border-secondary/50 bg-brand-white p-2 flex flex-col items-center">
+                  <span class="font-pixel text-xs text-slate-500 select-none">Items Cooked</span>
+                  <span class="font-mc text-lg font-bold text-primary">{{ player.stat.items_cooked }}</span>
+                </div>
+                <div class="border-2 border-secondary/50 bg-brand-white p-2 flex flex-col items-center">
+                  <span class="font-pixel text-xs text-slate-500 select-none">Fish Caught</span>
+                  <span class="font-mc text-lg font-bold text-primary">{{ player.stat.fish_caught }}</span>
+                </div>
+                <div class="border-2 border-secondary/50 bg-brand-white p-2 flex flex-col items-center">
+                  <span class="font-pixel text-xs text-slate-500 select-none">Monsters Killed</span>
+                  <span class="font-mc text-lg font-bold text-primary">{{ player.stat.monsters_killed }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    } @else if (saves.isLoading()) {
+      <div
+        class="flex flex-col border-3 h-56 animate-pulse border-secondary/50 shadow-[5px_10px_0] shadow-brand-pink p-2 bg-slate-100"
+      ></div>
+      <div
+        class="flex flex-col border-3 h-56 animate-pulse border-secondary/50 shadow-[5px_10px_0] shadow-brand-pink p-2 bg-slate-100"
+      ></div>
+    } @else {
+      <div class="flex justify-center py-10">
+        <span class="font-pixel text-3xl font-bold text-primary opacity-55"
+          >No players in this save<span class="animate-ping">...</span></span
+        >
+      </div>
+    }
+  </div>
+</div>
