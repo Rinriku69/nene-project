@@ -33,6 +33,7 @@ import { PetService } from '../../services/pet.service';
 import { PetComponent } from '../../components/pet-component/pet-component';
 import { getPetIdLocalStorage, getRandomInt, setPetIdLocalStorage } from '../../helpers';
 import { PetAnimation, UserPet } from '../../models/Resource';
+import { StardewService } from '../../services/stardew.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -47,6 +48,7 @@ export class MainLayout implements OnInit {
   private readonly layoutService = inject(LayoutService);
   private readonly petService = inject(PetService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly stardewService = inject(StardewService);
 
   protected readonly currentUser = computed(() => this.authService.currentUserState());
   protected readonly currentUserPet = computed(() => {
@@ -113,6 +115,7 @@ export class MainLayout implements OnInit {
   }
 
   logout() {
+    this.stardewService.saves.set(undefined);
     return this.authService.logout().subscribe({
       next: (response) => {
         this.router.navigate(['/auth/login']);

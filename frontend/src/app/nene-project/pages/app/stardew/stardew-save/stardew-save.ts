@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { StardewService } from '../../../../services/stardew.service';
 import { DecimalPipe } from '@angular/common';
 import { RouterLink } from "@angular/router";
@@ -9,7 +9,7 @@ import { RouterLink } from "@angular/router";
   templateUrl: './stardew-save.html',
   styleUrl: './stardew-save.css',
 })
-export class StardewSave {
+export class StardewSave implements OnInit{
   private readonly stardewService = inject(StardewService);
   private readonly destroyRef = inject(DestroyRef);
   saves = this.stardewService.saves;
@@ -21,5 +21,9 @@ export class StardewSave {
     this.destroyRef.onDestroy(()=>{
       clearInterval(reloadSave);
     })
+  }
+
+  ngOnInit(){
+    this.saves.reload()
   }
 }
