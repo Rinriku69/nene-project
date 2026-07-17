@@ -1,0 +1,2 @@
+import {ac as KL,at as Ye}from'./main-YFG3T3BB.js';var t=class e{baseApiUrl="http://localhost:8000/api";saves=KL(()=>`${this.baseApiUrl}/stardew/getSaves`);static \u0275fac=function(o){return new(o||e)};static \u0275prov=Ye({token:e,factory:e.\u0275fac})};
+export{t};
