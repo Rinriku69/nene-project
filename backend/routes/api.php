@@ -97,6 +97,13 @@ Route::middleware((['auth']))
                 Route::post('/buyPet/{id}','buyPet')->name('buyPet');
                 Route::get('/getAllUserPets','getAllUserPets')->name('getAllUserPets');
             });
+
+        Route::controller(StardewController::class)
+            ->prefix('/stardew')
+            ->name('stardew.')
+            ->group(static function():void{
+                Route::get('/getSaves','getSaves')->name('getSaves');
+            });
     });
 
 Route::middleware(['auth:api', 'throttle:10,1'])

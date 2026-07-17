@@ -28,15 +28,37 @@ export default [
             canMatch: [authGuard],
           },
           {
-            path:'safezone',
-            loadComponent:() => import('./pages/app/safe-zone/safe-zone').then((m)=>m.SafeZone),
-            canMatch: [roleGuard(['friend','admin'])]
+            path: 'safezone',
+            loadComponent: () => import('./pages/app/safe-zone/safe-zone').then((m) => m.SafeZone),
+            canMatch: [roleGuard(['friend', 'admin'])],
           },
           {
-            path:'petshop',
-            loadComponent:() => import('./pages/app/pet-shop/pet-shop').then((m)=>m.PetShop),
-            canMatch: [authGuard]
-          }
+            path: 'petshop',
+            loadComponent: () => import('./pages/app/pet-shop/pet-shop').then((m) => m.PetShop),
+            canMatch: [authGuard],
+          },
+          {
+            path: 'stardew',
+            children: [
+              { path: '', redirectTo: 'save', pathMatch: 'full' },
+              {
+                path: 'save',
+                loadComponent: () =>
+                  import('./pages/app/stardew/stardew-save/stardew-save').then(
+                    (m) => m.StardewSave,
+                  ),
+                canMatch: [authGuard],
+              },
+              {
+                path: ':id',
+                loadComponent: () =>
+                  import('./pages/app/stardew/stardew-player-list/stardew-player-list').then(
+                    (m) => m.StardewPlayerList,
+                  ),
+                canMatch: [authGuard],
+              },
+            ],
+          },
         ],
       },
       {
@@ -59,9 +81,10 @@ export default [
         ],
       },
       {
-        path:'profile',loadComponent:()=>import('./pages/profile/profile').then((m)=>m.Profile),
-        canMatch:[authGuard]
-      }
+        path: 'profile',
+        loadComponent: () => import('./pages/profile/profile').then((m) => m.Profile),
+        canMatch: [authGuard],
+      },
     ],
   },
 ] as Routes;

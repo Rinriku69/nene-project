@@ -6,6 +6,7 @@
     [class.bg-pink-50]="!isDarkTheme()"
     [class.bg-[radial-gradient(#fbcfe8_6px,transparent_3px)]]="!isDarkTheme()"
   ></div>
+  <!-- PC Nav -->
   <nav class="hidden lg:flex top-0 z-50 px-2 py-2 md:py-2 md:px-5 sm:px-2">
     <div
       class="flex flex-wrap items-center justify-between gap-4 px-6 py-2 md:py-2 lg:py-3 rounded-none border-4 transition-all duration-500 w-full"
@@ -78,6 +79,16 @@
           >
             <app-icons name="frog" classAttribute="size-6"></app-icons>
             <span> Pet Shop </span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="nav-list flex items-center gap-1"
+            routerLink="/app/stardew"
+            routerLinkActive="nav-list-active"
+          >
+            <app-icons name="house" classAttribute="size-6"></app-icons>
+            <span> Stardew </span>
           </a>
         </li>
         <li>
@@ -258,7 +269,8 @@
       }
     </div>
   </nav>
-  <!-- mobile nav -->
+
+  <!-- Mobile Nav -->
   <nav
     class="flex lg:hidden sticky top-0 z-40 px-4 py-3 items-center justify-between border-b-2 transition-all duration-500 shadow-sm"
     [class.bg-slate-800]="isDarkTheme()"
@@ -464,6 +476,17 @@
             [class.hover:bg-pink-100]="!isDarkTheme()"
             (click)="toggleMobileMenu()"
             >Pet Shop</a
+          >
+          <a
+            routerLink="/app/stardew"
+            routerLinkActive="bg-pink-200 text-pink-600"
+            class="block px-4 py-3 rounded-none font-black font-pixel transition-colors"
+            [class.text-pink-300]="isDarkTheme()"
+            [class.hover:bg-slate-700]="isDarkTheme()"
+            [class.text-pink-500]="!isDarkTheme()"
+            [class.hover:bg-pink-100]="!isDarkTheme()"
+            (click)="toggleMobileMenu()"
+            >Stardew</a
           >
           <a
             class="block px-4 py-3 rounded-none font-black font-pixel transition-colors"

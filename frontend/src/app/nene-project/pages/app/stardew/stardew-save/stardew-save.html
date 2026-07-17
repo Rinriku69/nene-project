@@ -1,0 +1,61 @@
+<div class="relative p-2 flex flex-col gap-5 bg-pink-100/50 min-h-svh">
+  <div class="flex justify-center mt-3">
+    <h3 class="font-pixel text-4xl font-bold text-primary">Your Stardew Saves</h3>
+  </div>
+  <div class="flex-1 p-2 md:p-5 flex flex-col gap-5 border-5 border-pink-200 bg-brand-white overflow-y-auto">
+    @if (saves.isLoading()) {
+      <div
+        class="flex flex-col border-3 h-30 animate-pulse border-secondary/50 shadow-[5px_10px_0] shadow-brand-pink p-2 bg-slate-100"
+      ></div>
+      <div
+        class="flex flex-col border-3 h-30 animate-pulse border-secondary/50 shadow-[5px_10px_0] shadow-brand-pink p-2 bg-slate-100"
+      ></div>
+      <div
+        class="flex flex-col border-3 h-30 animate-pulse border-secondary/50 shadow-[5px_10px_0] shadow-brand-pink p-2 bg-slate-100"
+      ></div>
+    } @else if (saves.hasValue()) {
+      @if (saves.value().length !== 0) {
+        @for (save of saves.value(); track save.id) {
+          <div
+            class="flex flex-col gap-1 border-3 border-primary/50 shadow-[5px_10px_0] shadow-secondary/80 p-3 bg-pink-100 cursor-pointer hover:scale-99 active:scale-90"
+            routerLink="../{{ save.id }}"
+          >
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-pixel text-xl font-bold select-none text-primary">{{
+                save.farm_name
+              }}</span>
+              <div class="ml-auto flex gap-2 border-2 border-secondary/50 bg-brand-white px-2 py-1">
+                <span class="font-mc text-sm font-semibold text-slate-600 select-none">D {{ save.day }}</span>
+                <span class="font-pixel text-sm font-semibold text-slate-600 select-none">{{ save.season }}</span>
+                <span class="font-mc text-sm font-semibold text-slate-600 select-none">Y {{ save.year }}</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-x-4">
+              <span class="font-mc select-none text-amber-600 font-semibold"
+                >Money: {{ save.money | number }} G</span
+              >
+              <span class="font-mc select-none text-slate-500"
+                >Total earned: {{ save.total_money_earned | number }} G</span
+              >
+            </div>
+            <span class="font-mc select-none">Players: {{ save.players.length }}</span>
+            <div class="flex gap-3">
+              <span class="font-mc text-slate-400 text-sm opacity-80"
+                >Game version: {{ save.game_version }}</span
+              >
+              <span class="font-mc text-slate-400 text-sm opacity-80"
+                >Mod version: {{ save.mod_version }}</span
+              >
+            </div>
+          </div>
+        }
+      } @else {
+        <div class="flex justify-center pt-10">
+          <span class="items-center font-pixel text-3xl text-primary font-bold opacity-55"
+            >You don't have any save<span class="animate-ping">...</span></span
+          >
+        </div>
+      }
+    }
+  </div>
+</div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Stardew;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\StardewSaveResource;
 use App\Models\StardewPlayer;
 use App\Models\StardewSave;
 use Carbon\Carbon;
@@ -91,7 +92,30 @@ class StardewController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'error' => $e->getMessage()
-            ], 401);
+            ], 500);
         }
     }
+
+    function getSaves(): JsonResponse
+    {
+        try {
+            $user = Auth::user();
+            $saves = StardewSave::query()->with('players',function ($query){
+                $query->with('skill')
+                ->with('stat');
+            })->whereHas('players',function($query) use ($user){
+                $query->where('user_id',$user->id);
+            })->get();
+            return response()->json(StardewSaveResource::collection($saves), 200);
+        } catch (QueryException $e) {
+
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+   
+
+
 }

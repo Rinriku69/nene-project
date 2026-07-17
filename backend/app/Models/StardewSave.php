@@ -9,6 +9,6 @@ class StardewSave extends Model
 {
     protected $guarded = [];
     function players(): HasMany{
-        return $this->hasMany(StardewPlayer::class);
+        return $this->hasMany(StardewPlayer::class,'save_id','id');
     }
 }
