@@ -11,16 +11,16 @@ import { StardewService } from '../../../../services/stardew.service';
   styleUrl: './stardew-player-list.css',
 })
 export class StardewPlayerList {
-  id = input.required<number>();
+  id = input.required<string>();
   private readonly stardewService = inject(StardewService);
   saves = this.stardewService.saves;
   players = computed<StardewPlayerResource[]>(() => {
     const saveResource = this.stardewService.saves;
     if (saveResource.hasValue()) {
       const saves = saveResource.value();
-      const players = saves.find((v) => v.id == this.id())!.players;
+      const players = saves.find((v) => v.id.toString() == this.id())?.players ;
 
-      return players;
+      return players ? players : [];
     }
 
     return [];
