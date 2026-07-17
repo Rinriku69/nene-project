@@ -15,6 +15,7 @@ class StardewSaveResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id'=>$this->id,
             'farm_name' => $this->farm_name,
             'game_version' => $this->game_version,
             'mod_version' => $this->mod_version,
