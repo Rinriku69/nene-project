@@ -4,6 +4,6 @@ import { httpResource } from '@angular/common/http';
 
 @Service()
 export class StardewService {
-  private readonly baseApiUrl = 'http://localhost:8000/api';
+  private readonly baseApiUrl = '/api';
   readonly saves = httpResource<StardewSaveResource[]>(() => `${this.baseApiUrl}/stardew/getSaves`);
 }
