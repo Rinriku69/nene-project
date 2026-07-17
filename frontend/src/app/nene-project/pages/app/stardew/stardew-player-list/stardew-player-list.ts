@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { StardewPlayerResource } from '../../../../models/StardewModel';
 import { StardewService } from '../../../../services/stardew.service';
 
+const CUSTOM_PIXELATED = 'e_pixelate:2';
 @Component({
   selector: 'app-stardew-player-list',
   imports: [DatePipe, RouterLink],
@@ -18,9 +19,23 @@ export class StardewPlayerList {
     const saveResource = this.stardewService.saves;
     if (saveResource.hasValue()) {
       const saves = saveResource.value();
-      const players = saves.find((v) => v.id.toString() == this.id())?.players ;
+      const save = saves.find((v) => v.id.toString() == this.id());
+      const players = save?.players ?
+        save.players
+        : [];
+      const newPlayers = players.map(v=>{
+        if(v.avatar_url){
 
-      return players ? players : [];
+          const startIndex = v.avatar_url.indexOf('upload') + 6;
+          const firstSection = v.avatar_url.slice(0,startIndex);
+          const lastSection = v.avatar_url.slice(startIndex + CUSTOM_PIXELATED.length);
+          const newUrl = `${firstSection}/${CUSTOM_PIXELATED}${lastSection}`
+
+          return {...v, avatar_url:newUrl}
+        }
+        return {...v}
+      })
+      return newPlayers ;
     }
 
     return [];
