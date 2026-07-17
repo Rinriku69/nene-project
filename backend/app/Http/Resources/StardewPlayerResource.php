@@ -20,6 +20,7 @@ class StardewPlayerResource extends JsonResource
             'is_host' => $this->is_host,
             'play_time' => $this->play_time,
             'sent_at'=>$this->sent_at,
+            'avatar_url'=>$this->avatar_url,
             'skill'=> [
                 'farming'=> $this->skill->farming,
                 'mining'=> $this->skill->mining,

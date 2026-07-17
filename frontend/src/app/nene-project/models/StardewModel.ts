@@ -17,6 +17,7 @@ export interface StardewPlayerResource {
   is_host: boolean;
   sent_at: string;
   play_time: number;
+  avatar_url:string;
   skill: StardewPlayerSkill;
   stat: StardewPlayerStat;
 }
