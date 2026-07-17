@@ -7,6 +7,7 @@ use App\Http\Resources\StardewSaveResource;
 use App\Models\StardewPlayer;
 use App\Models\StardewSave;
 use Carbon\Carbon;
+use Cloudinary\Cloudinary;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
@@ -100,11 +101,11 @@ class StardewController extends Controller
     {
         try {
             $user = Auth::user();
-            $saves = StardewSave::query()->with('players',function ($query){
+            $saves = StardewSave::query()->with('players', function ($query) {
                 $query->with('skill')
-                ->with('stat');
-            })->whereHas('players',function($query) use ($user){
-                $query->where('user_id',$user->id);
+                    ->with('stat');
+            })->whereHas('players', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
             })->get();
             return response()->json(StardewSaveResource::collection($saves), 200);
         } catch (QueryException $e) {
@@ -115,7 +116,44 @@ class StardewController extends Controller
         }
     }
 
-   
+    function uploadAvatar(Request $request): JsonResponse
+    {
+        $request->validate([
+            'avatar' => 'required|image'
+        ]);
+        
+        $user = Auth::guard('api')->user();
+        $saveId = $request->saveId;
 
+        $cloudinary = new Cloudinary(env('CLOUDINARY_URL'));
+        try {
+            $save = StardewSave::query()->where('save_id', $saveId)->firstOrFail();
+            $player = StardewPlayer::query()->where('user_id', $user->id)->where('save_id', $save->id)->firstOrFail();
+            if ($player->avatar_public_id) {
+                $cloudinary->uploadApi()->destroy($player->avatar_public_id);
+            }
+            $result = $cloudinary->uploadApi()->upload(
+                $request->file('avatar')->getRealPath(),
+                [
+                    'upload_preset' => 'stardew_avatar'
+                ]
+            );
+            $secureUrl = $result['secure_url'];
+            $publicId = $result['public_id'];
 
+            $player->update([
+                'avatar_url' => $secureUrl,
+                'avatar_public_id' => $publicId
+            ]);
+            $player->save();
+
+            return response()->json([
+                'message' => 'Update Avatar Successfully'
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

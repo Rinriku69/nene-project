@@ -10,7 +10,7 @@ class StardewPlayer extends Model
 {
     protected $guarded = []; 
     function stardewSave(): BelongsTo{
-        return $this->belongsTo(StardewSave::class);
+        return $this->belongsTo(StardewSave::class,'save_id','id');
     }
 
     function skill():HasOne{

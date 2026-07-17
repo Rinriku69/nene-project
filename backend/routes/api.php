@@ -121,6 +121,7 @@ Route::middleware(['auth:api', 'throttle:10,1'])
         ->name('stardew.')
         ->group(static function():void{
             Route::post('/saves','save')->name('saves');
+            Route::post('/avatar','uploadAvatar')->name('avatar');
         });
     });
 
