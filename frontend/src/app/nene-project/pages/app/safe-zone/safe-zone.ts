@@ -128,7 +128,7 @@ export class SafeZone implements OnInit {
       },
       error: (err: ResourceErrorResponse) => {
         if (err.status === 403) {
-          alert('Please verify your email before leaving a tanzaku! Use the resend button in the pink banner.');
+          alert('Please verify your email before leaving a tanzaku! ');
           return;
         }
         alert("Error occured, Try again later");
