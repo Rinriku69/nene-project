@@ -25,6 +25,10 @@ Route::controller(AuthController::class)
         Route::post('/resetPassword','resetPassword')->name('resetPassword')->middleware('throttle:6,1');
     });
 
+Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
+    ->middleware(['signed', 'throttle:6,1'])
+    ->name('verification.verify');
+
 Route::controller(JWTAuthController::class)
     ->prefix('/auth/jwt')
     ->name('auth.jwt.')

@@ -61,7 +61,7 @@ class EmailVerificationTest extends TestCase
     {
         $user = User::factory()->unverified()->create();
 
-        $this->get("/email/verify/{$user->id}/".sha1($user->email))->assertForbidden();
+        $this->get("/api/email/verify/{$user->id}/".sha1($user->email))->assertForbidden();
 
         $this->assertNull($user->fresh()->email_verified_at);
     }
