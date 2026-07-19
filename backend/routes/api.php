@@ -99,7 +99,7 @@ Route::middleware((['auth']))
             ->prefix('/stardew')
             ->name('stardew.')
             ->group(static function():void{
-                Route::get('/getSaves','getSaves')->name('getSaves')->middleware('throttle:10,1');
+                Route::get('/getSaves','getSaves')->name('getSaves')->middleware('throttle:30,1');
             });
     });
 
