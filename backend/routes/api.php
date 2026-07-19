@@ -82,7 +82,7 @@ Route::middleware((['auth']))
             ->prefix('/profile')
             ->name('profile.')
             ->group(static function (): void {
-                Route::post('/uploadProfile', 'uploadProfile')->name('uploadProfile')->middleware('throttle:10,1');
+                Route::post('/uploadProfile', 'uploadProfile')->name('uploadProfile')->middleware(['throttle:10,1','verified']);
             });
         
         Route::controller(PetController::class)
@@ -117,8 +117,8 @@ Route::middleware(['auth:api', 'throttle:10,1'])
         ->prefix('/stardew')
         ->name('stardew.')
         ->group(static function():void{
-            Route::post('/saves','save')->name('saves');
-            Route::post('/avatar','uploadAvatar')->name('avatar');
+            Route::post('/saves','save')->name('saves')->middleware(['throttle:10,1','verified']);
+            Route::post('/avatar','uploadAvatar')->name('avatar')->middleware(['throttle:10,1','verified']);
         });
     });
 
