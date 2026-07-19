@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\ResetPasswordNotification;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -14,7 +15,7 @@ use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 #[Fillable(['username', 'email', 'password', 'image_url'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject,MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -30,6 +31,13 @@ class User extends Authenticatable implements JWTSubject
             'password' => 'hashed',
             'last_login_at' => 'datetime'
         ];
+    }
+
+    #[\Override]
+    public function sendPasswordResetNotification($token)
+    {
+        $url = config('app.frontend_url').'/auth/resetPassword?token='.$token.'&email='.urlencode($this->email);
+        $this->notify(new ResetPasswordNotification($url));
     }
 
     function getJWTIdentifier()
@@ -65,4 +73,6 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(UserPet::class);
     }
+
+
 }

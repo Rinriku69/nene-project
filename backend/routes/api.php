@@ -18,8 +18,10 @@ Route::controller(AuthController::class)
     ->prefix('/auth')
     ->name('auth.')
     ->group(static function (): void {
-        Route::post('/register', 'register')->name('register');
+        Route::post('/register', 'register')->name('register')->middleware('throttle:6,1');
         Route::post('/login', 'login')->name('login')->middleware('throttle:6,1');
+        Route::post('/forgotPassword','forgotPassword')->name('forgotPassword')->middleware('throttle:6,1');
+        Route::post('/resetPassword','resetPassword')->name('resetPassword')->middleware('throttle:6,1');
     });
 
 Route::controller(JWTAuthController::class)
@@ -37,20 +39,20 @@ Route::middleware((['auth']))
         Route::controller(UserController::class)
             ->name('user.')
             ->group(static function (): void {
-                Route::get('/getUser', 'getUser')->name('getUser');
-                Route::post('/getDailyLogin', 'dailyLogin')->name('dailyLogin');
-                Route::get('/getInventory', 'getInventory')->name('getInventory');
-                Route::get('/getNoti', 'getNoti')->name('getNoti');
-                Route::post('/markAsReadAll', 'markAsReadAll')->name('markAsReadAll');
+                Route::get('/getUser', 'getUser')->name('getUser')->middleware('throttle:60,1');
+                Route::post('/getDailyLogin', 'dailyLogin')->name('dailyLogin')->middleware('throttle:60,1');;
+                Route::get('/getInventory', 'getInventory')->name('getInventory')->middleware('throttle:60,1');;
+                Route::get('/getNoti', 'getNoti')->name('getNoti')->middleware('throttle:60,1');;
+                Route::post('/markAsReadAll', 'markAsReadAll')->name('markAsReadAll')->middleware('throttle:10,1');;
             });
 
         Route::controller(GachaController::class)
             ->prefix('/gacha')
             ->name('gacha.')
             ->group(static function (): void {
-                Route::post('/pull', 'pull')->name('pull');
-                Route::get('/logs', 'getGachaLogs')->name('logs');
-                Route::get('/getFeatureBanner', 'getFeatureBanner')->name('getFeatureBanner');
+                Route::post('/pull', 'pull')->name('pull')->middleware('throttle:60,1');;
+                Route::get('/logs', 'getGachaLogs')->name('logs')->middleware('throttle:60,1');;
+                Route::get('/getFeatureBanner', 'getFeatureBanner')->name('getFeatureBanner')->middleware('throttle:60,1');;
             });
 
         Route::controller(AdminController::class)
@@ -66,43 +68,36 @@ Route::middleware((['auth']))
                 Route::post('/gemGiveaway', 'gemGiveaway')->name('gemGiveaway');
             });
 
-        Route::controller(GachaController::class)
-            ->prefix('/gacha')
-            ->name('gacha.')
-            ->group(static function (): void {
-                Route::post('/pull', 'pull')->name('pull');
-            });
-
         Route::controller(SafeZoneMessageController::class)
             ->prefix('/safezone')
             ->name('safezone.')
             ->group(static function (): void {
-                Route::post('/addTanzaku', 'addTanzaku')->name('addTanzaku');
-                Route::get('/getMessages', 'getMessages')->name('getMessages');
+                Route::post('/addTanzaku', 'addTanzaku')->name('addTanzaku')->middleware('throttle:10,1');
+                Route::get('/getMessages', 'getMessages')->name('getMessages')->middleware('throttle:60,1');
             });
 
         Route::controller(ProfileController::class)
             ->prefix('/profile')
             ->name('profile.')
             ->group(static function (): void {
-                Route::post('/uploadProfile', 'uploadProfile')->name('uploadProfile');
+                Route::post('/uploadProfile', 'uploadProfile')->name('uploadProfile')->middleware('throttle:10,1');
             });
         
         Route::controller(PetController::class)
             ->prefix('/pet')
             ->name('pet.')
             ->group(static function():void{
-                Route::get('/getUserPet/{id}','getUserPet')->name('getUserPet');
-                Route::get('/getPetShop','getPetShop')->name('getPetShop');
-                Route::post('/buyPet/{id}','buyPet')->name('buyPet');
-                Route::get('/getAllUserPets','getAllUserPets')->name('getAllUserPets');
+                Route::get('/getUserPet/{id}','getUserPet')->name('getUserPet')->middleware('throttle:60,1');
+                Route::get('/getPetShop','getPetShop')->name('getPetShop')->middleware('throttle:60,1');
+                Route::post('/buyPet/{id}','buyPet')->name('buyPet')->middleware('throttle:60,1');
+                Route::get('/getAllUserPets','getAllUserPets')->name('getAllUserPets')->middleware('throttle:60,1');
             });
 
         Route::controller(StardewController::class)
             ->prefix('/stardew')
             ->name('stardew.')
             ->group(static function():void{
-                Route::get('/getSaves','getSaves')->name('getSaves');
+                Route::get('/getSaves','getSaves')->name('getSaves')->middleware('throttle:10,1');
             });
     });
 
