@@ -8,6 +8,7 @@ import {
   signal,
   WritableSignal,
   ChangeDetectionStrategy,
+  linkedSignal,
 } from '@angular/core';
 import {
   debounce,
@@ -48,7 +49,7 @@ export class Register {
     },
     message: '',
   });
-  protected readonly isLoading = computed(() => this.loadingService.isLoading());
+  protected readonly isLoading = computed(()=> this.loadingService.isLoading());
   protected readonly formSubmitDisable: Signal<boolean> = computed(() => {
     if (this.registerForm().invalid() || this.registerForm.password_confirmation().invalid()) {
       return true;
@@ -83,7 +84,6 @@ export class Register {
       console.error('Register form invalid');
       return;
     }
-
     this.authService.getCSRFToken().subscribe({
       next: () => {
         this.authService.register(this.registerForm().value()).subscribe({
@@ -91,7 +91,10 @@ export class Register {
             this.router.navigate(['/auth/login']);
           },
           error: (error: ResourceErrorResponse) => {
-            this.errorMessage.update(() => error.error);
+            this.errorMessage.set({
+              message: error.error.message,
+              errors: { username: [], email: [], ...error.error.errors },
+            });
           },
         });
       },
