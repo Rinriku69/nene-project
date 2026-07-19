@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\JWTAuthController;
 use App\Http\Controllers\GachaController;
 use App\Http\Controllers\PetController;
@@ -35,6 +36,7 @@ Route::controller(JWTAuthController::class)
 Route::middleware((['auth']))
     ->group(static function (): void {
         Route::post('/auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
+        Route::post('/auth/resendVerification', [EmailVerificationController::class, 'resend'])->name('auth.resendVerification')->middleware('throttle:6,1');
 
         Route::controller(UserController::class)
             ->name('user.')
@@ -50,7 +52,7 @@ Route::middleware((['auth']))
             ->prefix('/gacha')
             ->name('gacha.')
             ->group(static function (): void {
-                Route::post('/pull', 'pull')->name('pull')->middleware('throttle:60,1');;
+                Route::post('/pull', 'pull')->name('pull')->middleware(['throttle:60,1', 'verified']);
                 Route::get('/logs', 'getGachaLogs')->name('logs')->middleware('throttle:60,1');;
                 Route::get('/getFeatureBanner', 'getFeatureBanner')->name('getFeatureBanner')->middleware('throttle:60,1');;
             });
@@ -72,7 +74,7 @@ Route::middleware((['auth']))
             ->prefix('/safezone')
             ->name('safezone.')
             ->group(static function (): void {
-                Route::post('/addTanzaku', 'addTanzaku')->name('addTanzaku')->middleware('throttle:10,1');
+                Route::post('/addTanzaku', 'addTanzaku')->name('addTanzaku')->middleware(['throttle:10,1', 'verified']);
                 Route::get('/getMessages', 'getMessages')->name('getMessages')->middleware('throttle:60,1');
             });
 
@@ -89,7 +91,7 @@ Route::middleware((['auth']))
             ->group(static function():void{
                 Route::get('/getUserPet/{id}','getUserPet')->name('getUserPet')->middleware('throttle:60,1');
                 Route::get('/getPetShop','getPetShop')->name('getPetShop')->middleware('throttle:60,1');
-                Route::post('/buyPet/{id}','buyPet')->name('buyPet')->middleware('throttle:60,1');
+                Route::post('/buyPet/{id}','buyPet')->name('buyPet')->middleware(['throttle:60,1', 'verified']);
                 Route::get('/getAllUserPets','getAllUserPets')->name('getAllUserPets')->middleware('throttle:60,1');
             });
 
