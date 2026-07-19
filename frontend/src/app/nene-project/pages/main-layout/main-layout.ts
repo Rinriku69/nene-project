@@ -71,6 +71,13 @@ export class MainLayout implements OnInit {
   protected readonly currentUserPetAnimation = signal<string>('idle1');
   private readonly isIdleRotationEnabled = signal<boolean>(true);
 
+  protected readonly verifyBannerDismissed = signal<boolean>(false);
+  protected readonly resendVerifyState = signal<'idle' | 'sending' | 'sent'>('idle');
+  protected readonly showVerifyBanner = computed(() => {
+    const user = this.currentUser();
+    return user != null && user.email_verified_at == null && !this.verifyBannerDismissed();
+  });
+
   protected readonly userMenuShow = signal<boolean>(false);
   protected readonly mobileMenuOpen = signal<boolean>(false);
   protected readonly notifications = computed(() => this.authService.notifications());
@@ -108,6 +115,21 @@ export class MainLayout implements OnInit {
 
   toggleMobileMenu(): void {
     this.mobileMenuOpen.set(!this.mobileMenuOpen());
+  }
+
+  resendVerification() {
+    if (this.resendVerifyState() !== 'idle') {
+      return;
+    }
+    this.resendVerifyState.set('sending');
+    this.authService.resendVerificationEmail().subscribe({
+      next: () => {
+        this.resendVerifyState.set('sent');
+      },
+      error: () => {
+        this.resendVerifyState.set('idle');
+      },
+    });
   }
 
   markNotiAsReadAll() {

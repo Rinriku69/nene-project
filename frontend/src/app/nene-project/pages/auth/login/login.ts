@@ -7,7 +7,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { form, FormField, min, minLength, required } from '@angular/forms/signals';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LoginModel } from '../../../models/AuthModel';
 import { AuthService } from '../../../services/auth.service';
 import { switchMap, tap } from 'rxjs';
@@ -36,6 +36,8 @@ export class Login {
     password: '',
   });
   protected readonly errorMessage = signal<string | null>(null);
+  
+  protected readonly justVerified = inject(ActivatedRoute).snapshot.queryParamMap.get('verified') === '1';
   protected readonly loginForm = form(this.loginModel, (path) => {
     required(path.username, { message: 'Hey your Username!!' });
     required(path.password, { message: 'Password is required' });

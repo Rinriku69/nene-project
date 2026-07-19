@@ -16,6 +16,9 @@
 
         <p class="font-semibold font-pixel mt-2 text-red-500">{{errorMessage()}}</p>
       }
+      @if(justVerified){
+        <p class="font-semibold font-pixel mt-2 text-green-600">Email verified! You can log in now </p>
+      }
     </div>
 
     <form class="flex flex-col gap-5 w-full">
@@ -47,6 +50,12 @@
             <p class="text-sm font-pixel text-red-500 ml-4">{{error.message}}</p>
           }
         }
+        <a
+          routerLink="/auth/forgotPassword"
+          class="ml-4 text-sm text-pink-500 font-bold font-pixel hover:text-pink-400 underline decoration-2 decoration-pink-300 underline-offset-4 cursor-pointer self-start"
+        >
+          Forgot your password?
+        </a>
       </div>
       <button type="button" class="main-btn group mt-4 w-full flex justify-center items-center"
       (click)="submit()"
