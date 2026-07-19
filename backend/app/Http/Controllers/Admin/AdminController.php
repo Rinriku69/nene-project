@@ -65,7 +65,7 @@ class AdminController extends Controller
         ]);
         Gate::authorize('isAdmin', Auth::user());
 
-        $user = User::all();
+        $user = User::query()->select('id')->get();
 
         Notification::send($user, new UserNotification($validated['title'], $validated['message']));
 
