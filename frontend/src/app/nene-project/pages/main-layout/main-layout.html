@@ -59,18 +59,18 @@
             <span>Inventory</span></a
           >
         </li>
-          @if(currentUser() && currentUser()?.role !== 'user'){
-        <li>
-          <a
-            class="nav-list flex items-center gap-1"
-            routerLink="/app/safezone"
-            routerLinkActive="nav-list-active"
-          >
-            <app-icons name="heart_mail" classAttribute="size-6"></app-icons>
-            <span> Safe Zone </span>
-          </a>
-        </li>
-      }
+        @if (currentUser() && currentUser()?.role !== 'user') {
+          <li>
+            <a
+              class="nav-list flex items-center gap-1"
+              routerLink="/app/safezone"
+              routerLinkActive="nav-list-active"
+            >
+              <app-icons name="heart_mail" classAttribute="size-6"></app-icons>
+              <span> Safe Zone </span>
+            </a>
+          </li>
+        }
         <li>
           <a
             class="nav-list flex items-center gap-1"
@@ -92,7 +92,11 @@
           </a>
         </li>
         <li>
-          <a class="relative px-4 md:px-6 py-2 md:py-3 rounded-none font-bold text-base md:text-xl font-pixel cursor-not-allowed  text-slate-500 select-none flex bg-slate-300 opacity-60" aria-disabled="true">Co-op Mission(WIP)</a>
+          <a
+            class="relative px-4 md:px-6 py-2 md:py-3 rounded-none font-bold text-base md:text-xl font-pixel cursor-not-allowed text-slate-500 select-none flex bg-slate-300 opacity-60"
+            aria-disabled="true"
+            >Co-op Mission(WIP)</a
+          >
         </li>
         @if (currentUser() && currentUser()?.role === 'admin') {
           <li>
@@ -453,7 +457,7 @@
             (click)="toggleMobileMenu()"
             >Inventory</a
           >
-          @if(currentUser() && currentUser()?.role !== 'user'){
+          @if (currentUser() && currentUser()?.role !== 'user') {
             <a
               routerLink="/app/safezone"
               routerLinkActive="bg-pink-200 text-pink-600"
@@ -574,11 +578,19 @@
       </div>
     </div>
   }
+  @if (!isProfileRoute()) {
+    <app-verify-email-banner classAttribute="relative z-30 mx-2 md:mx-5 mt-2" />
+  }
   <router-outlet></router-outlet>
 </div>
-@if(currentUserPet()){
-  <div class="fixed bottom-10 right-5 md:right-10 md:bottom-15 z-2000 w-20 h-30 md:w-30 flex items-center justify-center scale-110"
+@if (currentUserPet()) {
+  <div
+    class="fixed bottom-10 right-5 md:right-10 md:bottom-15 z-2000 w-20 h-30 md:w-30 flex items-center justify-center scale-110"
   >
-    <app-pet-component [pet]="currentUserPet()!" [animationName]="currentUserPetAnimation()" type="scale_pet"></app-pet-component>
+    <app-pet-component
+      [pet]="currentUserPet()!"
+      [animationName]="currentUserPetAnimation()"
+      type="scale_pet"
+    ></app-pet-component>
   </div>
 }

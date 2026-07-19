@@ -87,6 +87,10 @@ export class Gacha implements OnInit, OnDestroy {
       },
       error: (error: ResourceErrorResponse) => {
         this.isRolling.set(false);
+        if (error.status === 403) {
+          alert('Please verify your email before pulling gacha!');
+          return;
+        }
         console.error(error);
       },
     });

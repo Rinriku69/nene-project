@@ -35,7 +35,11 @@ export class PetShop implements OnInit {
       next: (res)=>{
       },
       error: (er: ResourceErrorResponse)=>{
-        this.message.set(er.message);
+        if(er.status === 403){
+          this.message.set('Please verify your email before adopting a pet!');
+          return
+        }
+        this.message.set(er.error.message);
       }
     })
   }

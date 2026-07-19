@@ -39,6 +39,22 @@ services:
       - backend-php
     networks:
       - nene-network
+  backend-worker:
+    container_name: nene-laravel-worker
+    build:
+      context: ./backend
+    command: php artisan queue:work --tries=3 --max-time=3600
+    volumes:
+      - ./backend:/var/www/html
+      - /var/www/html/vendor
+    env_file:
+      - ./backend/.env
+    restart: unless-stopped
+    depends_on:
+      - db
+    networks:
+      - nene-network
+
   db:
     image: postgres:16-alpine
     container_name: nene-postgres

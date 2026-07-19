@@ -21,4 +21,16 @@ export interface User{
     role:string;
     image_url:string|null;
     last_login_at:string | null;
+    email_verified_at:string | null;
+}
+
+export interface ForgotPasswordModel {
+    email:string;
+}
+
+export interface ResetPasswordModel {
+    token:string;
+    email:string;
+    password:string;
+    password_confirmation:string;
 }

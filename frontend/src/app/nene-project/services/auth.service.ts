@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, linkedSignal, Resource, signal } from '@angular/core';
 import { catchError, Observable, of, switchMap, tap } from 'rxjs';
-import { JwtLoginResponse, LoginModel, RegisterModel, User } from '../models/AuthModel';
+import { ForgotPasswordModel, JwtLoginResponse, LoginModel, RegisterModel, ResetPasswordModel, User } from '../models/AuthModel';
 import { NotificationItem, Notifications, ResourceResponse } from '../models/Resource';
 import co from '@angular/common/locales/co';
 import { clearPetIdLocalStorage } from '../helpers';
@@ -32,6 +32,18 @@ export class AuthService {
     return this.http.post<ResourceResponse>(`${this.baseApiUrl}/auth/login`, credentials);
   }
 
+
+  forgotPassword(payload: ForgotPasswordModel): Observable<ResourceResponse> {
+    return this.http.post<ResourceResponse>(`${this.baseApiUrl}/auth/forgotPassword`, payload);
+  }
+
+  resetPassword(payload: ResetPasswordModel): Observable<ResourceResponse> {
+    return this.http.post<ResourceResponse>(`${this.baseApiUrl}/auth/resetPassword`, payload);
+  }
+
+  resendVerificationEmail(): Observable<ResourceResponse> {
+    return this.http.post<ResourceResponse>(`${this.baseApiUrl}/auth/resendVerification`, {});
+  }
 
   jwtLogin(credentials: LoginModel): Observable<JwtLoginResponse> {
     return this.http.post<JwtLoginResponse>(`${this.baseApiUrl}/auth/jwt/login`, credentials);

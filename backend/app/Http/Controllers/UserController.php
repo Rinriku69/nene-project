@@ -21,7 +21,8 @@ class UserController extends Controller
             'currency' => $user->currency,
             'role' => $user->role,
             'image_url' => $user->image_url,
-            'last_login_at' => $user->last_login_at
+            'last_login_at' => $user->last_login_at,
+            'email_verified_at' => $user->email_verified_at
         ], 200);
     }
 
