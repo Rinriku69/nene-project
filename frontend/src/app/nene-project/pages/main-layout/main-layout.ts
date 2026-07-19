@@ -34,10 +34,11 @@ import { PetComponent } from '../../components/pet-component/pet-component';
 import { getPetIdLocalStorage, getRandomInt, setPetIdLocalStorage } from '../../helpers';
 import { PetAnimation, UserPet } from '../../models/Resource';
 import { StardewService } from '../../services/stardew.service';
+import { VerifyEmailBanner } from '../../components/verify-email-banner/verify-email-banner';
 
 @Component({
   selector: 'app-main-layout',
-  imports: [DecimalPipe, RouterOutlet, RouterLinkWithHref, Icons, RouterLinkActive, PetComponent],
+  imports: [DecimalPipe, RouterOutlet, RouterLinkWithHref, Icons, RouterLinkActive, PetComponent, VerifyEmailBanner],
   templateUrl: './main-layout.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './main-layout.css',
@@ -71,13 +72,6 @@ export class MainLayout implements OnInit {
   protected readonly currentUserPetAnimation = signal<string>('idle1');
   private readonly isIdleRotationEnabled = signal<boolean>(true);
 
-  protected readonly verifyBannerDismissed = signal<boolean>(false);
-  protected readonly resendVerifyState = signal<'idle' | 'sending' | 'sent'>('idle');
-  protected readonly showVerifyBanner = computed(() => {
-    const user = this.currentUser();
-    return user != null && user.email_verified_at == null && !this.verifyBannerDismissed();
-  });
-
   protected readonly userMenuShow = signal<boolean>(false);
   protected readonly mobileMenuOpen = signal<boolean>(false);
   protected readonly notifications = computed(() => this.authService.notifications());
@@ -101,6 +95,15 @@ export class MainLayout implements OnInit {
     { initialValue: this.router.url.includes('/safezone') },
   );
 
+
+  protected readonly isProfileRoute = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event) => event.urlAfterRedirects.includes('/profile')),
+    ),
+    { initialValue: this.router.url.includes('/profile') },
+  );
+
   toggleNoti(): void {
     this.notiIsOpen.set(!this.notiIsOpen());
     if (this.notiIsOpen() === true && this.unreadCount() !== 0) {
@@ -115,21 +118,6 @@ export class MainLayout implements OnInit {
 
   toggleMobileMenu(): void {
     this.mobileMenuOpen.set(!this.mobileMenuOpen());
-  }
-
-  resendVerification() {
-    if (this.resendVerifyState() !== 'idle') {
-      return;
-    }
-    this.resendVerifyState.set('sending');
-    this.authService.resendVerificationEmail().subscribe({
-      next: () => {
-        this.resendVerifyState.set('sent');
-      },
-      error: () => {
-        this.resendVerifyState.set('idle');
-      },
-    });
   }
 
   markNotiAsReadAll() {

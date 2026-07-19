@@ -36,7 +36,7 @@ Route::controller(JWTAuthController::class)
 Route::middleware((['auth']))
     ->group(static function (): void {
         Route::post('/auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
-        Route::post('/auth/resendVerification', [EmailVerificationController::class, 'resend'])->name('auth.resendVerification')->middleware('throttle:6,1');
+        Route::post('/auth/resendVerification', [EmailVerificationController::class, 'resend'])->name('auth.resendVerification')->middleware('throttle:10,1');
 
         Route::controller(UserController::class)
             ->name('user.')

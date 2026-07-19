@@ -3,10 +3,11 @@ import { ProfileService } from '../../services/profile.service';
 import { AuthService } from '../../services/auth.service';
 import { ResourceErrorResponse } from '../../models/Resource';
 import { Icons } from '../../components/icons/icons';
+import { VerifyEmailBanner } from '../../components/verify-email-banner/verify-email-banner';
 
 @Component({
   selector: 'app-profile',
-  imports: [Icons],
+  imports: [Icons, VerifyEmailBanner],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
