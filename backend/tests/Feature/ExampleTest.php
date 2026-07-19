@@ -12,7 +12,8 @@ class ExampleTest extends TestCase
      */
     public function test_the_application_returns_a_successful_response(): void
     {
-        $response = $this->get('/');
+        // API-only app: no '/' route exists, so smoke-test the framework health endpoint
+        $response = $this->get('/up');
 
         $response->assertStatus(200);
     }
