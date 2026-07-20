@@ -34,6 +34,11 @@ export class SafeZone implements OnInit {
   protected readonly safeZoneMessages = signal<SafeZoneResponse[] | null>(null);
 
   protected readonly currentUser = computed(() => this.authService.currentUserState());
+  protected readonly isFriend = computed(() => {
+    const role = this.currentUser()?.role;
+    return role === 'friend' || role === 'admin';
+  });
+  readonly viewMode = signal<'public' | 'private'>('public');
   readonly modalIsOpen = signal<boolean>(false);
   readonly viewModalIsOpen = signal<boolean>(false);
   readonly selectedTanzaku = signal<SafeZoneResponse | null>(null);
@@ -59,6 +64,7 @@ export class SafeZone implements OnInit {
     pos_x: 0,
     pos_y: 0,
     unlocked_at: null,
+    is_public: false,
   });
 
   protected readonly messageForm = form(this.messageModel, (path) => {
@@ -73,6 +79,7 @@ export class SafeZone implements OnInit {
       pos_x: 0,
       pos_y: 0,
       unlocked_at: null,
+      is_public: false,
     });
     this.isSecret.set(false);
     this.isShownTanzaku.set(false);
@@ -80,6 +87,10 @@ export class SafeZone implements OnInit {
 
   addWishClick(): void {
     this.modalIsOpen.set(false);
+    if(!this.authService.isVerified()){
+      this.authService.dismissed() ? this.authService.showBanner() : null;
+      return
+    }
     this.isPlacementMode.set(true);
     this.isShownTanzaku.set(true);
   }
@@ -172,8 +183,15 @@ export class SafeZone implements OnInit {
     this.selectedTanzaku.set(null);
   }
 
-  ngOnInit() {
-    this.safeZoneService.getMessages().subscribe({
+  switchView(mode: 'public' | 'private') {
+    if (this.viewMode() === mode) return;
+    this.viewMode.set(mode);
+    this.safeZoneMessages.set(null);
+    this.loadMessages();
+  }
+
+  loadMessages() {
+    this.safeZoneService.getMessages(this.viewMode()).subscribe({
       next: (res) => {
         this.safeZoneMessages.set(res);
       },
@@ -181,5 +199,12 @@ export class SafeZone implements OnInit {
         alert("Error try getting message")
       },
     });
+  }
+
+  ngOnInit() {
+    if (this.isFriend()) {
+      this.viewMode.set('private');
+    }
+    this.loadMessages();
   }
 }

@@ -30,7 +30,7 @@ export default [
           {
             path: 'safezone',
             loadComponent: () => import('./pages/app/safe-zone/safe-zone').then((m) => m.SafeZone),
-            canMatch: [roleGuard(['friend', 'admin'])],
+            canMatch: [authGuard],
           },
           {
             path: 'petshop',

@@ -14,7 +14,9 @@ export class SafeZoneService {
     return this.http.post<ResourceResponse>(`/api/safezone/addTanzaku`,tanzakuForm);
   }
 
-  getMessages():Observable<SafeZoneResponse[]>{
-    return this.http.get<SafeZoneResponse[]>(`/api/safezone/getMessages`);
+  getMessages(visibility: 'public' | 'private'):Observable<SafeZoneResponse[]>{
+    return this.http.get<SafeZoneResponse[]>(`/api/safezone/getMessages`,{
+      params: { visibility },
+    });
   }
 }

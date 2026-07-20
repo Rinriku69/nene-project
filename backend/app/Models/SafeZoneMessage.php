@@ -15,7 +15,15 @@ class SafeZoneMessage extends Model
     protected $keyType = 'string';
 
     public $incrementing = false;
-    
+
+    protected function casts(): array
+    {
+        return [
+            'is_public' => 'boolean',
+        ];
+    }
+
+
     function user(): BelongsTo{
         return $this->belongsTo(User::class);
     }

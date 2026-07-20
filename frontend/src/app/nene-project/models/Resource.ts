@@ -118,6 +118,7 @@ export interface SafeZoneResponse {
   unlocked_at:string;
   expired_at: string;
   is_locked: boolean;
+  is_public: boolean;
 }
 
 export interface ProfileImage{

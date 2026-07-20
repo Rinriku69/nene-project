@@ -16,6 +16,31 @@
       {{ isShownTanzaku() ? 'Edit Tanzaku' : '+ Add Tanzaku' }}
     </button>
 
+    @if (isFriend()) {
+      <div
+        class="absolute top-2 right-1 flex border-4 border-pink-500 bg-slate-800/80 shadow-[0_6px_0_#db2777]"
+      >
+        <button
+          class="p-3 text-sm lg:text-xl font-black font-pixel transition-colors cursor-pointer"
+          [class.bg-pink-500]="viewMode() === 'private'"
+          [class.text-white]="viewMode() === 'private'"
+          [class.text-pink-300]="viewMode() !== 'private'"
+          (click)="switchView('private'); $event.stopPropagation()"
+        >
+          Private
+        </button>
+        <button
+          class="p-3 text-sm lg:text-xl font-black font-pixel transition-colors cursor-pointer"
+          [class.bg-pink-500]="viewMode() === 'public'"
+          [class.text-white]="viewMode() === 'public'"
+          [class.text-pink-300]="viewMode() !== 'public'"
+          (click)="switchView('public'); $event.stopPropagation()"
+        >
+          Public
+        </button>
+      </div>
+    }
+
     @if (isShownTanzaku()) {
       <div
         class="absolute pointer-events-none translate-x-[-50%] translate-y-[20%]"
@@ -131,6 +156,26 @@
               </div>
             </div>
           </div>
+
+          @if (isFriend()) {
+            <div class="flex items-center gap-3 ml-4 mt-2">
+              <input
+                type="checkbox"
+                id="publicCheckbox"
+                class="w-5 h-5 accent-pink-500 cursor-pointer"
+                [formField]="messageForm.is_public"
+              />
+              <label
+                for="publicCheckbox"
+                class="text-pink-300 font-bold font-pixel cursor-pointer select-none"
+                >Share to the Public Zone?</label
+              >
+            </div>
+          } @else {
+            <p class="ml-4 mt-2 text-xs text-slate-400 font-pixel">
+              Your tanzaku will appear in the public zone 
+            </p>
+          }
 
           <div class="flex items-center gap-3 ml-4 mt-2">
             <input

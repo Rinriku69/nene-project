@@ -15,10 +15,20 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly baseApiUrl = "/api";
   private readonly petService = inject(PetService);
-  private readonly currentUser = signal<User|null>(null);
-  readonly currentUserState = linkedSignal(()=>this.currentUser());
-  readonly isLoggedIn = computed(()=> this.currentUser()!== null);
-  readonly notifications = signal<NotificationItem[]|null>(null);
+  private readonly currentUser = signal<User | null>(null);
+  readonly currentUserState = linkedSignal(() => this.currentUser());
+  readonly isLoggedIn = computed(() => this.currentUser() !== null);
+  readonly notifications = signal<NotificationItem[] | null>(null);
+  readonly dismissed = signal<boolean>(false);
+  readonly isVerified = computed(()=> this.currentUser() !== null && this.currentUser()?.email_verified_at !== null)
+
+  dismissBanner():void{
+    this.dismissed.set(true);
+  }
+
+  showBanner():void{
+    this.dismissed.set(false);
+  }
 
   getCSRFToken():Observable<ResourceResponse>{
     return this.http.get<ResourceResponse>("/sanctum/csrf-cookie");
