@@ -17,4 +17,5 @@ export interface SafeZoneModel {
   pos_x:number;
   pos_y:number;
   unlocked_at:string|null;
+  is_public:boolean;
 }

@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\Gate;
 class SafeZoneMessageController extends Controller
 {
     function addTanzaku(Request $request):JsonResponse{
-        $user = Auth::user();   
-        Gate::authorize('isFriend',$user);
+        $user = Auth::user();
         $validated = $request->validate([
             'message'=>['required','string'],
             'theme_color'=>['required','string'],
             'pos_x'=>['required','numeric'],
             'pos_y'=>['required','numeric'],
-            'unlocked_at'=>['nullable','date_format:Y-m-d']
+            'unlocked_at'=>['nullable','date_format:Y-m-d'],
+            'is_public'=>['nullable','boolean']
         ]);
         $unlocked_at = $validated['unlocked_at'];
         // dd($unlocked_at);
@@ -32,6 +32,9 @@ class SafeZoneMessageController extends Controller
         $message = new SafeZoneMessage($validated);
         $message->user_id = $user->id;
         $message->expired_at = $expired_at;
+        $message->is_public = Gate::allows('isFriend', $user)
+            ? $request->boolean('is_public')
+            : true;
         $message->save();
         
         return response()->json([
@@ -39,10 +42,20 @@ class SafeZoneMessageController extends Controller
         ],200);
     }
 
-    function getMessages():JsonResponse{
-        Gate::authorize('isFriend',Auth::user());
+    function getMessages(Request $request):JsonResponse{
+        $user = Auth::user();
         $now = now();
-        $activeMessages = SafeZoneMessage::where('expired_at','>',$now)
+        $query = SafeZoneMessage::where('expired_at','>',$now);
+        $visibility = $request->input('visibility');
+        if($visibility === 'private'){
+            Gate::authorize('isFriend',$user);
+            $query->where('is_public',false);
+        }else{
+            $query->where('is_public',true);
+        }
+
+
+        $activeMessages = $query
         ->with('user:id,username,image_url')
         ->get();
         
@@ -59,7 +72,8 @@ class SafeZoneMessageController extends Controller
                 'created_at' => $msg->created_at->format('Y-m-d H:i'),
                 'unlocked_at' => $msg->unlocked_at,
                 'expired_at' => $msg->expired_at,
-                'is_locked' => $isLocked
+                'is_locked' => $isLocked,
+                'is_public' => $msg->is_public
             ];
         });
 
