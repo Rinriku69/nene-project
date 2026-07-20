@@ -4,7 +4,7 @@
       <h2 class="text-4xl sm:text-5xl font-pixel font-extrabold text-pink-500 drop-shadow-sm mb-3">
         Welcome, {{ currentUser()?.username || 'Friend' }}!
       </h2>
-     
+      @if (currentUser()?.role === 'friend') {
         <div class="flex flex-col items-center gap-3 ">
           <div class=" flex gap-2 items-center ">
             <app-icons name="anniversary" classAttribute="w-10 h-10 text-pink-600 drop-shadow ">
@@ -17,7 +17,7 @@
             {{ countDownTime().seconds }}S Until Anniversary</span
           >
         </div>
-      
+      }
     </div>
   </header>
 

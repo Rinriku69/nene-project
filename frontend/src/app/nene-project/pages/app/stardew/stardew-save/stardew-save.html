@@ -1,26 +1,44 @@
 <div class="relative p-2 flex flex-col gap-5 bg-pink-100/50 min-h-svh">
   <div class="flex justify-center mt-3 gap-3">
-    <h3 class="font-pixel text-4xl font-bold text-primary">Your Stardew Saves
-    </h3>
-    <span class="font-pixel text-4xl font-bold text-secondary underline">
-      (<a href="https://www.nexusmods.com/stardewvalley/mods/49400" 
-      target="_blank"
-      rel="noopener noreferrer">Get mod</a>)
-
+    <h3 class="font-pixel text-4xl font-bold text-secondary">Your Stardew Saves</h3>
+    <span class="font-pixel text-4xl font-bold text-primary underline text-shadow-pink-300 text-shadow-md">
+      <a
+        href="https://www.nexusmods.com/stardewvalley/mods/49400"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex opacity-80"
+        >
+        <app-icons name="link" classAttribute="text-primary w-8 stroke-current "></app-icons>
+        Get mod
+        </a
+      >
     </span>
   </div>
-  <div class="flex-1 p-2 md:p-5 flex flex-col gap-5 border-5 border-pink-200 bg-brand-white overflow-y-auto">
+  <div
+    class="flex-1 p-2 md:p-5 flex flex-col gap-5 border-5 border-pink-200 bg-brand-white overflow-y-auto"
+  >
     @if (saves.isLoading()) {
-      <div
-        class="flex flex-col border-3 h-30 animate-pulse border-slate-200/50 shadow-[5px_10px_0] shadow-brand-pink p-2 bg-slate-200"
-      ></div>
-      <div
-        class="flex flex-col border-3 h-30 animate-pulse border-slate-200/50 shadow-[5px_10px_0] shadow-brand-pink p-2 bg-slate-200"
-      ></div>
-      <div
-        class="flex flex-col border-3 h-30 animate-pulse border-slate-200/50 shadow-[5px_10px_0] shadow-brand-pink p-2 bg-slate-200"
-      ></div>
-     
+      <div class="flex flex-col h-30 animate-pulse bg-pink-200/80 p-4 gap-3">
+        <div class="flex justify-between">
+          <div class="w-30 h-8 bg-brand-white animate-pulse"></div>
+          <div class="w-30 h-8 bg-brand-white animate-pulse"></div>
+        </div>
+        <div class="w-100 h-20 bg-brand-white animate-pulse"></div>
+      </div>
+      <div class="flex flex-col h-30 animate-pulse bg-pink-200/80  p-4 gap-3">
+        <div class="flex justify-between">
+          <div class="w-30 h-8 bg-brand-white animate-pulse"></div>
+          <div class="w-30 h-8 bg-brand-white animate-pulse"></div>
+        </div>
+        <div class="w-100 h-20 bg-brand-white animate-pulse"></div>
+      </div>
+      <div class="flex flex-col h-30 animate-pulse bg-pink-200/80  p-4 gap-3">
+        <div class="flex justify-between">
+          <div class="w-30 h-8 bg-brand-white animate-pulse"></div>
+          <div class="w-30 h-8 bg-brand-white animate-pulse"></div>
+        </div>
+        <div class="w-100 h-20 bg-brand-white animate-pulse"></div>
+      </div>
     } @else if (saves.hasValue()) {
       @if (saves.value().length !== 0) {
         @for (save of saves.value(); track save.id) {
@@ -29,24 +47,36 @@
             routerLink="../{{ save.id }}"
           >
             <div class="flex flex-wrap items-center gap-2">
-              <span class="font-pixel text-xl font-bold select-none text-primary">{{
+              <div class="flex items-end gap-1 font-pixel text-xl font-bold select-none text-primary">
+                <app-icons name="home"></app-icons>
+                {{
                 save.farm_name
-              }}</span>
+              }}</div>
               <div class="ml-auto flex gap-2 border-2 border-secondary/50 bg-brand-white px-2 py-1">
-                <span class="font-mc text-sm font-semibold text-slate-600 select-none">D {{ save.day }}</span>
-                <span class="font-pixel text-sm font-semibold text-slate-600 select-none">{{ save.season }}</span>
-                <span class="font-mc text-sm font-semibold text-slate-600 select-none">Y {{ save.year }}</span>
+                <span class="font-mc text-sm font-semibold text-slate-600 select-none"
+                  >D {{ save.day }}</span
+                >
+                <span class="font-pixel text-sm font-semibold text-slate-600 select-none">{{
+                  save.season
+                }}</span>
+                <span class="font-mc text-sm font-semibold text-slate-600 select-none"
+                  >Y {{ save.year }}</span
+                >
               </div>
             </div>
-            <div class="flex flex-wrap gap-x-4">
-              <span class="font-mc select-none text-amber-600 font-semibold"
-                >Money: {{ save.money | number }} G</span
+            <div class="flex flex-wrap  items-end gap-x-4">
+              <div class="flex items-end gap-2 font-mc select-none text-secondary font-semibold"
+                >
+                <app-icons name="coin"></app-icons>
+                Money: {{ save.money | number }} G</div
               >
               <span class="font-mc select-none text-slate-500"
-                >Total earned: {{ save.total_money_earned | number }} G</span
+                >Total earned: <span class="underline">{{ save.total_money_earned | number }}</span>  G</span
               >
             </div>
-            <span class="font-mc select-none">Players: {{ save.players.length }}</span>
+            <div class="font-mc select-none flex gap-2 items-end text-slate-600">
+              <app-icons name="multi-user" classAttribute=""></app-icons>
+              Players: {{ save.players.length }}</div>
             <div class="flex gap-3">
               <span class="font-mc text-slate-400 text-sm opacity-80"
                 >Game version: {{ save.game_version }}</span
