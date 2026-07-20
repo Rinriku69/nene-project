@@ -1,18 +1,24 @@
 <div class="min-h-screen p-4 sm:p-8 font-sans text-pink-900 flex flex-col items-center">
   <header class="mb-12 text-center mt-8">
-    <h2 class="text-4xl sm:text-5xl font-pixel font-extrabold text-pink-500 drop-shadow-sm mb-3">
-      Welcome, {{ currentUser()?.username || 'Friend' }}!
-    </h2>
-    @if (currentUser()?.role === 'friend') {
-      <div class="flex flex-col items-center gap-1">
-        <app-icons name="anniversary" classAttribute="w-10 h-10 text-pink-600 drop-shadow"></app-icons>
-
-        <span class="text-2xl text-pink-500 font-mc drop-shadow">
-          {{ countDownTime().days }} D {{ countDownTime().hours }}H: {{ countDownTime().minutes }}M:
-          {{ countDownTime().seconds }}S Until Anniversary</span
-        >
-      </div>
-    }
+    <div class="relative  flex flex-col p-2  ">
+      <h2 class="text-4xl sm:text-5xl font-pixel font-extrabold text-pink-500 drop-shadow-sm mb-3">
+        Welcome, {{ currentUser()?.username || 'Friend' }}!
+      </h2>
+     
+        <div class="flex flex-col items-center gap-3 ">
+          <div class=" flex gap-2 items-center ">
+            <app-icons name="anniversary" classAttribute="w-10 h-10 text-pink-600 drop-shadow ">
+            </app-icons>
+            <span class=" w-30 font-pixel  text-secondary text-sm font-semibold ">Nene x Mheepooh</span>
+          </div>
+  
+          <span class="text-2xl text-pink-500 font-mc drop-shadow">
+            {{ countDownTime().days }} D {{ countDownTime().hours }}H: {{ countDownTime().minutes }}M:
+            {{ countDownTime().seconds }}S Until Anniversary</span
+          >
+        </div>
+      
+    </div>
   </header>
 
   <div class="max-w-4xl w-full grid grid-cols-1 sm:grid-cols-2 gap-8 px-4">
