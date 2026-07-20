@@ -74,7 +74,7 @@ export class Gacha implements OnInit, OnDestroy {
   roll() {
     if (this.isRolling()) return;
     if(!this.authService.isVerified()){
-      this.authService.dismissed() ? this.authService.showBanner() : null;
+      this.authService.showBanner() ;
       this.closeConfirmModal();
       this.pullResults.set(null);
       return

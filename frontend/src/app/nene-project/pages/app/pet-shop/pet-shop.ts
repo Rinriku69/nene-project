@@ -20,7 +20,7 @@ export class PetShop implements OnInit {
 
   onBuy(pet: PetShopResource){
     if(!this.authService.isVerified()){
-      this.authService.dismissed() ? this.authService.showBanner() : null;
+      this.authService.showBanner()
       return
     }
 

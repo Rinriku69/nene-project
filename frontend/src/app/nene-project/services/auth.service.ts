@@ -20,6 +20,7 @@ export class AuthService {
   readonly isLoggedIn = computed(() => this.currentUser() !== null);
   readonly notifications = signal<NotificationItem[] | null>(null);
   readonly dismissed = signal<boolean>(false);
+  readonly attentionTick = signal<number>(0);
   readonly isVerified = computed(()=> this.currentUser() !== null && this.currentUser()?.email_verified_at !== null)
 
   dismissBanner():void{
@@ -28,6 +29,7 @@ export class AuthService {
 
   showBanner():void{
     this.dismissed.set(false);
+    this.attentionTick.update((tick) => tick + 1);
   }
 
   getCSRFToken():Observable<ResourceResponse>{

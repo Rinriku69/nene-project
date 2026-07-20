@@ -88,7 +88,7 @@ export class SafeZone implements OnInit {
   addWishClick(): void {
     this.modalIsOpen.set(false);
     if(!this.authService.isVerified()){
-      this.authService.dismissed() ? this.authService.showBanner() : null;
+      this.authService.showBanner();
       return
     }
     this.isPlacementMode.set(true);
