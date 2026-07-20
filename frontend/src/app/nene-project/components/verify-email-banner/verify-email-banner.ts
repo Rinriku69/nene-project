@@ -25,7 +25,7 @@ export class VerifyEmailBanner {
   protected readonly resendState = signal<'idle' | 'sending' | 'sent'>('idle');
 
   protected readonly show = computed(() => {
-    return (!this.authService.isVerified() && !this.dismissed()) || !this.dismissible();
+    return (!this.authService.isVerified() && !this.dismissed()) || (!this.dismissible() && !this.authService.isVerified());
   });
 
   dismissBanner(){
