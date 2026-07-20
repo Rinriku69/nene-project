@@ -135,7 +135,8 @@ export class SafeZone implements OnInit {
     };
     this.safeZoneService.addTanzaku(messageTranform).subscribe({
       next: (res) => {
-        console.log(res.message);
+        this.loadMessages();
+        this.isShownTanzaku.set(false);
       },
       error: (err: ResourceErrorResponse) => {
         if (err.status === 403) {
