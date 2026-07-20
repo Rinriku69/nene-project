@@ -19,6 +19,10 @@ export class PetShop implements OnInit {
   protected readonly message = signal<string | null>(null);
 
   onBuy(pet: PetShopResource){
+    if(!this.authService.isVerified()){
+      this.authService.dismissed() ? this.authService.showBanner() : null;
+      return
+    }
 
     if(this.currentUser()?.currency! < pet.price){
       this.message.set('Insufficient Currency !')

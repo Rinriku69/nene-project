@@ -21,6 +21,7 @@ import { ItemResultComponent } from '../../../components/item-result-component/i
 import { ItemViewComponent } from '../../../components/item-view-component/item-view-component';
 import { DecimalPipe } from '@angular/common';
 import { Icons } from "../../../components/icons/icons";
+import { RouterTestingHarness } from '@angular/router/testing';
 
 @Component({
   selector: 'app-gacha',
@@ -72,6 +73,12 @@ export class Gacha implements OnInit, OnDestroy {
 
   roll() {
     if (this.isRolling()) return;
+    if(!this.authService.isVerified()){
+      this.authService.dismissed() ? this.authService.showBanner() : null;
+      this.closeConfirmModal();
+      this.pullResults.set(null);
+      return
+    }
     this.isRolling.set(true);
     this.closeConfirmModal();
     this.pullResults.set(null);

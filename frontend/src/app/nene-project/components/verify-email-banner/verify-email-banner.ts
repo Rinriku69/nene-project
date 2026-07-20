@@ -21,13 +21,16 @@ export class VerifyEmailBanner {
   readonly dismissible = input<boolean>(true);
   readonly classAttribute = input<string>('');
 
-  protected readonly dismissed = signal<boolean>(false);
+  protected readonly dismissed = computed<boolean>(()=>this.authService.dismissed());
   protected readonly resendState = signal<'idle' | 'sending' | 'sent'>('idle');
 
   protected readonly show = computed(() => {
-    const user = this.authService.currentUserState();
-    return user != null && user.email_verified_at == null && !this.dismissed();
+    return (!this.authService.isVerified() && !this.dismissed()) || !this.dismissible();
   });
+
+  dismissBanner(){
+    this.authService.dismissBanner();
+  }
 
   resend() {
     if (this.resendState() !== 'idle') {
