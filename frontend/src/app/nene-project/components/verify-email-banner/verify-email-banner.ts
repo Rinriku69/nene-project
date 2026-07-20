@@ -1,10 +1,13 @@
 import {
+  afterRenderEffect,
   ChangeDetectionStrategy,
   Component,
   computed,
+  ElementRef,
   inject,
   input,
   signal,
+  viewChild,
 } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 
@@ -27,6 +30,19 @@ export class VerifyEmailBanner {
   protected readonly show = computed(() => {
     return (!this.authService.isVerified() && !this.dismissed()) || (!this.dismissible() && !this.authService.isVerified());
   });
+
+  private readonly banner = viewChild<ElementRef<HTMLElement>>('banner');
+
+  constructor() {
+    afterRenderEffect(() => {
+      this.authService.attentionTick();
+      const element = this.banner()?.nativeElement;
+      element?.getAnimations().forEach((animation) => {
+        animation.cancel();
+        animation.play();
+      });
+    });
+  }
 
   dismissBanner(){
     this.authService.dismissBanner();

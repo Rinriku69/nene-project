@@ -1,7 +1,9 @@
 @if(show()){
   <div
+    #banner
     class="px-4 py-3 flex flex-wrap items-center justify-between gap-3 rounded-none bg-pink-100 border-4 border-pink-300 shadow-[4px_4px_0_#db2777]"
     [class]="classAttribute()"
+    [class.animate-attention]="!dismissed()"
   >
     <p class="font-pixel font-bold text-pink-500">
       Please verify your email to unlock gacha pulls, tanzaku and the pet shop!
