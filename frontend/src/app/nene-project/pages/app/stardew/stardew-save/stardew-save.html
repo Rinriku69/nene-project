@@ -5,14 +5,15 @@
   <div class="flex-1 p-2 md:p-5 flex flex-col gap-5 border-5 border-pink-200 bg-brand-white overflow-y-auto">
     @if (saves.isLoading()) {
       <div
-        class="flex flex-col border-3 h-30 animate-pulse border-secondary/50 shadow-[5px_10px_0] shadow-brand-pink p-2 bg-slate-100"
+        class="flex flex-col border-3 h-30 animate-pulse border-slate-200/50 shadow-[5px_10px_0] shadow-brand-pink p-2 bg-slate-200"
       ></div>
       <div
-        class="flex flex-col border-3 h-30 animate-pulse border-secondary/50 shadow-[5px_10px_0] shadow-brand-pink p-2 bg-slate-100"
+        class="flex flex-col border-3 h-30 animate-pulse border-slate-200/50 shadow-[5px_10px_0] shadow-brand-pink p-2 bg-slate-200"
       ></div>
       <div
-        class="flex flex-col border-3 h-30 animate-pulse border-secondary/50 shadow-[5px_10px_0] shadow-brand-pink p-2 bg-slate-100"
+        class="flex flex-col border-3 h-30 animate-pulse border-slate-200/50 shadow-[5px_10px_0] shadow-brand-pink p-2 bg-slate-200"
       ></div>
+     
     } @else if (saves.hasValue()) {
       @if (saves.value().length !== 0) {
         @for (save of saves.value(); track save.id) {
