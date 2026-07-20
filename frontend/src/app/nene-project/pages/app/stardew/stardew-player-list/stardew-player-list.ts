@@ -23,6 +23,7 @@ export class StardewPlayerList {
       const players = save?.players ?
         save.players
         : [];
+        /* 
       const newPlayers = players.map(v=>{
         if(v.avatar_url){
 
@@ -34,8 +35,8 @@ export class StardewPlayerList {
           return {...v, avatar_url:newUrl}
         }
         return {...v}
-      })
-      return newPlayers ;
+      }) */
+      return players ;
     }
 
     return [];
