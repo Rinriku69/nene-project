@@ -78,7 +78,7 @@ Route::middleware((['auth']))
             ->prefix('/safezone')
             ->name('safezone.')
             ->group(static function (): void {
-                Route::post('/addTanzaku', 'addTanzaku')->name('addTanzaku')->middleware(['throttle:10,1', 'verified']);
+                Route::post('/addTanzaku', 'addTanzaku')->name('addTanzaku')->middleware(['throttle:30,1', 'verified']);
                 Route::get('/getMessages', 'getMessages')->name('getMessages')->middleware('throttle:60,1');
             });
 
