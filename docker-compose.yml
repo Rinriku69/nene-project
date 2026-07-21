@@ -8,7 +8,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "127.0.0.1:8080:80"
     restart: unless-stopped
     networks:
       - nene-network
@@ -30,7 +30,7 @@ services:
     image: nginx:alpine
     container_name: nene-laravel-nginx
     ports:
-      - "8000:80" 
+      - "127.0.0.1:8000:80" 
     volumes:
       - ./backend:/var/www/html
       #- backend_code:/var/www/html
