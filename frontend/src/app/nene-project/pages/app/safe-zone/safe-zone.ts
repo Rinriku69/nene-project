@@ -18,6 +18,8 @@ import { ResourceErrorResponse, SafeZoneResponse } from '../../../models/Resourc
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { Icons } from "../../../components/icons/icons";
 import { linkifyMessage } from '../../../helpers';
+import { StateService } from '../../../services/state.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-safe-zone',
@@ -30,6 +32,7 @@ export class SafeZone implements OnInit {
   sakuraImg = viewChild<ElementRef>('sakuraImg');
   private readonly authService = inject(AuthService);
   private readonly safeZoneService = inject(SafeZoneService);
+  private readonly stateService = inject(StateService);
   private readonly datePipe = new DatePipe('en-US');
   protected readonly safeZoneMessages = signal<SafeZoneResponse[] | null>(null);
 
@@ -138,12 +141,12 @@ export class SafeZone implements OnInit {
         this.loadMessages();
         this.closeModal();
       },
-      error: (err: ResourceErrorResponse) => {
+      error: (err: HttpErrorResponse) => {
         if (err.status === 403) {
-          alert('Please verify your email before leaving a tanzaku! ');
+          this.stateService.setErrorMessage("Please Verify your email")
           return;
         }
-        alert("Error occured, Try again later");
+        this.stateService.setErrorMessage(`${err.error.message} try again later!`);
       },
     });
   }

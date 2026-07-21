@@ -1,17 +1,18 @@
 <div class="relative p-2 flex flex-col gap-5 bg-pink-100/50 min-h-svh">
   <div class="flex justify-center mt-3 gap-3">
     <h3 class="font-pixel text-4xl font-bold text-secondary">Your Stardew Saves</h3>
-    <span class="font-pixel text-4xl font-bold text-primary underline text-shadow-pink-300 text-shadow-md">
+    <span
+      class="font-pixel text-4xl font-bold text-primary underline text-shadow-pink-300 text-shadow-md"
+    >
       <a
         href="https://www.nexusmods.com/stardewvalley/mods/49400"
         target="_blank"
         rel="noopener noreferrer"
         class="flex opacity-80"
-        >
+      >
         <app-icons name="link" classAttribute="text-primary w-8 stroke-current "></app-icons>
         Get mod
-        </a
-      >
+      </a>
     </span>
   </div>
   <div
@@ -23,21 +24,21 @@
           <div class="w-30 h-8 bg-brand-white animate-pulse"></div>
           <div class="w-30 h-8 bg-brand-white animate-pulse"></div>
         </div>
-        <div class="w-100 h-20 bg-brand-white animate-pulse"></div>
+        <div class="md:w-100 h-20 bg-brand-white animate-pulse"></div>
       </div>
-      <div class="flex flex-col h-30 animate-pulse bg-pink-200/80  p-4 gap-3">
+      <div class="flex flex-col h-30 animate-pulse bg-pink-200/80 p-4 gap-3">
         <div class="flex justify-between">
           <div class="w-30 h-8 bg-brand-white animate-pulse"></div>
           <div class="w-30 h-8 bg-brand-white animate-pulse"></div>
         </div>
-        <div class="w-100 h-20 bg-brand-white animate-pulse"></div>
+        <div class="md:w-100 h-20 bg-brand-white animate-pulse"></div>
       </div>
-      <div class="flex flex-col h-30 animate-pulse bg-pink-200/80  p-4 gap-3">
+      <div class="flex flex-col h-30 animate-pulse bg-pink-200/80 p-4 gap-3">
         <div class="flex justify-between">
           <div class="w-30 h-8 bg-brand-white animate-pulse"></div>
           <div class="w-30 h-8 bg-brand-white animate-pulse"></div>
         </div>
-        <div class="w-100 h-20 bg-brand-white animate-pulse"></div>
+        <div class="md:w-100 h-20 bg-brand-white animate-pulse"></div>
       </div>
     } @else if (saves.hasValue()) {
       @if (saves.value().length !== 0) {
@@ -46,12 +47,14 @@
             class="flex flex-col gap-1 border-3 border-primary/50 shadow-[5px_10px_0] shadow-secondary/80 p-3 bg-pink-100 cursor-pointer hover:scale-99 active:scale-90"
             routerLink="../{{ save.id }}"
           >
+            
             <div class="flex flex-wrap items-center gap-2">
-              <div class="flex items-end gap-1 font-pixel text-xl font-bold select-none text-primary">
+              <div
+                class="flex items-end gap-1 font-pixel text-xl font-bold select-none text-primary"
+              >
                 <app-icons name="home"></app-icons>
-                {{
-                save.farm_name
-              }}</div>
+                {{ save.farm_name }}
+              </div>
               <div class="ml-auto flex gap-2 border-2 border-secondary/50 bg-brand-white px-2 py-1">
                 <span class="font-mc text-sm font-semibold text-slate-600 select-none"
                   >D {{ save.day }}</span
@@ -64,19 +67,20 @@
                 >
               </div>
             </div>
-            <div class="flex flex-wrap  items-end gap-x-4">
-              <div class="flex items-end gap-2 font-mc select-none text-secondary font-semibold"
-                >
+            <div class="flex flex-wrap items-end gap-x-4">
+              <div class="flex items-end gap-2 font-mc select-none text-secondary font-semibold">
                 <app-icons name="coin"></app-icons>
-                Money: {{ save.money | number }} G</div
-              >
+                Money: {{ save.money | number }} G
+              </div>
               <span class="font-mc select-none text-slate-500"
-                >Total earned: <span class="underline">{{ save.total_money_earned | number }}</span>  G</span
+                >Total earned:
+                <span class="underline">{{ save.total_money_earned | number }}</span> G</span
               >
             </div>
             <div class="font-mc select-none flex gap-2 items-end text-slate-600">
               <app-icons name="multi-user" classAttribute=""></app-icons>
-              Players: {{ save.players.length }}</div>
+              Players: {{ save.players.length }}
+            </div>
             <div class="flex gap-3">
               <span class="font-mc text-slate-400 text-sm opacity-80"
                 >Game version: {{ save.game_version }}</span

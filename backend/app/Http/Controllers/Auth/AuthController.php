@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\Rules\Email;
 
 class AuthController extends Controller
 {
@@ -18,7 +19,7 @@ class AuthController extends Controller
     {
         $validated = $request->validate([
             'username' => ['required', 'string', 'max:20', 'unique:users,username'],
-            'email' => ['required', 'email', 'unique:users,email'],
+            'email' => ['required',Email::default()->validateMxRecord(), 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'] // หาfield password_confirmation ให้เอง
         ]);
 

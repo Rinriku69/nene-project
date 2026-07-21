@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\SafeZoneMessage;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,17 +31,23 @@ class SafeZoneMessageController extends Controller
             'user_id' => $user->id,
             'expired_at' => $expired_at
         ]); */
-        $message = new SafeZoneMessage($validated);
-        $message->user_id = $user->id;
-        $message->expired_at = $expired_at;
-        $message->is_public = Gate::allows('isFriend', $user)
-            ? $request->boolean('is_public')
-            : true;
-        $message->save();
-        
-        return response()->json([
-            'message' => 'Successfully added'
-        ],200);
+        try{
+            $message = new SafeZoneMessage($validated);
+            $message->user_id = $user->id;
+            $message->expired_at = $expired_at;
+            $message->is_public = Gate::allows('isFriend', $user)
+                ? $request->boolean('is_public')
+                : true;
+            $message->save();
+            
+            return response()->json([
+                'message' => 'Successfully added'
+            ],200);
+        }catch(QueryException $e){
+            return response()->json([
+                'message' => 'Error'.$e->getMessage()
+            ],400);
+        }
     }
 
     function getMessages(Request $request):JsonResponse{
