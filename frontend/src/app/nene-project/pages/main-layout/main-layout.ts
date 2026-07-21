@@ -35,10 +35,12 @@ import { getPetIdLocalStorage, getRandomInt, setPetIdLocalStorage } from '../../
 import { PetAnimation, UserPet } from '../../models/Resource';
 import { StardewService } from '../../services/stardew.service';
 import { VerifyEmailBanner } from '../../components/verify-email-banner/verify-email-banner';
+import { ErrorBanner } from "../../components/error-banner/error-banner";
+import { StateService } from '../../services/state.service';
 
 @Component({
   selector: 'app-main-layout',
-  imports: [DecimalPipe, RouterOutlet, RouterLinkWithHref, Icons, RouterLinkActive, PetComponent, VerifyEmailBanner],
+  imports: [DecimalPipe, RouterOutlet, RouterLinkWithHref, Icons, RouterLinkActive, PetComponent, VerifyEmailBanner, ErrorBanner],
   templateUrl: './main-layout.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './main-layout.css',
@@ -50,6 +52,7 @@ export class MainLayout implements OnInit {
   private readonly petService = inject(PetService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly stardewService = inject(StardewService);
+  private readonly stateService = inject(StateService);
 
   protected readonly currentUser = computed(() => this.authService.currentUserState());
   protected readonly currentUserPet = computed(() => {
@@ -71,6 +74,9 @@ export class MainLayout implements OnInit {
   private animationTimout?: ReturnType<typeof setTimeout>;
   protected readonly currentUserPetAnimation = signal<string>('idle1');
   private readonly isIdleRotationEnabled = signal<boolean>(true);
+
+  readonly errorMessage = computed(()=>this.stateService.errorMessageState());
+  readonly showTick = computed(()=>this.stateService.showTick());
 
   protected readonly userMenuShow = signal<boolean>(false);
   protected readonly mobileMenuOpen = signal<boolean>(false);
@@ -95,6 +101,9 @@ export class MainLayout implements OnInit {
     { initialValue: this.router.url.includes('/safezone') },
   );
 
+  clearError():void{
+    this.stateService.removeErrorMessage();
+  }
 
   protected readonly isProfileRoute = toSignal(
     this.router.events.pipe(

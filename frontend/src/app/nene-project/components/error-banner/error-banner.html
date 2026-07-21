@@ -1,0 +1,13 @@
+@if (show()) {
+  <div #errorBanner class="flex flex-wrap justify-between px-2 py-2 h-14 bg-red-400 shadow-[5px_5px] shadow-red-500 animate-attention" [class]="classAttribute()">
+    <div class="flex flex-1 gap-2">
+      <app-icons name="warning" classAttribute="w-10 text-white"></app-icons>
+      <div class="flex flex-1 items-start">
+          <span class="font-pixel text-white text-sm">{{ errorMessage() }}</span>
+      </div>
+    </div>
+    <div>
+        <button type="button" class="font-bold text-white cursor-pointer" (click)="onClose()">✕</button>
+    </div>
+  </div>
+}

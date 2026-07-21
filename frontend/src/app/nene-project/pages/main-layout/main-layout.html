@@ -574,9 +574,12 @@
       </div>
     </div>
   }
-  @if (!isProfileRoute()) {
-    <app-verify-email-banner classAttribute="relative z-30 mx-2 md:mx-5 mt-2" />
-  }
+  <div class="flex flex-col gap-2">
+    @if (!isProfileRoute()) {
+      <app-verify-email-banner classAttribute="relative z-30 mx-2 md:mx-5 mt-2" />
+    }
+    <app-error-banner [errorMessage]="errorMessage()" [showTick]="showTick()" classAttribute="relative z-30 mx-2 md:mx-5 " (isClose)="clearError()"></app-error-banner>
+  </div>
   <router-outlet></router-outlet>
 </div>
 @if (currentUserPet()) {

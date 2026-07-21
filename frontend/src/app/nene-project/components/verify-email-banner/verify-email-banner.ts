@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   ElementRef,
   inject,
   input,
@@ -10,6 +11,8 @@ import {
   viewChild,
 } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { StateService } from '../../services/state.service';
 
 @Component({
   selector: 'app-verify-email-banner',
@@ -20,7 +23,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class VerifyEmailBanner {
   private readonly authService = inject(AuthService);
-
+  private readonly stateService = inject(StateService);
   readonly dismissible = input<boolean>(true);
   readonly classAttribute = input<string>('');
 
@@ -34,7 +37,7 @@ export class VerifyEmailBanner {
   private readonly banner = viewChild<ElementRef<HTMLElement>>('banner');
 
   constructor() {
-    afterRenderEffect(() => {
+    effect(() => {
       this.authService.attentionTick();
       const element = this.banner()?.nativeElement;
       element?.getAnimations().forEach((animation) => {
@@ -57,8 +60,9 @@ export class VerifyEmailBanner {
       next: () => {
         this.resendState.set('sent');
       },
-      error: () => {
+      error: (err: HttpErrorResponse) => {
         this.resendState.set('idle');
+        this.stateService.setErrorMessage(`${err.error.message} try again later`);
       },
     });
   }
