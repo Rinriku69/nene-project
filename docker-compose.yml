@@ -1,7 +1,6 @@
 
 
 services:
-  # 1. Frontend Service (Angular + Nginx)
   frontend:
     container_name: nene-angular
     build:
