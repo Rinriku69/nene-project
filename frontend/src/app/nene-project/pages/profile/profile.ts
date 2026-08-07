@@ -27,6 +27,10 @@ export class Profile {
   });
 
   onFileSelected(event: Event): void {
+    if(!this.authService.isVerified()){
+      this.authService.showBanner() ;
+      return
+    }
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0] ?? null;
 
@@ -53,7 +57,7 @@ export class Profile {
 
     this.profileService.uploadProfile(formData).subscribe({
       next: (res) => {
-        console.log(res.message);
+        // console.log(res.message);
         this.uploadSuccess.set(true);
         this.selectedFile.set(null);
         this.isUploading.set(false);
