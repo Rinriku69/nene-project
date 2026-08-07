@@ -83,7 +83,7 @@ export class GachaManagement implements OnInit {
     if (this.itemForm().invalid()) return;
     this.adminService.addItem(this.itemForm().value()).subscribe({
       next: (res) => {
-        console.log(res.message);
+        // console.log(res.message);
         this.adminService.getAllItems().subscribe({
           next: (res) => {
             this.items.set(res);
@@ -101,7 +101,7 @@ export class GachaManagement implements OnInit {
 
     this.adminService.updateItem(this.itemForm().value()).subscribe({
       next: (res) => {
-        console.log(res.message);
+        // console.log(res.message);
         this.adminService.getAllItems().subscribe({
           next: (res) => {
             this.items.set(res);

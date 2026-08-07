@@ -57,7 +57,7 @@ export class Profile {
 
     this.profileService.uploadProfile(formData).subscribe({
       next: (res) => {
-        console.log(res.message);
+        // console.log(res.message);
         this.uploadSuccess.set(true);
         this.selectedFile.set(null);
         this.isUploading.set(false);
