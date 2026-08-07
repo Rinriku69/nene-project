@@ -27,6 +27,10 @@ export class Profile {
   });
 
   onFileSelected(event: Event): void {
+    if(!this.authService.isVerified()){
+      this.authService.showBanner() ;
+      return
+    }
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0] ?? null;
 
