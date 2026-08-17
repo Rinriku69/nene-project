@@ -11,6 +11,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Ramsey\Uuid\Type\Integer;
@@ -35,18 +36,20 @@ class PetController extends Controller
 
     function getPetShop(): JsonResponse{
         $user = Auth::user();
-        $pets = Pet::with(['petAnimations' => function ($query){
-            $query->where('name','idle1')
-            ->orWhere('name','dance')
-            ->orWhere('name','standing');
-        }])->get();
+        $pets = Cache::remember('pet:catalog',now()->addHours(10),function () {
+            return Pet::with(['petAnimations' => function ($query){
+                $query->where('name','idle1')
+                ->orWhere('name','dance')
+                ->orWhere('name','standing');
+            }])->get();
+        });
      
         $petReosurce = PetResource::collection($pets)->resolve();
 
         $petOwnedIds = UserPet::where('user_id',$user->id)->pluck('pet_id')->all();
         $petShop = array_map(fn($pet) => [...$pet,'is_owned' => in_array($pet['id'],$petOwnedIds)] ,$petReosurce );
         // dd($petShop);
-
+        
         return response()->json($petShop, 200);
     }
 
