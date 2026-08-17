@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class GachaController extends Controller
@@ -71,7 +72,9 @@ class GachaController extends Controller
 
     private function randomPull($pulls)
     {
-        $items = Item::all()->groupBy('rarity');
+        $items = Cache::remember('item:by_rarity', now()->addHours(5), function(){
+            return Item::all()->groupBy('rarity');
+        });
 
         $totalWeightByRarity = $items->map(function ($items) {
             return $items->sum('weight');

@@ -11,6 +11,7 @@ use App\Notifications\UserNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Notification;
@@ -93,7 +94,7 @@ class AdminController extends Controller
             'weight' => ['required', 'integer']
         ]);
         $item = Item::where('id', $request->id)->update($validated);
-
+        Cache::forget('item:by_rarity');
         return response()->json([
             'message' => 'Successfully Updated'
         ], 200);
@@ -110,7 +111,7 @@ class AdminController extends Controller
             'weight' => ['required', 'integer']
         ]);
         $item = Item::create($validated);
-
+        Cache::forget('item:by_rarity');
         return response()->json([
             'message' => 'Successfully Created'
         ], 200);
