@@ -69,6 +69,13 @@ services:
     networks:
       - nene-network
 
+  redis:
+   image: redis:7-alphine
+   container_name: nene-redis
+   restart: unless-stopped
+   network:
+    - nene-network
+
 volumes:
   postgres_data:
   #backend_code:
