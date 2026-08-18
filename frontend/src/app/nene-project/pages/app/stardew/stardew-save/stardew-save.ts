@@ -26,6 +26,5 @@ export class StardewSave implements OnInit{
 
   ngOnInit(){
     this.stardewService.loadSave.set(true);
-    this.saves.reload();
   }
 }
