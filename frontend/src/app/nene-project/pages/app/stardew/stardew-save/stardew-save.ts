@@ -18,13 +18,14 @@ export class StardewSave implements OnInit{
   constructor(){
     const reloadSave = setInterval(()=>{
       this.saves.reload();
-    },1_000 * 60 * 15)
+    },1_000 * 60 * 10)
     this.destroyRef.onDestroy(()=>{
       clearInterval(reloadSave);
     })
   }
 
   ngOnInit(){
-    this.saves.reload()
+    this.stardewService.loadSave.set(true);
+    this.saves.reload();
   }
 }
