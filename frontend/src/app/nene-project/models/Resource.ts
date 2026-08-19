@@ -148,3 +148,20 @@ export interface PetShopResource extends UserPet{
   is_owned:boolean;
   price:number;
 }
+
+export interface MapPosition {
+  lat:number;
+  long:number;
+}
+
+export interface LocationResource extends MapPosition {
+  username:string;
+  image_url:string;
+  text_status:string;
+  updated:string;
+  is_online:boolean;
+}
+
+export interface PositionUpdate extends MapPosition{
+  text_status:string|null;
+}
