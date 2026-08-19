@@ -59,7 +59,7 @@ class LocationController extends Controller
                 ->select('id', 'username', 'image_url');
         }])->get(); */
 
-        $userLocations = UserLocation::query()->whereHas('user', function ($query){
+        $userLocations = UserLocation::query()->where('user_id','!=',$user->id)->whereHas('user', function ($query){
             $query->where('role','friend')
             ->orWhere('role','admin');
         })->with('user:id,username,image_url')->get();
