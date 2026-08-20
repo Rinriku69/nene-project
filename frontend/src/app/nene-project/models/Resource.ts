@@ -149,19 +149,20 @@ export interface PetShopResource extends UserPet{
   price:number;
 }
 
-export interface MapPosition {
+export interface Position {
   lat:number;
   long:number;
 }
 
-export interface LocationResource extends MapPosition {
+export interface UserLocationResource extends Position {
+  user_id:number;
   username:string;
-  image_url:string;
+  image_url:string|null;
   text_status:string;
   updated:string;
   is_online:boolean;
 }
 
-export interface PositionUpdate extends MapPosition{
+export interface UserLocation extends Position{
   text_status:string|null;
 }
