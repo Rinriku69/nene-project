@@ -59,6 +59,11 @@ export default [
               },
             ],
           },
+          {
+            path: 'location',
+            loadComponent: () => import('./pages/app/location/location').then((m) => m.Location),
+            canMatch: [authGuard, roleGuard(['friend', 'admin'])],
+          },
         ],
       },
       {

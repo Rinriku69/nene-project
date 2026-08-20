@@ -91,6 +91,16 @@
         </li>
         <li>
           <a
+            class="nav-list flex items-center gap-1"
+            routerLink="/app/location"
+            routerLinkActive="nav-list-active"
+          >
+            <app-icons name="location" classAttribute="size-6"></app-icons>
+            <span> Location </span>
+          </a>
+        </li>
+        <li>
+          <a
             class="relative px-4 md:px-6 py-2 md:py-3 rounded-none font-bold text-base md:text-xl font-pixel cursor-not-allowed text-slate-500 select-none flex bg-slate-300 opacity-60"
             aria-disabled="true"
             >Co-op Mission(WIP)</a
@@ -489,13 +499,15 @@
             >Stardew</a
           >
           <a
+            routerLink="/app/location"
+            routerLinkActive="bg-pink-200 text-pink-600"
             class="block px-4 py-3 rounded-none font-black font-pixel transition-colors"
             [class.text-pink-300]="isDarkTheme()"
             [class.hover:bg-slate-700]="isDarkTheme()"
             [class.text-pink-500]="!isDarkTheme()"
             [class.hover:bg-pink-100]="!isDarkTheme()"
             (click)="toggleMobileMenu()"
-            >Co-op Mission</a
+            >Location</a
           >
 
           @if (currentUser() && currentUser()?.role === 'admin') {
@@ -578,7 +590,12 @@
     @if (!isProfileRoute()) {
       <app-verify-email-banner classAttribute="relative z-30 mx-2 md:mx-5 mt-2" />
     }
-    <app-error-banner [errorMessage]="errorMessage()" [showTick]="showTick()" classAttribute="relative z-30 mx-2 md:mx-5 " (isClose)="clearError()"></app-error-banner>
+    <app-error-banner
+      [errorMessage]="errorMessage()"
+      [showTick]="showTick()"
+      classAttribute="relative z-30 mx-2 md:mx-5 "
+      (isClose)="clearError()"
+    ></app-error-banner>
   </div>
   <router-outlet></router-outlet>
 </div>
