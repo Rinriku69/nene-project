@@ -2,12 +2,14 @@
     <div class="relative h-150 w-90 md:w-220 border-4 border-primary px-1 py-2 md:px-4 md:py-1 flex flex-col gap-1 bg-brand-white shadow-[4px_4px_#70024f]">
         <div #mapContainer class="border-3 border-secondary z-30 h-130 min-w-full relative">
         </div>
-        <button class="absolute! main-btn top-1 right-1 z-30 px-2">
-            <span class="font-pixel text-xl font-semibold text-brand-white">Stop Sharing</span>
+        <button class="absolute! main-btn top-1 right-1 z-30 px-2" (click)="toggleSharing()">
+            <span class="font-pixel text-xl font-semibold text-brand-white">{{ isSharing() ? "Stop Sharing" : "Share Location"}}</span>
         </button>
-        <span class="absolute left-20 font-extrabold z-40 -top-10 text-3xl text-slate-700 ">Test V1</span>
-        <div class="border-3 border-secondary flex-1">
-            <span></span>
+        <span class="absolute left-20 font-extrabold z-40 -top-10 text-3xl text-slate-700 ">Test V2</span>
+        <div class="border-3 border-secondary flex-1 py-1">
+           <!--  <div class="border-2 w-10">
+
+            </div> -->
         </div>
     </div>
 

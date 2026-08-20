@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class LocationController extends Controller
@@ -22,13 +23,14 @@ class LocationController extends Controller
             'text_status' => 'string|nullable'
         ]);
         $user = Auth::user();
+        Gate::authorize('isFriend',$user);
         try {
-            if ($user->role !== 'friend' && $user->role !== 'admin') {
+            /* if ($user->role !== 'friend' && $user->role !== 'admin') {
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Unauthorize'
                 ], 401);
-            }
+            } */
             UserLocation::query()->updateOrCreate(['user_id' => $user->id], $validated);
 
             return response()->json([
@@ -46,12 +48,13 @@ class LocationController extends Controller
     function getFriendLocation(): JsonResponse
     {
         $user = Auth::user();
-        if ($user->role !== 'friend' && $user->role !== 'admin') {
+        Gate::authorize('isFriend',$user);
+        /* if ($user->role !== 'friend' && $user->role !== 'admin') {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Unauthorize'
             ], 401);
-        }
+        } */
 
         /* $userLocations = UserLocation::query()->where('user_id', '!=', $user->id)->with(['user' => function ($query) {
             $query->where('role', 'friend')

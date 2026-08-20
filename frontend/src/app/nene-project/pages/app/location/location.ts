@@ -2,23 +2,40 @@ import {
   afterNextRender,
   afterRenderEffect,
   Component,
-  computed,
   DestroyRef,
   ElementRef,
   inject,
   signal,
   viewChild,
-  WritableSignal,
 } from '@angular/core';
 import * as L from 'leaflet';
 import { LocationService } from '../../../services/location.service';
-import { LocationResource, MapPosition, PositionUpdate, ResourceErrorResponse } from '../../../models/Resource';
+import {
+  UserLocationResource,
+  Position,
+  UserLocation,
+  ResourceErrorResponse,
+} from '../../../models/Resource';
 import { StateService } from '../../../services/state.service';
-import { Icons } from '../../../components/icons/icons';
+import { AuthService } from '../../../services/auth.service';
 
 const TIME_OUT = 10 * 1_000;
 const MAX_AGE = 0;
 const GET_POSITION_TIME = 5 * 1_000;
+const DELAY_AFTER_TOGGLE = 1 * 1_000;
+const PIN_SIZE = 32;
+
+interface PinAppearance {
+  imageUrl: string | null;
+  username: string;
+  isSelf: boolean;
+  isOnline: boolean;
+}
+
+interface FriendMarker {
+  marker: L.Marker;
+  iconKey: string;
+}
 
 @Component({
   selector: 'app-location',
@@ -30,53 +47,43 @@ export class Location {
   private readonly locationService = inject(LocationService);
   private readonly stateService = inject(StateService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly authService = inject(AuthService);
   private readonly mapContainer = viewChild.required<ElementRef<HTMLElement>>('mapContainer');
 
+  private readonly currentUser = this.authService.currentUserState();
   private readonly map = signal<L.Map | null>(null);
-  private readonly myMarker = signal<L.Marker | null>(null);
+  private myMarker: L.Marker | null = null;
+  private readonly friendMarkers = new Map<number, FriendMarker>();
   protected readonly isSharing = signal<boolean>(true);
-  private readonly myPosition = signal<PositionUpdate | null>(null);
-  private readonly myPositionState = computed<PositionUpdate | null>(() => this.myPosition());
+  private readonly myPosition = signal<UserLocation | null>(null);
+  private readonly friendPositions = signal<UserLocationResource[] | null>(null);
   private getUserId?: number;
+  private getFriendId?: number;
 
-  private readonly myPinIcon = L.divIcon({
-    className:'bg-blue-500 animate-pulse',
-    html:'<div></div>',
-    iconSize:[16,16],
-    iconAnchor:[8,8]
-  })
-  private readonly friendPinIcon = L.divIcon({
-    className:'bg-primary animate-pulse',
-    html:'<div></div>',
-    iconSize:[16,16],
-    iconAnchor:[8,8]
-  })
+  private readonly myPinIcon = this.buildPinIcon({
+    imageUrl: this.currentUser?.image_url ?? null,
+    username: this.currentUser?.username ?? '?',
+    isSelf: true,
+    isOnline: true,
+  });
 
   protected readonly textStatus = signal<string | null>(null);
 
   constructor() {
     afterRenderEffect(() => {
-      /* if (this.mapContainer()) {
-        const lat = this.myLocation()?.lat ?? 51.505;
-        const long = this.myLocation()?.long ?? -0.09;
-        
-      } */
-      const currentPosition = this.myPositionState();
+      const currentPosition = this.myPosition();
       const leafletMap = this.map();
       if (currentPosition && leafletMap) {
-        const lat = currentPosition.lat;
-        const long = currentPosition.long;
-        const existingMarker = this.myMarker();
-
-        if (!existingMarker) {
-          leafletMap.setView([lat, long], leafletMap.getZoom(), { animate: true });
-          this.myMarker.set(L.marker([lat, long],{icon: this.myPinIcon}).addTo(leafletMap));
-        } else {
-          existingMarker.setLatLng([lat, long]);
-        }
+        this.syncMyMarker(leafletMap, currentPosition, this.myPinIcon);
       }
-      /*  console.log('after render run')
-     console.log(this.myPositionState()) */
+    });
+
+    afterRenderEffect(() => {
+      const leafletMap = this.map();
+      const friendPositions = this.friendPositions();
+      if (friendPositions && leafletMap) {
+        this.syncFriendMarker(leafletMap, friendPositions);
+      }
     });
 
     afterNextRender(() => {
@@ -85,13 +92,122 @@ export class Location {
         this.map.set(leafletMap);
         this.loadTileLayer(leafletMap);
       }
-      this.updateUserMapPosition();
+      this.updateUserPosition();
+      this.updateFriendLocation();
     });
 
     this.destroyRef.onDestroy(() => {
       this.map()?.remove();
       this.map.set(null);
+      this.myMarker = null;
+      this.friendMarkers.clear();
       clearTimeout(this.getUserId);
+      clearTimeout(this.getFriendId);
+    });
+  }
+
+  setMapView(map: L.Map, position: Position): void {
+    map.setView([position.lat, position.long], map.getZoom(), { animate: true });
+  }
+
+
+  private pinIconKey(pin: PinAppearance): string {
+    return `${pin.imageUrl ?? ''}|${pin.isOnline}`;
+  }
+
+  private buildPinIcon(pin: PinAppearance): L.DivIcon {
+    const wrapper = document.createElement('div');
+    wrapper.className = [
+      'w-8 h-8 rounded-none border-2 overflow-hidden bg-brand-white',
+      'flex items-center justify-center font-pixel font-black text-sm',
+      pin.isSelf
+        ? 'border-sky-500 text-sky-700 shadow-[2px_2px_0_#0369a1]'
+        : 'border-primary text-primary shadow-[2px_2px_0_#70024f]',
+      pin.isOnline ? 'animate-pulse' : 'grayscale opacity-50',
+    ].join(' ');
+
+    if (pin.imageUrl) {
+      const avatar = document.createElement('img');
+      avatar.className = 'w-full h-full object-cover';
+      avatar.alt = '';
+      avatar.src = pin.imageUrl;
+      avatar.onerror = () => {
+        avatar.remove();
+        wrapper.textContent = pin.username.charAt(0).toUpperCase();
+      };
+      wrapper.appendChild(avatar);
+    } else {
+      wrapper.textContent = pin.username.charAt(0).toUpperCase();
+    }
+
+    return L.divIcon({
+      html: wrapper,
+      className: '',
+      iconSize: [PIN_SIZE, PIN_SIZE],
+      iconAnchor: [PIN_SIZE / 2, PIN_SIZE / 2],
+      tooltipAnchor: [0, -PIN_SIZE / 2],
+    });
+  }
+
+  private buildPinLabel(username: string, textStatus: string | null): HTMLElement {
+    const label = document.createElement('span');
+    label.className = 'font-pixel text-xs';
+    label.textContent = textStatus ? `${username} · ${textStatus}` : username;
+    return label;
+  }
+
+  syncMyMarker(map: L.Map, position: Position, icon: L.DivIcon): void {
+    if (!this.myMarker) {
+      this.setMapView(map, position);
+      this.myMarker = L.marker([position.lat, position.long], { icon })
+        .addTo(map)
+        .bindTooltip(this.buildPinLabel(this.currentUser?.username ?? 'Me', this.textStatus()), {
+          direction: 'top',
+          permanent: true,
+        });
+    } else {
+      this.myMarker.setLatLng([position.lat, position.long]);
+    }
+  }
+
+  syncFriendMarker(map: L.Map, friendPositions: UserLocationResource[]): void {
+    const seen = new Set<number>();
+
+    friendPositions.forEach((userPosition) => {
+      seen.add(userPosition.user_id);
+
+      const pin: PinAppearance = {
+        imageUrl: userPosition.image_url,
+        username: userPosition.username,
+        isSelf: false,
+        isOnline: userPosition.is_online,
+      };
+      const iconKey = this.pinIconKey(pin);
+      const existing = this.friendMarkers.get(userPosition.user_id);
+
+      if (!existing) {
+        const marker = L.marker([userPosition.lat, userPosition.long], {
+          icon: this.buildPinIcon(pin),
+        })
+          .addTo(map)
+          .bindTooltip(this.buildPinLabel(userPosition.username, userPosition.text_status), {
+            direction: 'top',
+            permanent: true,
+          });
+
+        this.friendMarkers.set(userPosition.user_id, { marker, iconKey });
+        return;
+      }
+
+      existing.marker.setLatLng([userPosition.lat, userPosition.long]);
+      existing.marker.setTooltipContent(
+        this.buildPinLabel(userPosition.username, userPosition.text_status),
+      );
+
+      if (existing.iconKey !== iconKey) {
+        existing.marker.setIcon(this.buildPinIcon(pin));
+        existing.iconKey = iconKey;
+      }
     });
   }
 
@@ -106,7 +222,7 @@ export class Location {
     openStreetMapTiles.addTo(map);
   }
 
-  updatePosition(position: PositionUpdate): void {
+  updatePosition(position: UserLocation): void {
     this.locationService.updatePosition(position).subscribe({
       error: (err: ResourceErrorResponse) => {
         this.stateService.setErrorMessage(`Error ${err.error.message}`);
@@ -114,12 +230,12 @@ export class Location {
     });
   }
 
-  updateUserMapPosition(): void {
+  updateUserPosition(): void {
     if (!this.isSharing()) return;
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        const currentPosition: PositionUpdate = {
+        const currentPosition: UserLocation = {
           lat: position.coords.latitude,
           long: position.coords.longitude,
           text_status: this.textStatus(),
@@ -138,18 +254,29 @@ export class Location {
         maximumAge: MAX_AGE,
       },
     );
-    // console.log('updated')
-    this.getUserId = setTimeout(() => this.updateUserMapPosition(), GET_POSITION_TIME);
+    this.getUserId = setTimeout(() => this.updateUserPosition(), GET_POSITION_TIME);
   }
 
-  getFriendLocation(): void{
+  updateFriendLocation(): void {
+    this.getFriendLocation();
+    this.getFriendId = setTimeout(() => this.updateFriendLocation(), GET_POSITION_TIME);
+  }
+
+  getFriendLocation(): void {
     this.locationService.getFriendLocation().subscribe({
-      next:(res)=>{
-
+      next: (res) => {
+        this.friendPositions.set(res);
       },
-      error:(err)=>{
+      error: (_) => {
+        this.stateService.setErrorMessage(`Error Unable to get friends location.`);
+      },
+    });
+  }
 
-      }
-    })
+  toggleSharing(): void {
+    this.isSharing.set(!this.isSharing());
+    if (this.isSharing()) {
+      setTimeout(() => this.updateUserPosition(), DELAY_AFTER_TOGGLE);
+    }
   }
 }
