@@ -126,7 +126,7 @@ export class Location {
         };
         // console.log(position)
         this.myPosition.set(currentPosition);
-        // this.updatePosition(currentPosition);
+        this.updatePosition(currentPosition);
       },
       (error) => {
         // console.error(`Error ${error.message}`)
