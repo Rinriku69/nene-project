@@ -6,6 +6,7 @@ use App\Http\Resources\UserLocationResource;
 use App\Models\User;
 use App\Models\UserLocation;
 use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,14 +16,13 @@ class LocationController extends Controller
 {
     function update(Request $request): JsonResponse
     {
+        $validated = $request->validate([
+            'lat' => 'required|numeric|between:-90,90',
+            'long' => 'required|numeric|between:-180,180',
+            'text_status' => 'string|nullable'
+        ]);
+        $user = Auth::user();
         try {
-
-            $validated = $request->validate([
-                'lat' => 'required|numeric|between:-90,90',
-                'long' => 'required|numeric|between:-180,180',
-                'text_status' => 'string|nullable'
-            ]);
-            $user = Auth::user();
             if ($user->role !== 'friend' && $user->role !== 'admin') {
                 return response()->json([
                     'status' => 'error',
@@ -35,10 +35,10 @@ class LocationController extends Controller
                 'status' => 'ok',
                 'message' => 'successfully updated location'
             ], 200);
-        } catch (Exception $e) {
+        } catch (QueryException $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'update location failed'
+                'message' => 'update location failed ' . $e->getMessage() 
             ], 400);
         }
     }
