@@ -3,7 +3,7 @@ import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LocationResource, PositionUpdate, ResourceResponse } from '../models/Resource';
 
-const BASE_API_URL = 'http://localhost:8000/api';
+const BASE_API_URL = '/api';
 @Service()
 export class LocationService {
     private readonly http = inject(HttpClient);
