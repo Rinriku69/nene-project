@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\JWTAuthController;
 use App\Http\Controllers\GachaController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SafeZoneMessageController;
@@ -104,6 +105,14 @@ Route::middleware((['auth']))
             ->name('stardew.')
             ->group(static function():void{
                 Route::get('/getSaves','getSaves')->name('getSaves')->middleware('throttle:30,1');
+            });
+
+        Route::controller(LocationController::class)
+            ->prefix('/location')
+            ->name('location.')
+            ->group(static function():void{
+                Route::post('/update','update')->name('update')->middleware(['throttle:60,1','verified']);
+                Route::get('/getFriendLocation','getFriendLocation')->name('getFriendLocation')->middleware(['throttle:60,1','verified']);
             });
     });
 
