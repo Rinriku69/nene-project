@@ -55,8 +55,8 @@ export class Location {
   private myMarker: L.Marker | null = null;
   private readonly friendMarkers = new Map<number, FriendMarker>();
   protected readonly isSharing = signal<boolean>(true);
-  private readonly myPosition = signal<UserLocation | null>(null);
-  private readonly friendPositions = signal<UserLocationResource[] | null>(null);
+  protected readonly myPosition = signal<UserLocation | null>(null);
+  protected readonly friendPositions = signal<UserLocationResource[] | null>(null);
   private getUserId?: number;
   private getFriendId?: number;
 
@@ -106,8 +106,10 @@ export class Location {
     });
   }
 
-  setMapView(map: L.Map, position: Position): void {
-    map.setView([position.lat, position.long], map.getZoom(), { animate: true });
+  setMapView(position: Position): void {
+    const leafletMap = this.map()
+    if(!leafletMap) return;
+    leafletMap.setView([position.lat, position.long], leafletMap.getZoom(), { animate: true });
   }
 
 
@@ -158,7 +160,7 @@ export class Location {
 
   syncMyMarker(map: L.Map, position: Position, icon: L.DivIcon): void {
     if (!this.myMarker) {
-      this.setMapView(map, position);
+      this.setMapView(position);
       this.myMarker = L.marker([position.lat, position.long], { icon })
         .addTo(map)
         .bindTooltip(this.buildPinLabel(this.currentUser?.username ?? 'Me', this.textStatus()), {
@@ -171,10 +173,10 @@ export class Location {
   }
 
   syncFriendMarker(map: L.Map, friendPositions: UserLocationResource[]): void {
-    const seen = new Set<number>();
+    // const seen = new Set<number>();
 
     friendPositions.forEach((userPosition) => {
-      seen.add(userPosition.user_id);
+      // seen.add(userPosition.user_id);
 
       const pin: PinAppearance = {
         imageUrl: userPosition.image_url,
@@ -209,6 +211,7 @@ export class Location {
         existing.iconKey = iconKey;
       }
     });
+
   }
 
   loadTileLayer(map: L.Map): void {
