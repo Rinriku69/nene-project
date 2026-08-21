@@ -171,10 +171,10 @@ export class Location {
   }
 
   syncFriendMarker(map: L.Map, friendPositions: UserLocationResource[]): void {
-    const seen = new Set<number>();
+    // const seen = new Set<number>();
 
     friendPositions.forEach((userPosition) => {
-      seen.add(userPosition.user_id);
+      // seen.add(userPosition.user_id);
 
       const pin: PinAppearance = {
         imageUrl: userPosition.image_url,
@@ -209,6 +209,7 @@ export class Location {
         existing.iconKey = iconKey;
       }
     });
+
   }
 
   loadTileLayer(map: L.Map): void {
