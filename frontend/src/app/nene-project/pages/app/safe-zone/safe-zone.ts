@@ -25,7 +25,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   selector: 'app-safe-zone',
   imports: [SakuraComponent, FormField, UpperCasePipe, Icons],
   templateUrl: './safe-zone.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './safe-zone.css',
 })
 export class SafeZone implements OnInit {
