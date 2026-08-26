@@ -23,7 +23,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-dashboard',
   imports: [Icons, RouterLink],
   templateUrl: './dashboard.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './dashboard.css',
 })
 export class Dashboard {

@@ -20,17 +20,11 @@ class LocationController extends Controller
         $validated = $request->validate([
             'lat' => 'required|numeric|between:-90,90',
             'long' => 'required|numeric|between:-180,180',
-            'text_status' => 'string|nullable'
+            'text_status' => 'string|nullable|max:50'
         ]);
         $user = Auth::user();
         Gate::authorize('isFriend',$user);
         try {
-            /* if ($user->role !== 'friend' && $user->role !== 'admin') {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Unauthorize'
-                ], 401);
-            } */
             UserLocation::query()->updateOrCreate(['user_id' => $user->id], $validated);
 
             return response()->json([
@@ -49,18 +43,6 @@ class LocationController extends Controller
     {
         $user = Auth::user();
         Gate::authorize('isFriend',$user);
-        /* if ($user->role !== 'friend' && $user->role !== 'admin') {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Unauthorize'
-            ], 401);
-        } */
-
-        /* $userLocations = UserLocation::query()->where('user_id', '!=', $user->id)->with(['user' => function ($query) {
-            $query->where('role', 'friend')
-                ->orWhere('role', 'admin')
-                ->select('id', 'username', 'image_url');
-        }])->get(); */
 
         $userLocations = UserLocation::query()->where('user_id','!=',$user->id)->whereHas('user', function ($query){
             $query->where('role','friend')
@@ -68,5 +50,15 @@ class LocationController extends Controller
         })->with('user:id,username,image_url')->get();
 
         return response()->json(UserLocationResource::collection($userLocations),200);
+    }
+
+    function getMyLocation(): JsonResponse
+    {
+        $user = Auth::user();
+        Gate::authorize('isFriend',$user);
+        $userLocation = UserLocation::query()->where('user_id',$user->id)
+            ->with('user:id,username,image_url')->first();
+
+        return response()->json($userLocation ? new UserLocationResource($userLocation) : null, 200);
     }
 }

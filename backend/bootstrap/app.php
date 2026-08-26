@@ -22,7 +22,9 @@ return Application::configure(basePath: dirname(__DIR__))
             '192.168.0.0/16',
         ]);
         $middleware->statefulApi();
-        $middleware->alias(['verified' => \App\Http\Middleware\EnsureEmailIsVerified::class]);
+        $middleware->alias([
+            'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
+            ]);
         $middleware->preventRequestForgery(except: [
             'api/auth/jwt/*',
             'api/stardew/*'
