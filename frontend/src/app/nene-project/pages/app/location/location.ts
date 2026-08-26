@@ -23,6 +23,7 @@ const TIME_OUT = 10 * 1_000;
 const MAX_AGE = 0;
 const GET_POSITION_TIME = 5 * 1_000;
 const DELAY_AFTER_TOGGLE = 1 * 1_000;
+const TICK_TIME = 30 * 1_000;
 const PIN_SIZE = 32;
 
 interface PinAppearance {
@@ -68,6 +69,10 @@ export class Location {
   });
 
   protected readonly textStatus = signal<string | null>(null);
+  protected readonly highAccuracy = signal<boolean>(true);
+  protected readonly myLastUpdate = signal<Date | null>(null);
+  private readonly now = signal<number>(Date.now());
+  private tickId?: number;
 
   constructor() {
     afterRenderEffect(() => {
@@ -92,8 +97,9 @@ export class Location {
         this.map.set(leafletMap);
         this.loadTileLayer(leafletMap);
       }
-      this.updateUserPosition();
+      this.restoreMyLocation();
       this.updateFriendLocation();
+      this.tickId = setInterval(() => this.now.set(Date.now()), TICK_TIME);
     });
 
     this.destroyRef.onDestroy(() => {
@@ -103,6 +109,7 @@ export class Location {
       this.friendMarkers.clear();
       clearTimeout(this.getUserId);
       clearTimeout(this.getFriendId);
+      clearInterval(this.tickId);
     });
   }
 
@@ -169,6 +176,9 @@ export class Location {
         });
     } else {
       this.myMarker.setLatLng([position.lat, position.long]);
+      this.myMarker.setTooltipContent(
+        this.buildPinLabel(this.currentUser?.username ?? 'Me', this.textStatus()),
+      );
     }
   }
 
@@ -245,6 +255,7 @@ export class Location {
         };
         // console.log(position)
         this.myPosition.set(currentPosition);
+        this.myLastUpdate.set(new Date());
         this.updatePosition(currentPosition);
       },
       (error) => {
@@ -252,7 +263,7 @@ export class Location {
         this.stateService.setErrorMessage(`Error ${error.message}`);
       },
       {
-        enableHighAccuracy: true,
+        enableHighAccuracy: this.highAccuracy(),
         timeout: TIME_OUT,
         maximumAge: MAX_AGE,
       },
@@ -278,8 +289,49 @@ export class Location {
 
   toggleSharing(): void {
     this.isSharing.set(!this.isSharing());
+    clearTimeout(this.getUserId);
     if (this.isSharing()) {
-      setTimeout(() => this.updateUserPosition(), DELAY_AFTER_TOGGLE);
+      this.getUserId = setTimeout(() => this.updateUserPosition(), DELAY_AFTER_TOGGLE);
     }
+  }
+
+  toggleHighAccuracy(): void {
+    this.highAccuracy.set(!this.highAccuracy());
+  }
+
+  setTextStatus(event: Event): void {
+    const value = (event.target as HTMLInputElement).value.trim();
+    this.textStatus.set(value || null);
+  }
+
+  restoreMyLocation(): void {
+    this.locationService.getMyLocation().subscribe({
+      // this callback runs when the response arrives; polling only starts from inside it
+      // so the first POST already carries the real text_status instead of null
+      next: (res) => {
+        if (res) {
+          this.textStatus.set(res.text_status);
+          this.myLastUpdate.set(new Date(res.updated));
+        }
+        this.updateUserPosition();
+      },
+      error: (_) => {
+        this.stateService.setErrorMessage(`Error Unable to restore your last location.`);
+        this.updateUserPosition();
+      },
+    });
+  }
+
+  timeAgo(value: Date | string | null): string {
+    if (!value) return 'no update yet';
+
+    const minutes = Math.floor((this.now() - new Date(value).getTime()) / 60_000);
+    if (minutes < 1) return 'just now';
+    if (minutes < 60) return `${minutes}m ago`;
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h ${minutes % 60}m ago`;
+
+    return `${Math.floor(hours / 24)}d ${hours % 24}h ago`;
   }
 }

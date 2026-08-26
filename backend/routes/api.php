@@ -113,6 +113,7 @@ Route::middleware((['auth']))
             ->group(static function():void{
                 Route::post('/update','update')->name('update')->middleware(['throttle:60,1','verified']);
                 Route::get('/getFriendLocation','getFriendLocation')->name('getFriendLocation')->middleware(['throttle:60,1','verified']);
+                Route::get('/getMyLocation','getMyLocation')->name('getMyLocation')->middleware(['throttle:60,1','verified']);
             });
     });
 

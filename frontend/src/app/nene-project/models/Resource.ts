@@ -158,7 +158,7 @@ export interface UserLocationResource extends Position {
   user_id:number;
   username:string;
   image_url:string|null;
-  text_status:string;
+  text_status:string|null;
   updated:string;
   is_online:boolean;
 }
