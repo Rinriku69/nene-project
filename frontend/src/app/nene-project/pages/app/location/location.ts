@@ -98,7 +98,7 @@ export class Location {
         this.loadTileLayer(leafletMap);
       }
       this.restoreMyLocation();
-      this.updateFriendLocation();
+      this.runFriendLocation();
       this.tickId = setInterval(() => this.now.set(Date.now()), TICK_TIME);
     });
 
@@ -113,12 +113,97 @@ export class Location {
     });
   }
 
-  setMapView(position: Position): void {
-    const leafletMap = this.map()
-    if(!leafletMap) return;
-    leafletMap.setView([position.lat, position.long], leafletMap.getZoom(), { animate: true });
+  loadTileLayer(map: L.Map): void {
+    const openStreetMapTiles: L.TileLayer = L.tileLayer(
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+      },
+    );
+    openStreetMapTiles.addTo(map);
   }
 
+  toggleSharing(): void {
+    this.isSharing.set(!this.isSharing());
+    clearTimeout(this.getUserId);
+    if (this.isSharing()) {
+      this.getUserId = setTimeout(() => this.runMyPosition(), DELAY_AFTER_TOGGLE);
+    }
+  }
+
+  toggleHighAccuracy(): void {
+    this.highAccuracy.set(!this.highAccuracy());
+  }
+
+  protected setTextStatus(event: Event): void {
+    const value = (event.target as HTMLInputElement).value.trim();
+    this.textStatus.set(value || null);
+  }
+
+  syncMyMarker(map: L.Map, position: Position, icon: L.DivIcon): void {
+    if (!this.myMarker) {
+      this.setMapView(position);
+      this.myMarker = L.marker([position.lat, position.long], { icon })
+        .addTo(map)
+        .bindTooltip(this.buildPinLabel(this.currentUser?.username ?? 'Me', this.textStatus()), {
+          direction: 'top',
+          permanent: true,
+        });
+    } else {
+      this.myMarker.setLatLng([position.lat, position.long]);
+      this.myMarker.setTooltipContent(
+        this.buildPinLabel(this.currentUser?.username ?? 'Me', this.textStatus()),
+      );
+    }
+  }
+
+  syncFriendMarker(map: L.Map, friendPositions: UserLocationResource[]): void {
+    // const seen = new Set<number>();
+
+    friendPositions.forEach((friendPosition) => {
+      // seen.add(friendPosition.user_id);
+
+      const pin: PinAppearance = {
+        imageUrl: friendPosition.image_url,
+        username: friendPosition.username,
+        isSelf: false,
+        isOnline: friendPosition.is_online,
+      };
+      const iconKey = this.pinIconKey(pin);
+      const existing = this.friendMarkers.get(friendPosition.user_id);
+
+      if (!existing) {
+        const marker = L.marker([friendPosition.lat, friendPosition.long], {
+          icon: this.buildPinIcon(pin),
+        })
+          .addTo(map)
+          .bindTooltip(this.buildPinLabel(friendPosition.username, friendPosition.text_status), {
+            direction: 'top',
+            permanent: true,
+          });
+
+        this.friendMarkers.set(friendPosition.user_id, { marker, iconKey });
+        return;
+      }
+
+      existing.marker.setLatLng([friendPosition.lat, friendPosition.long]);
+      existing.marker.setTooltipContent(
+        this.buildPinLabel(friendPosition.username, friendPosition.text_status),
+      );
+
+      if (existing.iconKey !== iconKey) {
+        existing.marker.setIcon(this.buildPinIcon(pin));
+        existing.iconKey = iconKey;
+      }
+    });
+  }
+
+  setMapView(position: Position): void {
+    const leafletMap = this.map();
+    if (!leafletMap) return;
+    leafletMap.setView([position.lat, position.long], leafletMap.getZoom(), { animate: true });
+  }
 
   private pinIconKey(pin: PinAppearance): string {
     return `${pin.imageUrl ?? ''}|${pin.isOnline}`;
@@ -165,115 +250,17 @@ export class Location {
     return label;
   }
 
-  syncMyMarker(map: L.Map, position: Position, icon: L.DivIcon): void {
-    if (!this.myMarker) {
-      this.setMapView(position);
-      this.myMarker = L.marker([position.lat, position.long], { icon })
-        .addTo(map)
-        .bindTooltip(this.buildPinLabel(this.currentUser?.username ?? 'Me', this.textStatus()), {
-          direction: 'top',
-          permanent: true,
-        });
-    } else {
-      this.myMarker.setLatLng([position.lat, position.long]);
-      this.myMarker.setTooltipContent(
-        this.buildPinLabel(this.currentUser?.username ?? 'Me', this.textStatus()),
-      );
-    }
-  }
+  timeAgo(value: Date | string | null): string {
+    if (!value) return 'no update yet';
 
-  syncFriendMarker(map: L.Map, friendPositions: UserLocationResource[]): void {
-    // const seen = new Set<number>();
+    const minutes = Math.floor((this.now() - new Date(value).getTime()) / 60_000);
+    if (minutes < 1) return 'just now';
+    if (minutes < 60) return `${minutes}m ago`;
 
-    friendPositions.forEach((userPosition) => {
-      // seen.add(userPosition.user_id);
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h ${minutes % 60}m ago`;
 
-      const pin: PinAppearance = {
-        imageUrl: userPosition.image_url,
-        username: userPosition.username,
-        isSelf: false,
-        isOnline: userPosition.is_online,
-      };
-      const iconKey = this.pinIconKey(pin);
-      const existing = this.friendMarkers.get(userPosition.user_id);
-
-      if (!existing) {
-        const marker = L.marker([userPosition.lat, userPosition.long], {
-          icon: this.buildPinIcon(pin),
-        })
-          .addTo(map)
-          .bindTooltip(this.buildPinLabel(userPosition.username, userPosition.text_status), {
-            direction: 'top',
-            permanent: true,
-          });
-
-        this.friendMarkers.set(userPosition.user_id, { marker, iconKey });
-        return;
-      }
-
-      existing.marker.setLatLng([userPosition.lat, userPosition.long]);
-      existing.marker.setTooltipContent(
-        this.buildPinLabel(userPosition.username, userPosition.text_status),
-      );
-
-      if (existing.iconKey !== iconKey) {
-        existing.marker.setIcon(this.buildPinIcon(pin));
-        existing.iconKey = iconKey;
-      }
-    });
-
-  }
-
-  loadTileLayer(map: L.Map): void {
-    const openStreetMapTiles: L.TileLayer = L.tileLayer(
-      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
-      },
-    );
-    openStreetMapTiles.addTo(map);
-  }
-
-  updatePosition(position: UserLocation): void {
-    this.locationService.updatePosition(position).subscribe({
-      error: (err: ResourceErrorResponse) => {
-        this.stateService.setErrorMessage(`Error ${err.error.message}`);
-      },
-    });
-  }
-
-  updateUserPosition(): void {
-    if (!this.isSharing()) return;
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const currentPosition: UserLocation = {
-          lat: position.coords.latitude,
-          long: position.coords.longitude,
-          text_status: this.textStatus(),
-        };
-        // console.log(position)
-        this.myPosition.set(currentPosition);
-        this.myLastUpdate.set(new Date());
-        this.updatePosition(currentPosition);
-      },
-      (error) => {
-        // console.error(`Error ${error.message}`)
-        this.stateService.setErrorMessage(`Error ${error.message}`);
-      },
-      {
-        enableHighAccuracy: this.highAccuracy(),
-        timeout: TIME_OUT,
-        maximumAge: MAX_AGE,
-      },
-    );
-    this.getUserId = setTimeout(() => this.updateUserPosition(), GET_POSITION_TIME);
-  }
-
-  updateFriendLocation(): void {
-    this.getFriendLocation();
-    this.getFriendId = setTimeout(() => this.updateFriendLocation(), GET_POSITION_TIME);
+    return `${Math.floor(hours / 24)}d ${hours % 24}h ago`;
   }
 
   getFriendLocation(): void {
@@ -287,51 +274,63 @@ export class Location {
     });
   }
 
-  toggleSharing(): void {
-    this.isSharing.set(!this.isSharing());
-    clearTimeout(this.getUserId);
-    if (this.isSharing()) {
-      this.getUserId = setTimeout(() => this.updateUserPosition(), DELAY_AFTER_TOGGLE);
-    }
+  private updateMyPosition(position: UserLocation): void {
+    this.locationService.updatePosition(position).subscribe({
+      error: (err: ResourceErrorResponse) => {
+        this.stateService.setErrorMessage(`Error ${err.error.message}`);
+      },
+    });
   }
 
-  toggleHighAccuracy(): void {
-    this.highAccuracy.set(!this.highAccuracy());
+  private getAndUpdateMyPosition(): void {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const currentPosition: UserLocation = {
+          lat: position.coords.latitude,
+          long: position.coords.longitude,
+          text_status: this.textStatus(),
+        };
+        // console.log(position)
+        this.myPosition.set(currentPosition);
+        this.myLastUpdate.set(new Date());
+        this.updateMyPosition(currentPosition);
+      },
+      (error) => {
+        // console.error(`Error ${error.message}`)
+        this.stateService.setErrorMessage(`Error ${error.message}`);
+      },
+      {
+        enableHighAccuracy: this.highAccuracy(),
+        timeout: TIME_OUT,
+        maximumAge: MAX_AGE,
+      },
+    );
   }
 
-  setTextStatus(event: Event): void {
-    const value = (event.target as HTMLInputElement).value.trim();
-    this.textStatus.set(value || null);
+  runMyPosition(): void {
+    if (!this.isSharing()) return;
+    this.getAndUpdateMyPosition();
+    this.getUserId = setTimeout(() => this.runMyPosition(), GET_POSITION_TIME);
+  }
+
+  runFriendLocation(): void {
+    this.getFriendLocation();
+    this.getFriendId = setTimeout(() => this.runFriendLocation(), GET_POSITION_TIME);
   }
 
   restoreMyLocation(): void {
     this.locationService.getMyLocation().subscribe({
-      // this callback runs when the response arrives; polling only starts from inside it
-      // so the first POST already carries the real text_status instead of null
       next: (res) => {
         if (res) {
           this.textStatus.set(res.text_status);
           this.myLastUpdate.set(new Date(res.updated));
         }
-        this.updateUserPosition();
+        this.runMyPosition();
       },
       error: (_) => {
         this.stateService.setErrorMessage(`Error Unable to restore your last location.`);
-        this.updateUserPosition();
+        this.runMyPosition();
       },
     });
-  }
-
-  timeAgo(value: Date | string | null): string {
-    if (!value) return 'no update yet';
-
-    const minutes = Math.floor((this.now() - new Date(value).getTime()) / 60_000);
-    if (minutes < 1) return 'just now';
-    if (minutes < 60) return `${minutes}m ago`;
-
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) return `${hours}h ${minutes % 60}m ago`;
-
-    return `${Math.floor(hours / 24)}d ${hours % 24}h ago`;
   }
 }
