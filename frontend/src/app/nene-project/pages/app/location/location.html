@@ -1,14 +1,75 @@
-<div class="relative min-h-[calc(100vh-100px)] md:min-h-[calc(100vh-200px)] flex px-5 py-10 md:p-10 justify-center">
-    <div class="relative h-150 w-90 md:w-220 border-4 border-primary px-1 py-2 md:px-4 md:py-1 flex flex-col gap-1 bg-brand-white shadow-[4px_4px_#70024f]">
-        <div #mapContainer class="border-3 border-secondary z-30 h-130 min-w-full relative">
-        </div>
-        <button class="absolute! main-btn top-1 right-1 z-30 px-2">
-            <span class="font-pixel text-xl font-semibold text-brand-white">Stop Sharing</span>
-        </button>
-        <span class="absolute left-20 font-extrabold z-40 -top-10 text-3xl text-slate-700 ">Test V1</span>
-        <div class="border-3 border-secondary flex-1">
-            <span></span>
-        </div>
+<div
+  class="relative min-h-[calc(100vh-100px)] md:min-h-[calc(100vh-200px)] flex px-5 py-10 md:p-10 justify-center"
+>
+  <div
+    class="relative h-150 w-90 md:w-220 border-4 border-primary px-1 py-2 md:px-4 md:py-1 flex flex-col gap-1 bg-brand-white shadow-[4px_4px_#70024f]"
+  >
+    <div #mapContainer class="border-3 border-secondary z-30 h-130 min-w-full relative"></div>
+
+    <div class="absolute top-1 right-1 z-30 flex flex-col items-end gap-2">
+      <button class="main-btn px-2" (click)="toggleSharing()">
+        <span class="font-pixel text-xl font-semibold text-brand-white">{{
+          isSharing() ? 'Stop Sharing' : 'Share Location'
+        }}</span>
+      </button>
+
+      <button class="main-btn px-2" (click)="toggleHighAccuracy()">
+        <span class="font-pixel text-sm font-semibold text-brand-white">{{
+          highAccuracy() ? 'GPS: High' : 'GPS: Low'
+        }}</span>
+      </button>
+
+      <input
+        type="text"
+        maxlength="50"
+        placeholder="What are you doing?"
+        class="w-45 rounded-none border-4 border-pink-500 bg-brand-white px-2 py-1 font-pixel text-sm text-primary shadow-[4px_4px_0_#db2777] focus:outline-none"
+        [value]="textStatus() ?? ''"
+        (input)="setTextStatus($event)"
+      />
     </div>
 
+    <div class="border-3 border-secondary flex flex-1 py-1 px-1 gap-2 overflow-x-auto">
+      <div
+        class="flex w-auto gap-2 h-full p-1 hover:scale-105 cursor-pointer"
+        (click)="setMapView(myPosition() ?? {lat:51.5074,long:0.1278})"
+      >
+        <div class="border-2 border-sky-700 w-6 shrink-0 bg-sky-500"></div>
+        <div class="flex flex-col leading-tight">
+          <span class="text-sm font-pixel font-semibold">You</span>
+          <span class="text-xs font-mc text-slate-500">
+            {{ timeAgo(myLastUpdate()) }}
+          </span>
+          @if (textStatus()) {
+            <span class="text-xs font-pixel text-primary wrap-break-word">{{ textStatus() }}</span>
+          }
+        </div>
+      </div>
+
+      @for (friend of friendPositions(); track friend.user_id) {
+        <div
+          class="flex w-auto gap-2 h-full p-1 hover:scale-105 cursor-pointer"
+          (click)="setMapView(friend)"
+        >
+          <div
+            class="border-2 w-6 shrink-0"
+            [class.bg-gray-400]="!friend.is_online"
+            [class.bg-pink-400]="friend.is_online"
+            [class.border-primary]="friend.is_online"
+          ></div>
+          <div class="flex flex-col leading-tight">
+            <span class="text-sm font-pixel font-semibold">{{ friend.username }}</span>
+            <span class="text-xs font-mc text-slate-500">
+              {{ timeAgo(friend.updated) }}
+            </span>
+            @if (friend.text_status) {
+              <span class="text-xs font-pixel text-primary wrap-break-word">{{
+                friend.text_status
+              }}</span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
 </div>

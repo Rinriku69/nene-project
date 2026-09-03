@@ -15,6 +15,7 @@ class UserLocationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'user_id'=>$this->user->id,
             'username'=> $this->user->username,
             'image_url'=> $this->user->image_url,
             'lat'=> $this->lat,
