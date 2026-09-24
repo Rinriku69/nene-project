@@ -28,8 +28,7 @@ class EmailVerificationTest extends TestCase
 
         $response = $this->actingAs($user)->postJson('/api/gacha/pull', ['type' => 1]);
 
-        // The pull itself may fail deeper in the controller (no items seeded),
-        // but the middleware must not be the thing rejecting a verified user.
+
         $this->assertNotSame(403, $response->status());
     }
 
