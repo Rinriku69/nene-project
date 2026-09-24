@@ -20,7 +20,7 @@ class AuthController extends Controller
         $validated = $request->validate([
             'username' => ['required', 'string', 'max:20', 'unique:users,username'],
             'email' => ['required',Email::default()->validateMxRecord(), 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'] // หาfield password_confirmation ให้เอง
+            'password' => ['required', 'string', 'min:8', 'confirmed'] // check with password_confirmation 
         ]);
 
         try {
@@ -41,7 +41,7 @@ class AuthController extends Controller
         } catch (QueryException $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => $e->getMessage(),
+                'message' => 'Email or Username is already taken',
             ], 400);
         }
     }
