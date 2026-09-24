@@ -1,7 +1,5 @@
 User-agent: *
-Disallow: /login/
-Disallow: /userManagement/
-Disallow: /gachaManagement/
-Disallow: /profile/
-
-
+Disallow: /app/
+Disallow: /admin/
+Disallow: /auth/
+Disallow: /profile
