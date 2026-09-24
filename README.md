@@ -1,4 +1,4 @@
-# Nene and The GANG 🌸
+# Nene and The GANG 
 
 A gamified web app I built as a gift for a long-distance relationship. It has a gacha (random-pull) system, a pet shop, a message board, live location sharing, and a Stardew Valley save viewer, all in a cute pink pixel-art style.
 
