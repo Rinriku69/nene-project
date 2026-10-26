@@ -1,6 +1,7 @@
 
-FROM php:8.4-fpm
+FROM php:8.4.27-fpm
 
+RUN echo "session.upload_progress.enabled=0" > /usr/local/etc/php/conf.d/zz-security.ini
 
 RUN apt-get update && apt-get install -y \
     libpq-dev \
