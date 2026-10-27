@@ -1,5 +1,5 @@
 
-FROM php:8.4.27-fpm
+FROM php:8.4-fpm
 
 RUN echo "session.upload_progress.enabled=0" > /usr/local/etc/php/conf.d/zz-security.ini
 

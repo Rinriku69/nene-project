@@ -26,7 +26,7 @@ services:
       - nene-network
 
   backend-nginx:
-    image: nginx:alpine
+    image: nginx:stable-alpine
     container_name: nene-laravel-nginx
     ports:
       - "127.0.0.1:8000:80" 
