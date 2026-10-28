@@ -19,7 +19,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           
           script: |
-            cd ~/nene-project
+            cd ~/app/nene-project
             git pull origin production
             docker compose build --pull
             docker compose up -d --pull always --renew-anon-volumes
