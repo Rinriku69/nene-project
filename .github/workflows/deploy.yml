@@ -20,7 +20,7 @@ jobs:
           
           script: |
             cd ~/app/nene-project
-            git pull origin production
+            git pull origin productions
             docker compose build --pull
             docker compose up -d --pull always --renew-anon-volumes
             docker compose exec -T backend-php php artisan package:discover --ansi
