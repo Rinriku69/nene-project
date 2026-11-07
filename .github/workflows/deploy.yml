@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     name: Deploy to VPS
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
 
     steps:
       - name: SSH into VPS and Deploy
@@ -17,7 +17,8 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{secrets.USERNAME}}
           key: ${{ secrets.SSH_KEY }}
-          
+          fingerprint: ${{ secrets.FINGERPRINT }}
+
           script: |
             cd ~/app/nene-project
             git pull origin production
