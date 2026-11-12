@@ -1,6 +1,7 @@
 
 FROM php:8.4-fpm
 
+RUN echo "session.upload_progress.enabled=0" > /usr/local/etc/php/conf.d/zz-security.ini
 
 RUN apt-get update && apt-get install -y \
     libpq-dev \
@@ -17,9 +18,13 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-COPY . .
+COPY composer.json composer.lock ./
 
-RUN composer install --optimize-autoloader --no-dev
+RUN composer install --no-dev --no-scripts --no-autoloader
+
+COPY . ./
+
+RUN composer dump-autoload --optimize --no-dev
 
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 

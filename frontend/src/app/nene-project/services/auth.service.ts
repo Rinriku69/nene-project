@@ -13,8 +13,8 @@ import { PetService } from './pet.service';
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
+  private readonly baseApiUrl = "/api";
   private readonly petService = inject(PetService);
-  private readonly baseApiUrl = 'http://localhost:8000/api';
   private readonly currentUser = signal<User | null>(null);
   readonly currentUserState = linkedSignal(() => this.currentUser());
   readonly isLoggedIn = computed(() => this.currentUser() !== null);
@@ -32,8 +32,8 @@ export class AuthService {
     this.attentionTick.update((tick) => tick + 1);
   }
 
-  getCSRFToken(): Observable<ResourceResponse> {
-    return this.http.get<ResourceResponse>('http://localhost:8000/sanctum/csrf-cookie');
+  getCSRFToken():Observable<ResourceResponse>{
+    return this.http.get<ResourceResponse>("/sanctum/csrf-cookie");
   }
 
   register(registerFormData: RegisterModel): Observable<ResourceResponse> {

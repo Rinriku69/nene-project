@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     name: Deploy to VPS
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
 
     steps:
       - name: SSH into VPS and Deploy
@@ -17,9 +17,14 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{secrets.USERNAME}}
           key: ${{ secrets.SSH_KEY }}
-          
+          fingerprint: ${{ secrets.FINGERPRINT }}
+
           script: |
-            cd ~/nene-project
+            cd ~/app/nene-project
             git pull origin production
-            docker compose up -d --build --renew-anon-volumes
+            docker compose build --pull
+            docker compose up -d --pull always --renew-anon-volumes
             docker compose exec -T backend-php php artisan package:discover --ansi
+            docker builder prune -f 
+            docker volume ls -qf dangling=true | grep -E '^[0-9a-f]{64}$' | xargs -r docker volume rm
+            docker image prune -f

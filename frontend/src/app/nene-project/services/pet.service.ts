@@ -17,19 +17,19 @@ export class PetService {
   readonly trigger = signal<number>(0);
   private readonly currentUserPetResource = httpResource<UserPet>(() => {
     if (!this.loadUserPet() || this.petId() === null) return undefined;
-    return { url: `http://localhost:8000/api/pet/getUserPet/${this.petId()}`, method: 'GET' };
+    return { url: `/api/pet/getUserPet/${this.petId()}`, method: 'GET' };
   });
   private readonly petShop = httpResource<PetShopResource[]>(() => {
     if (!this.loadPetShop()) return undefined;
     return {
-      url: 'http://localhost:8000/api/pet/getPetShop',
+      url: '/api/pet/getPetShop',
     };
   });
 
   private readonly allUserPet = httpResource<PetShopResource[]>(() => {
     if (!this.loadAllUserPet()) return undefined;
     return {
-      url: 'http://localhost:8000/api/pet/getAllUserPets',
+      url: '/api/pet/getAllUserPets',
     };
   });
 
@@ -38,7 +38,7 @@ export class PetService {
   readonly currentAllUserPets = computed(() => this.allUserPet);
 
   buyPet(id: number): Observable<ResourceResponse> {
-    return this.http.post<ResourceResponse>(`http://localhost:8000/api/pet/buyPet/${id}`, {});
+    return this.http.post<ResourceResponse>(`/api/pet/buyPet/${id}`, {});
   }
 
   async getCurrentPetId() {

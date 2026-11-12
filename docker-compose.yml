@@ -1,14 +1,13 @@
 
 
 services:
-  # 1. Frontend Service (Angular + Nginx)
   frontend:
     container_name: nene-angular
     build:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "127.0.0.1:8080:80"
     restart: unless-stopped
     networks:
       - nene-network
@@ -27,10 +26,10 @@ services:
       - nene-network
 
   backend-nginx:
-    image: nginx:alpine
+    image: nginx:stable-alpine
     container_name: nene-laravel-nginx
     ports:
-      - "8000:80" 
+      - "127.0.0.1:8000:80" 
     volumes:
       - ./backend:/var/www/html
       #- backend_code:/var/www/html
@@ -64,7 +63,7 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "5433:5432" 
+      - "127.0.0.1:5433:5432" 
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:

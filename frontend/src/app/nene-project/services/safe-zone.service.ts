@@ -11,11 +11,11 @@ export class SafeZoneService {
   private readonly http = inject(HttpClient);
 
   addTanzaku(tanzakuForm: SafeZoneModel):Observable<ResourceResponse>{
-    return this.http.post<ResourceResponse>(`http://localhost:8000/api/safezone/addTanzaku`,tanzakuForm);
+    return this.http.post<ResourceResponse>(`/api/safezone/addTanzaku`,tanzakuForm);
   }
 
   getMessages(visibility: 'public' | 'private'):Observable<SafeZoneResponse[]>{
-    return this.http.get<SafeZoneResponse[]>(`http://localhost:8000/api/safezone/getMessages`,{
+    return this.http.get<SafeZoneResponse[]>(`/api/safezone/getMessages`,{
       params: { visibility },
     });
   }

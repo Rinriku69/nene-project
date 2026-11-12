@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 
 @Service()
 export class StardewService {
-  private readonly baseApiUrl = 'http://localhost:8000/api';
+  private readonly baseApiUrl = '/api';
   loadSave = signal<boolean>(false);
   readonly saves = httpResource<StardewSaveResource[]>(() => {
   return this.loadSave() ?  

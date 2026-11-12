@@ -20,7 +20,7 @@ class GachaController extends Controller
     function pull(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'pull' => ['required', 'integer', 'max:10']
+            'pull' => ['required', 'integer','min:1' ,'max:10']
         ]);
         $rolledItems = DB::transaction(function () use ($request) {
             $user = User::where('id', Auth::id())->lockForUpdate()->first();

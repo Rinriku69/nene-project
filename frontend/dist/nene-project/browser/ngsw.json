@@ -1,0 +1,127 @@
+{
+  "configVersion": 1,
+  "timestamp": 1787740018341,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/chunk--EIratNP.js",
+        "/chunk-0fADUVIT.js",
+        "/chunk-B71m2B9s.js",
+        "/chunk-BG8icOtb.js",
+        "/chunk-BTg2KJB5.js",
+        "/chunk-BlSEJbxL.js",
+        "/chunk-BoqWFSeI.js",
+        "/chunk-C4NtCU4s.js",
+        "/chunk-CNKyDlM_.js",
+        "/chunk-D8PR6tVx.js",
+        "/chunk-DNv5Tuv_.js",
+        "/chunk-DYbsPsck.js",
+        "/chunk-DaeHetOh.js",
+        "/chunk-DauzDNG-.js",
+        "/chunk-DcOb89xN.js",
+        "/chunk-g1tNM-f6.js",
+        "/chunk-rwe_vTHr.js",
+        "/index.html",
+        "/main-R6VF2FDO.js",
+        "/manifest.webmanifest",
+        "/styles-RCU5SO6H.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/fonts/Minecraft.ttf",
+        "/icons/icon-128x128.png",
+        "/icons/icon-144x144.png",
+        "/icons/icon-152x152.png",
+        "/icons/icon-192x192.png",
+        "/icons/icon-384x384.png",
+        "/icons/icon-512x512.png",
+        "/icons/icon-72x72.png",
+        "/icons/icon-96x96.png",
+        "/icons/logo.png",
+        "/icons/nene_flower.png",
+        "/images/sakuraMobile.jpg",
+        "/images/sakuraMobile2.jpg",
+        "/images/sakurajpg.jpg",
+        "/media/layers-2x-TBM42ERR.png",
+        "/media/layers-55W3Q4RM.png",
+        "/media/marker-icon-2V3QKKVC.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/chunk--EIratNP.js": "3a516c7bac76fd134ab638a28e6fc138063cd116",
+    "/chunk-0fADUVIT.js": "71efd6bd492411968126691b5b1353a09590c50d",
+    "/chunk-B71m2B9s.js": "53b9e98fa94e7e427d79de67212b87b46facf73a",
+    "/chunk-BG8icOtb.js": "8361af3029f33663bccdad9592803ea676e7cfdd",
+    "/chunk-BTg2KJB5.js": "f37b6ac99a205cf163870d06097ad92b543a0aa9",
+    "/chunk-BlSEJbxL.js": "8b57e51f55a19130eac93eaaad4921881290fdeb",
+    "/chunk-BoqWFSeI.js": "07a6c53c20ce1346ae46d7bd7e15f4867ccb3483",
+    "/chunk-C4NtCU4s.js": "7ca2b1455c3297f3aa365fc9ebe6955051b3ae2c",
+    "/chunk-CNKyDlM_.js": "0ef80d42599ff891df8da33c110aaa3d32baf3de",
+    "/chunk-D8PR6tVx.js": "ada9655c31985baa55a7a432672a15075765483f",
+    "/chunk-DNv5Tuv_.js": "2b88891aa7a54ffbee4e7c3ef74170f5045c0933",
+    "/chunk-DYbsPsck.js": "7ef25811251a40bdd354e11792765cd0c1b2f82a",
+    "/chunk-DaeHetOh.js": "5d4d9f03103f6024061217e2d592fa1244116d2e",
+    "/chunk-DauzDNG-.js": "656c36a7a622c0db6399fadec27b38ebd5f876b6",
+    "/chunk-DcOb89xN.js": "1f9ae45edfbb5b67cc178b6561ea55100a1120fd",
+    "/chunk-g1tNM-f6.js": "8b632ca6845ec134b70c4e6af91179d35ae67348",
+    "/chunk-rwe_vTHr.js": "ad7e059e6a3a70ba835c12700394e771bc899988",
+    "/fonts/Minecraft.ttf": "adeaf75e88666e1987255be09e7bcc452bb4722d",
+    "/icons/icon-128x128.png": "a63cf8c084ffee2838f207b81859a979d9e99335",
+    "/icons/icon-144x144.png": "1a24d586313cf5cb8ca5acd96f950712ee06471c",
+    "/icons/icon-152x152.png": "291a56f585d1a8633a912d19be4d87ed698b4f9a",
+    "/icons/icon-192x192.png": "5744791d8c4f89b15d2c075cc59681f93e2f453a",
+    "/icons/icon-384x384.png": "7297a38487cc9d6122519f8c3172b7f83a65c920",
+    "/icons/icon-512x512.png": "214c055aa02f3df58d4f3ce54135288d3cda4c0e",
+    "/icons/icon-72x72.png": "814216bfe5e323b9643e40592a5dae3351830548",
+    "/icons/icon-96x96.png": "0e9d4fb235ea655b4b8962c5c509874c50085dfd",
+    "/icons/logo.png": "ce16164ca0c4f232fef9413b6fad3c5b39f2dddd",
+    "/icons/nene_flower.png": "4d2c2993c69d3ff7d0c53e6583cef7889b38c6f9",
+    "/images/sakuraMobile.jpg": "755bed5c9a95e076b450b90802fa3ceb5e69dbc9",
+    "/images/sakuraMobile2.jpg": "11ba4f9fe0cc935a7fd7c75794175bb1f62725f0",
+    "/images/sakurajpg.jpg": "17ae3e54955839688c229fa4fe6e89ed6d0b8b49",
+    "/index.html": "929837bb30c56a7ea1d417701985be3ff05885ef",
+    "/main-R6VF2FDO.js": "479504aebcafafd2280ff511236334b3ceb374d1",
+    "/manifest.webmanifest": "2913904731e2a365ed83648675f8a79eef6d6868",
+    "/media/layers-2x-TBM42ERR.png": "152a162333e46d24f9d89f566312fc0c64011dee",
+    "/media/layers-55W3Q4RM.png": "c9e7528e491a39232ba24a2706c6c739d6fb0f06",
+    "/media/marker-icon-2V3QKKVC.png": "60a90bcbb2b42b7ddb4556db94eb7c1084b0e5da",
+    "/styles-RCU5SO6H.css": "ae6166a0d67f21da9d6f61cb82764e32bd9cae9d"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
