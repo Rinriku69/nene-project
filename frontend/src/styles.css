@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
-@import "leaflet/dist/leaflet.css";
+@import 'leaflet/dist/leaflet.css';
 
 @font-face {
   font-family: 'MCFont';
@@ -74,25 +74,25 @@
     }
   }
 
-  @keyframes attention{
-    0%{
-      transform: translateY(10px)
+  @keyframes attention {
+    0% {
+      transform: translateY(10px);
     }
-    25%{
-      transform: translateY(0px)
+    25% {
+      transform: translateY(0px);
     }
-    50%{
-      transform: translateY(10px)
+    50% {
+      transform: translateY(10px);
     }
-    100%{
-      transform: translateY(0px)
+    100% {
+      transform: translateY(0px);
     }
   }
 }
 
 @utility sprite-engine {
   --index-y: 0;
-  
+
   width: var(--frame-w);
   height: var(--frame-h);
 
@@ -104,8 +104,6 @@
 @utility pet-animate {
   animation: sprite-animate var(--seconds) steps(var(--index-x-count)) infinite;
 }
-
-
 
 .main-btn {
   @apply relative bg-pink-400 border-4 border-pink-500 rounded-none cursor-pointer transition-all duration-200 shadow-[4px_8px_0_#db2777];
