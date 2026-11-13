@@ -1,6 +1,6 @@
 @if (type() === 'scale_box') {
   <div
-    class="pet-animate sprite-engine scale-100 [image-rendering:pixelated]"
+    class="sprite-animate sprite-engine scale-100 [image-rendering:pixelated]"
     [style.--index-y]="currentAnimation()?.index_y"
     [style.--index-x-count]="currentAnimation()?.index_x_count"
     [style.--seconds]="currentAnimation()?.seconds"
@@ -19,7 +19,7 @@
   ></div>
 } @else if (type() === 'scale_pet') {
   <div
-    class="pet-animate sprite-engine scale-100 [image-rendering:pixelated]"
+    class="sprite-animate sprite-engine scale-100 [image-rendering:pixelated]"
     [style.--index-y]="currentAnimation()?.index_y"
     [style.--index-x-count]="currentAnimation()?.index_x_count"
     [style.--seconds]="currentAnimation()?.seconds"

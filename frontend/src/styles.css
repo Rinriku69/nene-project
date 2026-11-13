@@ -65,7 +65,7 @@
     }
   }
 
-  @keyframes sprite-animate {
+  @keyframes horizontal-bg-transition {
     from {
       background-position-x: 0px;
     }
@@ -101,8 +101,8 @@
   background-position-y: calc(var(--index-y) * var(--frame-h) * -1);
 }
 
-@utility pet-animate {
-  animation: sprite-animate var(--seconds) steps(var(--index-x-count)) infinite;
+@utility sprite-animate {
+  animation: horizontal-bg-transition var(--seconds) steps(var(--index-x-count)) infinite;
 }
 
 .main-btn {
