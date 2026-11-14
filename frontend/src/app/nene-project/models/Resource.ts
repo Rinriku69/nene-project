@@ -109,60 +109,88 @@ export interface FeatureBanner {
 
 export interface SafeZoneResponse {
   username: string;
-  image_url:string | null;
+  image_url: string | null;
   pos_x: string;
   pos_y: string;
   message: string;
   theme_color: string;
-  created_at:string;
-  unlocked_at:string;
+  created_at: string;
+  unlocked_at: string;
   expired_at: string;
   is_locked: boolean;
   is_public: boolean;
 }
 
-export interface ProfileImage{
-  avatar : string
+export interface ProfileImage {
+  avatar: string;
 }
 
-export interface UserPet{
-  name:string;
-  url:string;
-  pet_animations: PetAnimation[]
+export interface UserPet {
+  name: string;
+  url: string;
+  pet_animations: PetAnimation[];
 }
 
-export interface PetAnimation{
-  name:string;
-  index_y:number;
-  index_x_count:number;
-  seconds:string;
-  frame_w:string;
-  frame_h:string;
-  is_idle:boolean;
-  scale_box:number|string;
-  scale_pet:number|string;
+export interface PetAnimation {
+  name: string;
+  index_y: number;
+  index_x_count: number;
+  seconds: string;
+  frame_w: string;
+  frame_h: string;
+  is_idle: boolean;
+  scale_box: number | string;
+  scale_pet: number | string;
 }
 
-export interface PetShopResource extends UserPet{
-  id:number;
-  is_owned:boolean;
-  price:number;
+export interface PetShopResource extends UserPet {
+  id: number;
+  is_owned: boolean;
+  price: number;
 }
 
 export interface Position {
-  lat:number;
-  long:number;
+  lat: number;
+  long: number;
 }
 
 export interface UserLocationResource extends Position {
-  user_id:number;
-  username:string;
-  image_url:string|null;
-  text_status:string|null;
-  updated:string;
-  is_online:boolean;
+  user_id: number;
+  username: string;
+  image_url: string | null;
+  text_status: string | null;
+  updated: string;
+  is_online: boolean;
 }
 
-export interface UserLocation extends Position{
-  text_status:string|null;
+export interface UserLocation extends Position {
+  text_status: string | null;
+}
+
+export interface FrameProperty {
+  w: number;
+  h: number;
+}
+
+interface Sheet {
+  cols: number;
+  rows: number;
+}
+
+export interface AnimationProperty {
+  indexXCount: number;
+  indexY: number;
+  seconds: number;
+}
+
+export interface SpriteSheetProperty {
+  frame: FrameProperty;
+  sheet: Sheet;
+  animations: Record<string, AnimationProperty>;
+  characters: string[];
+}
+
+export interface Character {
+  name: string;
+  animation: string;
 }

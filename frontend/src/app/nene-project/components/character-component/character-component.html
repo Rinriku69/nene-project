@@ -1,0 +1,10 @@
+<!-- <div class="h-20 w-full bg-[url('/images/sprite/mali.png')]"></div> -->
+<div
+  class="sprite-engine sprite-animate border-2 border-red-500"
+  [style.--frame-w]="'48px'"
+  [style.--frame-h]="'48px'"
+  [style.--seconds]="animationFrame[character().animation].seconds + 's'"
+  [style.--index-x-count]="animationFrame[character().animation].indexXCount"
+  [style.--index-y]="animationFrame[character().animation].indexY"
+  [style.background-image]="'url(' + '/images/sprites/' + character().name + '.png' + ')'"
+></div>
