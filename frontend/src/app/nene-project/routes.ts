@@ -64,6 +64,11 @@ export default [
             loadComponent: () => import('./pages/app/location/location').then((m) => m.Location),
             canMatch: [authGuard, roleGuard(['friend', 'admin'])],
           },
+          {
+            path: 'townfolk',
+            loadComponent: () => import('./pages/app/townfolk/townfolk').then((m) => m.Townfolk),
+            canMatch: [authGuard, roleGuard(['friend', 'admin'])],
+          },
         ],
       },
       {
